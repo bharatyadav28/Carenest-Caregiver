@@ -22,7 +22,7 @@ function SigninForm() {
 
   const handleSubmit = () => {
     const token = "Mai_Hu_Pankaj";
-    Cookies.set("care_nest_token", token);
+    Cookies.set("care_giver_token", token);
     router.push("/");
   };
 
