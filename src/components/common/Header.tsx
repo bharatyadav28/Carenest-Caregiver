@@ -1,0 +1,78 @@
+"use client";
+
+import React, { useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { IoNotificationsOutline as NotificationIcon } from "react-icons/io5";
+import { MdMenu as MenuIcon } from "react-icons/md";
+
+import { CustomButton } from "./CustomButton";
+import { IoMdPerson as ProfileIcon } from "react-icons/io";
+import { Logo } from "@/lib/svg_icons";
+import CustomDrawer from "./CustomDrawer";
+
+function Header() {
+  //   const [openNotifications, setOpenNotifications] = useState(false);
+  const [openMenu, setOpenMenu] = useState(false);
+
+  const handleOpenMenu = () => {
+    setOpenMenu((prev) => !prev);
+  };
+
+  const handleNotificationOpen = () => {
+    // setOpenNotifications((prev) => !prev);
+  };
+  const pathName = usePathname();
+
+  const unseenNotifications = true;
+
+  const navContent = (
+    <div className="flex lg:flex-row flex-col items-center gap-6">
+      <div className=" flex lg:flex-row flex-col items-center lg:gap-16 gap-6">
+        <Link
+          href={"/"}
+          className={`font-medium ${
+            pathName === "/" ? "text-primary" : "#fff"
+          } lg:mt-0 mt-4`}
+        >
+          Dashboard
+        </Link>
+        <button className="relative" onClick={handleNotificationOpen}>
+          <NotificationIcon size={20} />
+          {unseenNotifications && (
+            <div className="w-2 h-2 rounded-full bg-primary absolute top-0 right-[0.1rem]" />
+          )}
+        </button>
+      </div>
+
+      <CustomButton className="py-[1.1rem] lg:mb-0 mb-4" onClick={() => {}}>
+        <div className="flex items-center gap-2">
+          <ProfileIcon />
+          <div className="font-medium">My Profile</div>
+        </div>
+      </CustomButton>
+    </div>
+  );
+
+  return (
+    <div className="flex justify-between bg-primary-foreground  text-[#fff] items-center lg:px-28 px-8 py-5 ">
+      <div>{Logo}</div>
+
+      <div className="lg:block hidden"> {navContent}</div>
+
+      <button onClick={handleOpenMenu} className="lg:hidden">
+        <MenuIcon size={30} />
+      </button>
+
+      <CustomDrawer
+        className="bg-primary-foreground text-white lg-hidden "
+        open={openMenu}
+        handleOpen={handleOpenMenu}
+      >
+        {navContent}
+      </CustomDrawer>
+    </div>
+  );
+}
+
+export default Header;
