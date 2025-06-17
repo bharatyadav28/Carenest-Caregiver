@@ -1,0 +1,9 @@
+{
+  "basicDetails": {
+    "name": "Joe Done",
+    "email": "joedone@gmail.com",
+    "gender": "Male",
+    "address": "123, street road, place name, city ",
+    "mobile": "987 654 3210"
+  }
+}

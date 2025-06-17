@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { IoNotificationsOutline as NotificationIcon } from "react-icons/io5";
 import { MdMenu as MenuIcon } from "react-icons/md";
 
@@ -11,9 +11,14 @@ import { IoMdPerson as ProfileIcon } from "react-icons/io";
 import { Logo } from "@/lib/svg_icons";
 import CustomDrawer from "./CustomDrawer";
 
-function Header() {
+interface props {
+  className: string;
+}
+
+function Header({ className }: props) {
   //   const [openNotifications, setOpenNotifications] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
+  const router = useRouter();
 
   const handleOpenMenu = () => {
     setOpenMenu((prev) => !prev);
@@ -30,9 +35,9 @@ function Header() {
     <div className="flex lg:flex-row flex-col items-center gap-6">
       <div className=" flex lg:flex-row flex-col items-center lg:gap-16 gap-6">
         <Link
-          href={"/"}
+          href={"/dashboard"}
           className={`font-medium ${
-            pathName === "/" ? "text-primary" : "#fff"
+            pathName === "/dashboard" ? "text-primary" : "#fff"
           } lg:mt-0 mt-4`}
         >
           Dashboard
@@ -45,7 +50,12 @@ function Header() {
         </button>
       </div>
 
-      <CustomButton className="py-[1.1rem] lg:mb-0 mb-4" onClick={() => {}}>
+      <CustomButton
+        className="py-[1.1rem] lg:mb-0 mb-4"
+        onClick={() => {
+          router.push("/my-profile");
+        }}
+      >
         <div className="flex items-center gap-2">
           <ProfileIcon />
           <div className="font-medium">My Profile</div>
@@ -55,7 +65,9 @@ function Header() {
   );
 
   return (
-    <div className="flex justify-between bg-primary-foreground  text-[#fff] items-center lg:px-28 px-8 py-5 ">
+    <div
+      className={`flex justify-between bg-primary-foreground  text-[#fff] items-center py-5 ${className}`}
+    >
       <div>{Logo}</div>
 
       <div className="lg:block hidden"> {navContent}</div>

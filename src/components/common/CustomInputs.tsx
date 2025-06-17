@@ -7,6 +7,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   setText: React.Dispatch<React.SetStateAction<string>>;
   className?: string;
   divClassName?: string;
+  iconLast?: boolean;
   Icon?: React.JSX.Element;
 }
 
@@ -16,10 +17,13 @@ export const TextInput = ({
   className,
   divClassName,
   Icon,
+  iconLast,
   ...props
 }: InputProps) => {
   const classes = `w-full border-none focus-visible:ring-[0px] shadow-none ${className}`;
-  const divClasses = `flex items-center rounded-full bg-[#ffffff] py-2 px-4 ${divClassName}`;
+  const divClasses = `flex items-center rounded-full bg-[#ffffff] py-2 px-4 ${
+    iconLast ? "flex-row-reverse" : ""
+  } ${divClassName}`;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setText(event.target.value);
