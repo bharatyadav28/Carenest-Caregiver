@@ -51,6 +51,7 @@
   --primary-foreground: #233d4d;
   --light-gray: #f8f9fa;
   --cool-gray: #98a2b3;
+  --slat-gray: #667085;
 
   --radius: 0.625rem;
   --card: oklch(1 0 0);
@@ -135,5 +136,9 @@
 }
 
 .card {
-  @apply bg-[#fff] rounded-lg px-5 py-6 h-max;
+  @apply bg-[#fff] rounded-lg px-5 py-6 h-max shadow-sm;
+}
+
+.heading2 {
+  @apply text-2xl font-medium;
 }

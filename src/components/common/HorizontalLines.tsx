@@ -13,3 +13,7 @@ export default function TextWithLines({ text }: Props) {
     </div>
   );
 }
+
+export function SimpleLine() {
+  return <div className=" w-full border-t-1 border-[#33333333] my-2"></div>;
+}

@@ -4,3 +4,9 @@ export interface sidebarItemType {
   path?: string;
   handleClick?: () => void;
 }
+
+export interface jobProfileType {
+  id: number;
+  ques: string;
+  answer: string;
+}

@@ -8,7 +8,7 @@ import { PasswordInput, TextInput } from "@/components/common/CustomInputs";
 import { EmailIcon, passwordIcon } from "@/lib/svg_icons";
 import { CustomButton } from "../../common/CustomButton";
 import GoogleButton from "../GoogleButton";
-import TextWithLines from "../../common/TextWithLine";
+import TextWithLines from "../../common/HorizontalLines";
 import { Label } from "../../ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import Link from "next/link";

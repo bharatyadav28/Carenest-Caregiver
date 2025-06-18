@@ -13,7 +13,7 @@ import {
 } from "@/lib/svg_icons";
 import { CustomButton } from "../../common/CustomButton";
 import GoogleButton from "../GoogleButton";
-import TextWithLines from "../../common/TextWithLine";
+import TextWithLines from "../../common/HorizontalLines";
 
 function SignupForm() {
   const [name, setName] = useState("");

@@ -1,0 +1,110 @@
+{
+  "profileQues": [
+    {
+      "id": "q1",
+      "type": "radio",
+      "ques": "What type of caregiving are you up for?",
+      "options": [
+        { "id": "opt1", "text": "I provide care only for female clients" },
+        { "id": "opt2", "text": "I provide care only for male clients" },
+        { "id": "opt3", "text": "I provide care for everybody" }
+      ],
+      "placeholder": "Add type of care giving services you’re interested"
+    },
+    {
+      "id": "q2",
+      "type": "radio",
+      "ques": "Price Range (Hourly Rate)",
+      "options": [
+        { "id": "opt4", "text": "$100 - $200" },
+        { "id": "opt5", "text": "$200 - $300" },
+        { "id": "opt6", "text": "$300 - $400" }
+      ],
+      "placeholder": "Add price range"
+    },
+    {
+      "id": "q3",
+      "type": "radio",
+      "ques": "Preferred Location Range",
+      "options": [
+        { "id": "opt4", "text": "Within 2 miles from my current location" },
+        { "id": "opt7", "text": "Within 10 miles" },
+        { "id": "opt8", "text": "Within 15 miles " },
+        { "id": "opt9", "text": "Within 20 miles " },
+        { "id": "opt10", "text": "Within 30 miles " },
+        { "id": "opt11", "text": "Everywhere / Open to all locations " }
+      ],
+      "placeholder": "Add preferred location"
+    },
+    {
+      "id": "q4",
+      "type": "radio",
+      "ques": "PRN (Pro re nata)",
+      "options": [
+        { "id": "opt4", "text": "As Needed" },
+        { "id": "opt5", "text": "$200 - $300" }
+      ],
+      "placeholder": "Add PRN"
+    },
+    {
+      "id": "q7",
+      "type": "radio",
+      "ques": "Years of Experience?",
+      "options": [
+        { "id": "opt1", "text": "0-1 years" },
+        { "id": "opt2", "text": "2-5 years" },
+        { "id": "opt3", "text": "6-10 years" },
+        { "id": "opt4", "text": "10+ years" }
+      ],
+      "placeholder": "Add experience"
+    },
+    {
+      "id": "q5",
+      "type": "radio",
+      "ques": "Are You Certified?",
+      "options": [
+        { "id": "opt4", "text": "Yes" },
+        { "id": "opt5", "text": "No" }
+      ],
+      "placeholder": "Add certified status"
+    },
+    {
+      "id": "q6",
+      "type": "mutiple",
+      "ques": "Languages Spoken",
+      "options": [
+        { "id": "opt1", "text": "English" },
+        { "id": "opt2", "text": "Spanish" },
+        { "id": "opt3", "text": "Arabic" },
+        { "id": "opt4", "text": "German" },
+        { "id": "opt5", "text": "Russia" },
+        { "id": "opt6", "text": "Chinese" },
+        { "id": "opt7", "text": "Portuguese" },
+        { "id": "opt8", "text": "Italian" },
+        { "id": "opt9", "text": "Tukish" },
+        { "id": "opt10", "text": "French" },
+        { "id": "opt11", "text": "Japanese" },
+        { "id": "opt12", "text": "Hindi" }
+      ],
+      "placeholder": "Add languages"
+    }
+  ],
+  "services": [
+    {
+      "id": "s1",
+      "name": "Personal Care"
+    },
+    {
+      "id": "s2",
+      "name": "Home Care"
+    },
+    {
+      "id": "s3",
+      "name": "Memory Care"
+    },
+    {
+      "id": "s4",
+      "name": "Private Pay Skilled Nursing +"
+    }
+  ]
+}

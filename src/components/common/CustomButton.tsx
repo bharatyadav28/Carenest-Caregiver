@@ -1,6 +1,7 @@
 "use client";
-
 import React from "react";
+import { IoIosAdd as AddIcon } from "react-icons/io";
+import { MdOutlineEdit as EditIcon } from "react-icons/md";
 
 import { Button } from "../ui/button";
 
@@ -49,6 +50,32 @@ export const TransaparentButton = ({
     <CustomButton className={classes} onClick={onClick}>
       {" "}
       {title || "Cancel"}
+    </CustomButton>
+  );
+};
+
+export const AddButton = ({ onClick }: ActionButtonProps) => {
+  return (
+    <CustomButton onClick={onClick} className="py-1 ps-2">
+      <div className=" flex gap-1 items-center ">
+        <div>
+          <AddIcon />
+        </div>
+        Add
+      </div>
+    </CustomButton>
+  );
+};
+
+export const EditButton = ({ onClick }: ActionButtonProps) => {
+  return (
+    <CustomButton onClick={onClick} className="py-1 pe-2">
+      <div className="flex gap-1 items-center ">
+        Edit
+        <div>
+          <EditIcon size={17} />
+        </div>
+      </div>
     </CustomButton>
   );
 };

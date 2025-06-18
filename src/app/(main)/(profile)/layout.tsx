@@ -9,10 +9,10 @@ function Layout({
 }>) {
   return (
     <div className="my-8 grid grid-cols-24">
-      <div className="col-start-1 col-end-8">
+      <div className="col-start-1 col-end-7">
         <ProfileMenu />
       </div>
-      <div className="lg:col-start-9 col-start-1 col-end-25 lg:mt-0 mt-8">
+      <div className="lg:col-start-8 col-start-1 col-end-25 lg:mt-0 mt-8">
         {children}
       </div>
     </div>
