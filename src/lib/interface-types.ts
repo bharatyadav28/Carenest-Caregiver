@@ -6,7 +6,12 @@ export interface sidebarItemType {
 }
 
 export interface jobProfileType {
+  qid: string;
+  oid: string | string[];
+}
+
+export interface reasonType {
   id: number;
-  ques: string;
-  answer: string;
+  title: string;
+  description: string;
 }

@@ -139,6 +139,18 @@
   @apply bg-[#fff] rounded-lg px-5 py-6 h-max shadow-sm;
 }
 
+.btn {
+  @apply hover:cursor-pointer;
+}
+
 .heading2 {
   @apply text-2xl font-medium;
+}
+
+.preference-dialog {
+  @apply lg:!min-w-[29rem] w-[calc(100%-3rem)] py-5;
+}
+
+.service-card {
+  @apply text-[var(--slat-gray)] px-3 py-2 border border-[#98A2B34D] rounded-full text-sm;
 }

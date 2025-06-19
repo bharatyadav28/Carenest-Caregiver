@@ -19,9 +19,9 @@ export function CustomDialog({
   className,
   showCrossButton,
 }: Props) {
-  let classes = `max-w-full  !min-w-[20rem] w-max w-[10rem] min-h-[10rem] !bg-[#fff] !rounded-3xl overflow-y-auto py-4 pb-0 ${
+  let classes = `max-w-full  !min-w-[20rem] w-max w-[10rem] min-h-[10rem] !bg-[#fff] !rounded-3xl max-h-[calc(100%-3rem)] py-4 pb-0 ${
     !showCrossButton ? "[&>button:first-of-type]:hidden " : ""
-  }  `;
+  } `;
   if (className) {
     classes += " " + className;
   }
@@ -31,7 +31,9 @@ export function CustomDialog({
         <DialogTitle className="hidden"></DialogTitle>
         <DialogDescription className="hidden"></DialogDescription>
 
-        <div className="flex flex-col">{children}</div>
+        <div className="flex flex-col h-full overflow-y-auto hide-scrollbar">
+          {children}
+        </div>
       </DialogContent>
     </Dialog>
   );

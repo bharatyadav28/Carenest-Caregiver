@@ -2,38 +2,53 @@ import React, { useState } from "react";
 
 import { AddButton, EditButton } from "@/components/common/CustomButton";
 import { SimpleLine } from "@/components/common/HorizontalLines";
+import MyServicesDialog from "./MyServicesDialog";
 
 function MyServices() {
-  const [services, setServices] = useState("");
+  const [services, setServices] = useState<string[]>([]);
+  const [openDialog, setOpenDialog] = useState(false);
 
-  const handleClick = () => {
-    setServices("");
+  const handleOpenDialog = () => {
+    setOpenDialog((prev) => !prev);
   };
 
   return (
-    <div className="card flex flex-col gap-2">
-      <div className="flex justify-between items-center">
-        <div className="heading2">My Services</div>
-        {services ? (
-          <EditButton onClick={handleClick} />
-        ) : (
-          <AddButton onClick={handleClick} />
+    <>
+      <div className="card flex flex-col gap-2">
+        <div className="flex justify-between items-center">
+          <div className="heading2">My Services</div>
+          {services.length > 0 ? (
+            <EditButton onClick={handleOpenDialog} />
+          ) : (
+            <AddButton onClick={handleOpenDialog} />
+          )}
+        </div>
+
+        <div className="text-[var(--slat-gray)]">
+          Please add type of care giving services you’re interested
+        </div>
+
+        {services.length > 0 && (
+          <>
+            <SimpleLine />
+            <div className="flex flex-wrap gap-4 mt-2">
+              {services?.map((service) => (
+                <div className="service-card" key={service}>
+                  {service}
+                </div>
+              ))}
+            </div>{" "}
+          </>
         )}
       </div>
 
-      <div className="text-[var(--slat-gray)]">
-        {services ||
-          "Please add type of care giving services you’re interested"}
-      </div>
-
-      <SimpleLine />
-
-      <div className="flex flex-wrap mt-2">
-        <div className="text-[var(--slat-gray)] px-3 py-2 border border-[#98A2B34D] rounded-full text-sm">
-          Personal Care
-        </div>
-      </div>
-    </div>
+      <MyServicesDialog
+        open={openDialog}
+        handleOpen={handleOpenDialog}
+        services={services}
+        setServices={setServices}
+      />
+    </>
   );
 }
 

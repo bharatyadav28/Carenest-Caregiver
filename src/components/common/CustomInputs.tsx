@@ -1,6 +1,7 @@
 import { eyeClosedIcon, eyeOpenIcon } from "@/lib/svg_icons";
 import { Input } from "../ui/input";
 import { useState } from "react";
+import { Textarea } from "../ui/textarea";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   text: string;
@@ -73,6 +74,37 @@ export const PasswordInput = ({
       >
         {showPassword ? eyeClosedIcon : eyeOpenIcon}
       </button>
+    </div>
+  );
+};
+
+interface TextareaProps extends React.InputHTMLAttributes<HTMLTextAreaElement> {
+  text: string;
+  setText: React.Dispatch<React.SetStateAction<string>>;
+  className?: string;
+}
+export const CustomTextArea = ({
+  text,
+  setText,
+  className,
+
+  ...props
+}: TextareaProps) => {
+  const classes = `w-full focus-visible:ring-[0px] shadow-none ${className} border border-[#EBEBEB] rounded-xl resize-none `;
+
+  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setText(event.target.value);
+  };
+
+  return (
+    <div>
+      {/* {Icon && <div>{Icon}</div>} */}
+      <Textarea
+        value={text}
+        onChange={handleChange}
+        {...props}
+        className={classes}
+      />
     </div>
   );
 };

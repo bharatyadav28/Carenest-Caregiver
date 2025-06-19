@@ -6,7 +6,6 @@ function SignupProgress() {
   const pathName = usePathname();
   const isDocumentsPage = pathName?.split("/")?.includes("documents");
 
-  console.log("Pathname", pathName, isDocumentsPage);
   const classes =
     "bg-primary-foreground text-[#fff] text-sm px-[0.6rem] py-1 rounded-full w-max";
 

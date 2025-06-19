@@ -29,7 +29,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  if (!token && !restrictedPaths.includes(pathname)) {
+  if ((!token && !restrictedPaths.includes(pathname)) || pathname === "/") {
     return NextResponse.redirect(new URL("/signin", request.url));
   }
 

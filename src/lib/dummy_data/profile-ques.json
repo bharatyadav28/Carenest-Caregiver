@@ -70,7 +70,7 @@
     },
     {
       "id": "q6",
-      "type": "mutiple",
+      "type": "multiple",
       "ques": "Languages Spoken",
       "options": [
         { "id": "opt1", "text": "English" },
@@ -104,7 +104,7 @@
     },
     {
       "id": "s4",
-      "name": "Private Pay Skilled Nursing +"
+      "name": "Private Pay Skilled Nursing"
     }
   ]
 }
