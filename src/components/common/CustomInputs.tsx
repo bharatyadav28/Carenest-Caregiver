@@ -10,6 +10,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   divClassName?: string;
   iconLast?: boolean;
   Icon?: React.JSX.Element;
+  hideEyeIcon?: boolean;
 }
 
 export const TextInput = ({
@@ -48,18 +49,24 @@ export const PasswordInput = ({
   setText,
   className,
   Icon,
+  iconLast,
+  divClassName,
+  hideEyeIcon,
   ...props
 }: InputProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const classes = `w-full border-none  focus-visible:ring-[0px] shadow-none ${className}`;
+  const divClasses = `flex items-center rounded-full bg-[#ffffff] py-2 px-4 ${
+    iconLast ? "flex-row-reverse" : ""
+  } ${divClassName}`;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setText(event.target.value);
   };
 
   return (
-    <div className={`flex items-center rounded-full bg-[#ffffff] py-2 px-4`}>
+    <div className={divClasses}>
       {Icon && <div>{Icon}</div>}
       <Input
         type={showPassword ? "text" : "password"}
@@ -68,12 +75,14 @@ export const PasswordInput = ({
         {...props}
         className={classes}
       />
-      <button
-        className="p-0 m-0"
-        onClick={() => setShowPassword((prev) => !prev)}
-      >
-        {showPassword ? eyeClosedIcon : eyeOpenIcon}
-      </button>
+      {!hideEyeIcon && (
+        <button
+          className="p-0 m-0"
+          onClick={() => setShowPassword((prev) => !prev)}
+        >
+          {showPassword ? eyeClosedIcon : eyeOpenIcon}
+        </button>
+      )}
     </div>
   );
 };

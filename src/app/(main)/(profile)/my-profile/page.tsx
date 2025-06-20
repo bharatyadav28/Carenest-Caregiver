@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { TextInput } from "@/components/common/CustomInputs";
+import { LiaSaveSolid as SaveIcon } from "react-icons/lia";
 
+import { TextInput } from "@/components/common/CustomInputs";
 import { addressIcon, EmailIcon, personIcon, phoneIcon } from "@/lib/svg_icons";
 import { CustomButton } from "@/components/common/CustomButton";
-import { LiaSaveSolid as SaveIcon } from "react-icons/lia";
 import data from "@/lib/dummy_data/profile.json";
 
 function MyProfilePage() {

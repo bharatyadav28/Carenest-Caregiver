@@ -108,6 +108,24 @@ export const passwordIcon = (
   </svg>
 );
 
+export const smallPasswordIcon = (
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 18 18"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M12 9H13.05C13.1693 9 13.2838 9.04741 13.3682 9.1318C13.4526 9.21619 13.5 9.33065 13.5 9.45V14.55C13.5 14.6693 13.4526 14.7838 13.3682 14.8682C13.2838 14.9526 13.1693 15 13.05 15H4.95C4.83065 15 4.71619 14.9526 4.6318 14.8682C4.54741 14.7838 4.5 14.6693 4.5 14.55V9.45C4.5 9.33065 4.54741 9.21619 4.6318 9.1318C4.71619 9.04741 4.83065 9 4.95 9H6M12 9V6C12 5.00025 11.4 3 9 3C6.6 3 6 5.00025 6 6V9M12 9H6"
+      stroke="#667085"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
 export const eyeOpenIcon = (
   <svg
     width="24"
