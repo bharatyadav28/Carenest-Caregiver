@@ -154,3 +154,27 @@
 .service-card {
   @apply text-[var(--slat-gray)] px-3 py-2 border border-[#98A2B34D] rounded-full text-sm;
 }
+
+/* Frame 1321315701 */
+
+.test {
+  background: linear-gradient(
+    92.68deg,
+    #319afd 6.27%,
+    #3fb2a7 52.56%,
+    #4eb564 99.73%
+  );
+}
+
+.subscription-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.subscription-details div:nth-child(1) {
+  font-weight: 500;
+}
+
+.subscription-details div:nth-child(2) {
+  color: var(--slat-gray);
+}

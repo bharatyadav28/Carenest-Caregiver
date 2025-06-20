@@ -1,0 +1,38 @@
+{
+  "plans": [
+    {
+      "id": "p1",
+      "name": "Pro Caregiver Plan",
+      "price": "$20",
+      "interval": "month",
+      "period": "monthly",
+      "benefits": [
+        "Verified Badge on your profile – build instant trust with families",
+        "See Who Viewed You – access full customer details",
+        "Priority Listing – appear at the top in caregiver searches",
+        "First Call Advantage – be the first to receive new consultation calls"
+      ]
+    },
+    {
+      "id": "p2",
+      "name": "Pro Caregiver Plan",
+      "price": "$10",
+      "interval": "month",
+      "period": "yearly",
+      "benefits": [
+        "Verified Badge on your profile – build instant trust with families",
+        "See Who Viewed You – access full customer details",
+        "Priority Listing – appear at the top in caregiver searches",
+        "First Call Advantage – be the first to receive new consultation calls"
+      ]
+    }
+  ],
+  "subscriptionDetails": {
+    "plan": "Pro Caregiver",
+    "paymentId": "#7646523223",
+    "status": "Active",
+    "amount": "$20/month",
+    "paymentDate": "12 May 2025",
+    "ExpiringOn": "12 June 2025"
+  }
+}

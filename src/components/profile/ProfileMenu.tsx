@@ -19,7 +19,7 @@ function ProfileMenu() {
     {
       id: 3,
       text: "Subscription",
-      path: "/subscriptions",
+      path: "/subscription",
     },
     {
       id: 4,
