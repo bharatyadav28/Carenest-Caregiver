@@ -63,7 +63,7 @@ function ProfileMenu() {
   ];
   return (
     <>
-      <SidebarMenu items={items} />
+      <SidebarMenu items={items} ViewProfile={false}/>
 
       <ActionDialog
         open={openDeleteDialog}

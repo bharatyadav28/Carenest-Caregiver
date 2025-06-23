@@ -1,0 +1,14 @@
+{
+  "booking": {
+    "id": "#15678",
+    "bookedOn": "06 Apr 2025",
+    "careType": "Personal Care",
+    "bookingDate": "06 Apr 2025",
+    "duration": "1 Month",
+    "name": "William James",
+    "email": "Carelinx@gmail.com",
+    "phone": "9876543210",
+    "avatar": "/image.svg",
+    "address": "123 Evergreen Street, Willow Creek, California, 90210"
+  }
+}

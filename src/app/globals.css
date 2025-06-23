@@ -166,6 +166,15 @@
   );
 }
 
+.test2 {
+  background: linear-gradient(
+    92.68deg,
+    #FD3171 6.27%,
+    #FF726E 52.56%,
+    #FBA732 99.73%
+  );
+}
+
 .subscription-details {
   display: flex;
   flex-direction: column;
