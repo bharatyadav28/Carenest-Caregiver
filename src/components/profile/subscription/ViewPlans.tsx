@@ -35,7 +35,7 @@ function ViewPlans({ setHasSubscription }: Props) {
 
   return (
     <>
-      <div className="flex flex-col items-center card ">
+      <div className="flex flex-col items-center card  ">
         <div className="text-[1.6rem] font-medium mb-2">
           Select the <span className="text-primary">best plan</span> for your
           needs
@@ -43,7 +43,7 @@ function ViewPlans({ setHasSubscription }: Props) {
 
         <SimpleLine />
 
-        <div className="w-[25rem] px-6 py-8 bg-background flex flex-col rounded-2xl my-8 shadow-sm">
+        <div className="lg:w-[25rem] px-6 py-8 bg-background flex flex-col rounded-2xl my-8 shadow-sm">
           <div className="flex flex-col gap-1">
             <div className="font-semibold text-4xl text-center">
               {visiblePlan.price}

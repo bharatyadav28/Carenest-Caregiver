@@ -11,10 +11,10 @@ import { CustomPieChart } from "./CustomPieChart";
 import data from "@/lib/dummy_data/profile.json";
 
 interface Props {
-  items: sidebarItemType[]
+  items: sidebarItemType[];
   ViewProfile: boolean;
 }
-function SidebarMenu({ items,ViewProfile }: Props) {
+function SidebarMenu({ items, ViewProfile }: Props) {
   const [openMenu, setOpenMenu] = useState(false);
 
   const pathname = usePathname();
@@ -22,7 +22,7 @@ function SidebarMenu({ items,ViewProfile }: Props) {
 
   const lastIndex = items?.length - 1;
   const handleViewProfileClick = () => {
-    router.push('/my-profile');
+    router.push("/my-profile");
   };
   const handleOpenMenu = () => {
     setOpenMenu((prev) => !prev);
@@ -42,7 +42,7 @@ function SidebarMenu({ items,ViewProfile }: Props) {
   const basicDetails = data?.basicDetails;
 
   const content = (
-    <div className="min-h-[20rem] w-full min-w-[20rem] px-4 py-6 bg-[#fff] rounded-lg shadow-2xl">
+    <div className="min-h-[20rem] w-full min-w-[18rem] px-4 py-6 bg-[#fff] rounded-lg shadow-2xl">
       <div className="flex items-center gap-4">
         <CustomPieChart percentage={80}>
           <div className="relative rounded-full w-16 h-16 m-3">
@@ -57,16 +57,16 @@ function SidebarMenu({ items,ViewProfile }: Props) {
         <div className="flex flex-col ">
           <div className="text-[1.7rem] font-semibold">{basicDetails.name}</div>
           <div className="text-sm text-[#667085]">{basicDetails.email}</div>
-          {ViewProfile===true ?  
-               <div> 
-            <button 
-              onClick={handleViewProfileClick}
-              className="text-[#F2A307] border-1 border-[#F2A307] font-medium rounded-full bg-[#F2A3071A] px-2 py-1 m-2 hover:bg-[#F2A307]/40"
-            >
-              View Profile
-            </button>
-          </div>:null }
-      
+          {ViewProfile === true ? (
+            <div>
+              <button
+                onClick={handleViewProfileClick}
+                className="text-[#F2A307] border-1 border-[#F2A307] font-medium rounded-full bg-[#F2A3071A] px-2 py-1 m-2 hover:bg-[#F2A307]/40"
+              >
+                View Profile
+              </button>
+            </div>
+          ) : null}
         </div>
       </div>
 

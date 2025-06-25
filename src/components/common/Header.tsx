@@ -10,13 +10,14 @@ import { CustomButton } from "./CustomButton";
 import { IoMdPerson as ProfileIcon } from "react-icons/io";
 import { Logo } from "@/lib/svg_icons";
 import CustomDrawer from "./CustomDrawer";
+import Notification from "../Notification";
 
 interface props {
   className: string;
 }
 
 function Header({ className }: props) {
-  //   const [openNotifications, setOpenNotifications] = useState(false);
+  const [openNotifications, setOpenNotifications] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const router = useRouter();
 
@@ -25,7 +26,7 @@ function Header({ className }: props) {
   };
 
   const handleNotificationOpen = () => {
-    // setOpenNotifications((prev) => !prev);
+    setOpenNotifications((prev) => !prev);
   };
   const pathName = usePathname();
 
@@ -65,25 +66,32 @@ function Header({ className }: props) {
   );
 
   return (
-    <div
-      className={`flex justify-between bg-primary-foreground  text-[#fff] items-center py-5 ${className}`}
-    >
-      <div>{Logo}</div>
-
-      <div className="lg:block hidden"> {navContent}</div>
-
-      <button onClick={handleOpenMenu} className="lg:hidden">
-        <MenuIcon size={30} />
-      </button>
-
-      <CustomDrawer
-        className="bg-primary-foreground text-white lg-hidden "
-        open={openMenu}
-        handleOpen={handleOpenMenu}
+    <>
+      <div
+        className={`flex justify-between bg-primary-foreground  text-[#fff] items-center py-5 ${className}`}
       >
-        {navContent}
-      </CustomDrawer>
-    </div>
+        <div>{Logo}</div>
+
+        <div className="lg:block hidden"> {navContent}</div>
+
+        <button onClick={handleOpenMenu} className="lg:hidden">
+          <MenuIcon size={30} />
+        </button>
+
+        <CustomDrawer
+          className="bg-primary-foreground text-white lg-hidden "
+          open={openMenu}
+          handleOpen={handleOpenMenu}
+        >
+          {navContent}
+        </CustomDrawer>
+      </div>
+
+      <Notification
+        open={openNotifications}
+        handleOpen={handleNotificationOpen}
+      />
+    </>
   );
 }
 

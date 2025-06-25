@@ -1,0 +1,14 @@
+{
+  "notifications": [
+    {
+      "title": "The Caregiver has been assigned.",
+      "time": "1 day ago",
+      "seen": false
+    },
+    {
+      "title": "The booking has been successful",
+      "time": "1 week ago",
+      "seen": true
+    }
+  ]
+}

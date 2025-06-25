@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { upgradePlanIcon,noBooking } from "@/lib/svg_icons";
+import { upgradePlanIcon, noBooking } from "@/lib/svg_icons";
 import { DashboardStatCard } from "@/components/dashboard/DashboardStatCard";
 import { BookingCard } from "@/components/dashboard/BookingCard";
 
@@ -17,7 +17,7 @@ function MyDashboardPage() {
   );
 
   return (
-    <div className="flex flex-col gap-8 w-full card">
+    <div className="flex flex-col gap-8 w-full card ">
       {/* Subscription Section */}
       <div className="text-[#fff] py-6 lg:px-12 px-4 md:px-8 test2 w-full h-max rounded-xl flex lg:flex-row flex-col justify-between lg:items-start items-center gap-4">
         <div className="max-w-[35rem] w-full">
@@ -26,9 +26,9 @@ function MyDashboardPage() {
           </div>
           <div className="mt-1 text-sm md:text-base">
             Unlock all premium features for a full year and enjoy uninterrupted
-            access to top caregiver benefits. With the yearly plan, you will save
-            money, stay visible, and get priority access to care requests — all
-            without monthly renewals.
+            access to top caregiver benefits. With the yearly plan, you will
+            save money, stay visible, and get priority access to care requests —
+            all without monthly renewals.
           </div>
         </div>
         <div className="lg:mt-0 mt-4">{upgradePlanIcon}</div>
@@ -44,8 +44,10 @@ function MyDashboardPage() {
       {/* Active Booking Section */}
       {activeBookings.length === 0 ? (
         <div className="m-auto mt-8">
-       {noBooking}
-          <p className="text-center text-sm font-medium mt-2">No bookings right now</p>
+          {noBooking}
+          <p className="text-center text-sm font-medium mt-2">
+            No bookings right now
+          </p>
         </div>
       ) : (
         <div className="flex flex-col gap-4 w-full">
