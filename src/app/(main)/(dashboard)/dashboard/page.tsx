@@ -1,16 +1,20 @@
 "use client";
 
 import React from "react";
-import { upgradePlanIcon } from "@/lib/svg_icons";
+import { upgradePlanIcon,noBooking } from "@/lib/svg_icons";
 import { DashboardStatCard } from "@/components/dashboard/DashboardStatCard";
-import { ActiveBookingCard } from "@/components/dashboard/ActiveBookingCard";
+import { BookingCard } from "@/components/dashboard/BookingCard";
 
 import statData from "@/lib/dummy_data/dashboard-stats.json";
 import bookingData from "@/lib/dummy_data/active-booking.json";
 
 function MyDashboardPage() {
   const data = statData.data;
-  const booking = bookingData;
+
+  // ✅ Filter only active bookings
+  const activeBookings = bookingData.filter(
+    (b) => b.status?.toLowerCase() === "active"
+  );
 
   return (
     <div className="flex flex-col gap-8 w-full card">
@@ -38,19 +42,23 @@ function MyDashboardPage() {
       </div>
 
       {/* Active Booking Section */}
-      {bookingData.length === 0 ? <div className="m-auto">    <img
-                src={ "/no-booking.png"}
-                alt="avatar"
-                className="object-cover"
-              /></div>:
-      <div className="flex flex-col gap-4 w-full">
-        <div className="text-lg md:text-xl font-semibold text-[#1B2A37]">Active Booking</div>
-        <div className="flex flex-col gap-4 w-full">
-          {booking.map((booking, index) => (
-            <ActiveBookingCard key={index} {...booking} />
-          ))}
+      {activeBookings.length === 0 ? (
+        <div className="m-auto mt-8">
+       {noBooking}
+          <p className="text-center text-sm font-medium mt-2">No bookings right now</p>
         </div>
-      </div>}
+      ) : (
+        <div className="flex flex-col gap-4 w-full">
+          <div className="text-lg md:text-xl font-semibold text-[#1B2A37]">
+            Active Booking
+          </div>
+          <div className="flex flex-col gap-4 w-full">
+            {activeBookings.map((booking, index) => (
+              <BookingCard key={index} {...booking} />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -6,7 +6,28 @@
     "duration": "1 Month",
     "name": "William James",
     "email": "williamjames@gmail.com",
-    "avatar": "/image.svg"
+    "avatar": "/image.svg",
+    "status": "active"
+  },
+    {
+    "id": "#543219",
+    "careType": "Personal Care",
+    "date": "12 Apr 2025",
+    "duration": "1 Month",
+    "name": "William James",
+    "email": "williamjames@gmail.com",
+    "avatar": "/image.svg",
+    "status": "active"
+  },
+      {
+    "id": "#543278",
+    "careType": "Personal Care",
+    "date": "12 Apr 2025",
+    "duration": "1 Month",
+    "name": "William James",
+    "email": "williamjames@gmail.com",
+    "avatar": "/image.svg",
+    "status": "active"
   },
   {
     "id": "#543217",
@@ -15,35 +36,27 @@
     "duration": "1 Month",
     "name": "William James",
     "email": "williamjames@gmail.com",
-    "avatar":"/image.svg"
+    "avatar": "/image.svg",
+    "status": "rejected"
   },
     {
+    "id": "#543287",
+    "careType": "Personal Care",
+    "date": "12 Apr 2025",
+    "duration": "1 Month",
+    "name": "William James",
+    "email": "williamjames@gmail.com",
+    "avatar": "/image.svg",
+    "status": "rejected"
+  },
+  {
     "id": "#543218",
     "careType": "Personal Care",
     "date": "12 Apr 2025",
     "duration": "1 Month",
     "name": "William James",
     "email": "williamjames@gmail.com",
-    "avatar":"/image.svg"
-  },
-  {
-    "id": "#543219",
-    "careType": "Personal Care",
-    "date": "12 Apr 2025",
-    "duration": "1 Month",
-    "name": "William James",
-    "email": "williamjames@gmail.com",
-    "avatar": "/image.svg"
-  },
-    {
-    "id": "#543220",
-    "careType": "Personal Care",
-    "date": "12 Apr 2025",
-    "duration": "1 Month",
-    "name": "William James",
-    "email": "williamjames@gmail.com",
-    "avatar": "/image.svg"
-   
+    "avatar": "/image.svg",
+    "status": "hired"
   }
-  
 ]

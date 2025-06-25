@@ -1,10 +1,11 @@
 "use client";
+
 import React, { useState } from "react";
 import { BsCalendar2Event, BsClock } from "react-icons/bs";
 import { Button } from "@/components/ui/button";
-import BookingDetailsDialog from "@/components/dashboard/BookingDetailsDialog"; // Import dialog
+import BookingDetailsDialog from "@/components/dashboard/BookingDetailsDialog";
 
-interface ActiveBookingCardProps {
+interface BookingCardProps {
   id: string;
   careType: string;
   date: string;
@@ -15,7 +16,7 @@ interface ActiveBookingCardProps {
 
 }
 
-export function ActiveBookingCard({
+export function BookingCard({
   id,
   careType,
   date,
@@ -23,16 +24,16 @@ export function ActiveBookingCard({
   name,
   email,
   avatar,
- 
-}: ActiveBookingCardProps) {
+
+}: BookingCardProps) {
   const [showDialog, setShowDialog] = useState(false);
 
   return (
     <>
-      <div className="bg-white rounded-xl px-4 sm:px-6 py-4 flex flex-wrap justify-between items-start gap-4 sm:gap-y-4 shadow-sm border w-full">
+      <div className="bg-white rounded-xl px-4 sm:px-6 py-4 flex flex-wrap justify-between items-start gap-4 shadow-sm border w-full">
         {/* Booking ID and Care Type */}
-        <div className="flex flex-col gap-1 text-sm min-w-[150px] sm:min-w-[200px] w-full sm:w-auto">
-          <div className="flex items-center gap-1 font-medium text-[#1B2A37] text-[18px] sm:text-[20px]">
+        <div className="flex flex-col gap-1 text-sm min-w-[150px] w-full sm:w-auto">
+          <div className="text-[18px] sm:text-[20px] font-medium text-[#1B2A37]">
             Booking ID: {id}
           </div>
           <div>
@@ -41,26 +42,26 @@ export function ActiveBookingCard({
         </div>
 
         {/* Date and Duration */}
-        <div className="flex flex-col items-start text-sm gap-1 min-w-[120px] sm:min-w-[150px] w-full sm:w-auto">
+        <div className="flex flex-col gap-1 text-sm min-w-[120px] w-full sm:w-auto">
           <div className="flex items-center gap-2">
-            <BsCalendar2Event className="text-base" />
+            <BsCalendar2Event />
             <span>{date}</span>
           </div>
           <div className="flex items-center gap-2">
-            <BsClock className="text-base" />
+            <BsClock />
             <span>{duration}</span>
           </div>
         </div>
 
         {/* User Info */}
-        <div className="flex items-center gap-3 min-w-[180px] sm:min-w-[220px] w-full sm:w-auto">
+        <div className="flex items-center gap-3 min-w-[180px] w-full sm:w-auto">
           <img
-            src={avatar }
+            src={avatar || "/image.svg"}
             alt="avatar"
-            className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover"
+            className="w-10 h-10 rounded-full object-cover"
           />
           <div className="flex flex-col">
-            <div className="font-semibold text-[#1B2A37] text-[18px] sm:text-[22px]">
+            <div className="text-[18px] sm:text-[22px] font-semibold text-[#1B2A37]">
               {name}
             </div>
             <div className="text-sm text-[#7A8B9B] truncate max-w-[150px] sm:max-w-none">
@@ -80,8 +81,10 @@ export function ActiveBookingCard({
         </div>
       </div>
 
-      {/* Dialog Modal */}
-      {showDialog && <BookingDetailsDialog onClose={() => setShowDialog(false)} />}
+      {showDialog && (
+<BookingDetailsDialog open={showDialog} onClose={() => setShowDialog(false)} />
+
+      )}
     </>
   );
 }
