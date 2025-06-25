@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { IoMdClose } from "react-icons/io";
 import { FiPhone, FiMail, FiMapPin, FiInfo } from "react-icons/fi";
 import { CustomDialog } from "@/components/common/CustomDialog";
 

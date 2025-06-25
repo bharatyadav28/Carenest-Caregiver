@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { IoMdClose } from "react-icons/io";
-import { usePathname, useRouter } from "next/navigation";
+
+import {  useRouter } from "next/navigation";
 import { FiPhone, FiMail } from "react-icons/fi";
 import { CustomDialog } from "@/components/common/CustomDialog";
 import bookingData from "@/lib/dummy_data/booking-details.json";
