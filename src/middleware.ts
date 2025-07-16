@@ -6,8 +6,9 @@ const restrictedPaths = [
   "/signup",
   "/forgot-password",
   "/otp-verification",
-  "/reset_password",
+  "/resets-password",
   "/email-verification",
+  "/signup/documents"
 ];
 
 export async function middleware(request: NextRequest) {

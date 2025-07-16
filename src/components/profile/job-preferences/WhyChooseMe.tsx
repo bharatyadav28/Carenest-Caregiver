@@ -63,7 +63,7 @@ function WhyChooseMe() {
         </div>
       </div>
 
-      <WhyChooseMeDialog open={openDialog} handleOpen={handleOpenDialog} />
+      <WhyChooseMeDialog open={openDialog} handleOpen={handleOpenDialog}  />
 
       <ActionDialog
         icon={binIconTheme}
@@ -72,6 +72,7 @@ function WhyChooseMe() {
         handleConfirm={handleOpenDeleteDialog}
         heading="Deletion"
         subheading="Are you sure you want to delete this content?"
+     confirmText="Delete"
       />
     </>
   );

@@ -62,7 +62,7 @@ function WhyChooseMeDialog({ open, handleOpen, reason }: Props) {
 
         <div className="flex w-full gap-2 ">
           <TransaparentButton onClick={handleOpen} />
-          <DialogConfirmButton onClick={handleOpen} />
+          <DialogConfirmButton onClick={handleOpen} title="Save" />
         </div>
       </div>
     </CustomDialog>

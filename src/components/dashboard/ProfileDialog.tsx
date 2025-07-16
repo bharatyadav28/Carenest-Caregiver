@@ -52,7 +52,7 @@ function ProfileDialog() {
         </div>
 
         <div className="flex gap-2 w-full mt-2">
-          <TransaparentButton onClick={handleOpenDialog} />
+          <TransaparentButton onClick={handleOpenDialog}/>
           <DialogConfirmButton onClick={handleConfirm} />
         </div>
       </div>

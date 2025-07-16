@@ -48,11 +48,12 @@ function ProfileMenu() {
     {
       id: 4,
       text: "Reset Password",
-      path: "/change-password",
+      path: "/reset-password",
     },
     {
       id: 5,
       text: "Delete Account",
+    
       handleClick: handleDeleteDialog,
     },
     {
@@ -72,6 +73,7 @@ function ProfileMenu() {
         heading="Account Deletion"
         subheading="Are you sure you want to delete your account?"
         handleConfirm={handleDeleteDialog}
+          confirmText="Delete"
       />
 
       <ActionDialog
@@ -81,6 +83,8 @@ function ProfileMenu() {
         heading="Account Logout"
         subheading="Are you sure you want to logout your account?"
         handleConfirm={handleLogout}
+          confirmText="Logout"
+      
       />
     </>
   );

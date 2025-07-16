@@ -40,7 +40,7 @@ function AboutDialog({ open, handleOpen, about, setAbout }: Props) {
 
         <div className="flex w-full gap-2 ">
           <TransaparentButton onClick={handleOpen} />
-          <DialogConfirmButton onClick={handleOpen} />
+          <DialogConfirmButton onClick={handleOpen} title="Save" />
         </div>
       </div>
     </CustomDialog>

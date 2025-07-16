@@ -90,7 +90,7 @@ export default function BookingDetailsDialog({
             <h3 className="text-[16px] font-semibold text-[#1B2A37] mb-3">
               Booking Details
             </h3>
-            <div className="text-[14px] leading-[20px] text-[#1B2A37] space-y-3">
+            <div className="text-[14px] leading-[20px] text-[#1B2A37] space-y-1">
               <div className="flex justify-between">
                 <span>Booking ID:</span>
                 <span className="text-[#7A8B9B]">#{data.booking.id}</span>
@@ -116,12 +116,12 @@ export default function BookingDetailsDialog({
 
           {/* Contact Details */}
           <div>
-            <h3 className="text-[16px] font-semibold text-[#1B2A37] mb-3">
+            <h3 className="text-[16px] font-semibold text-[#233D4D] mb-3">
               Contact Details
             </h3>
 
             <div className="bg-white rounded-[16px] px-4 py-3 flex items-center gap-3 text-[14px] text-[#1B2A37] mb-3">
-              <FiPhone className="text-white bg-black text-[30px] rounded-full p-2 mt-2" />
+              <FiPhone className="text-white bg-[#233D4D] text-[30px] rounded-full p-2 mt-2" />
               <div>
                 <div className="mb-1">Phone number</div>
                 <span className="text-[#7A8B9B]">{data.booking.phone}</span>
@@ -129,7 +129,7 @@ export default function BookingDetailsDialog({
             </div>
 
             <div className="bg-white rounded-[16px] px-4 py-3 flex items-center gap-3 text-[14px] text-[#1B2A37]">
-              <FiMail className="text-white bg-black text-[30px] rounded-full p-2 mt-2" />
+              <FiMail className="text-white bg-[#233D4D] text-[30px] rounded-full p-2 mt-2" />
               <div>
                 <div className="mb-1">Email ID</div>
                 <span className="text-[#7A8B9B]">{data.booking.email}</span>

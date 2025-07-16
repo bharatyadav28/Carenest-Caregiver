@@ -7,29 +7,31 @@ import { BookingCard } from "@/components/dashboard/BookingCard";
 
 import statData from "@/lib/dummy_data/dashboard-stats.json";
 import bookingData from "@/lib/dummy_data/active-booking.json";
+import ProfileDialog from "@/components/dashboard/ProfileDialog";
 
 function MyDashboardPage() {
   const data = statData.data;
 
-  // ✅ Filter only active bookings
+ 
   const activeBookings = bookingData.filter(
     (b) => b.status?.toLowerCase() === "active"
   );
 
   return (
     <div className="flex flex-col gap-8 w-full card ">
-      {/* Subscription Section */}
+      <ProfileDialog/>
       <div className="text-[#fff] py-6 lg:px-12 px-4 md:px-8 test2 w-full h-max rounded-xl flex lg:flex-row flex-col justify-between lg:items-start items-center gap-4">
         <div className="max-w-[35rem] w-full">
-          <div className="text-xl md:text-2xl font-semibold">
-            Upgrade to Yearly & Save More!
+          <div className="lg:text-xl md:text-2xl font-semibold">
+          Join a Trusted Caregiver Network – Start Earning Today
           </div>
           <div className="mt-1 text-sm md:text-base">
-            Unlock all premium features for a full year and enjoy uninterrupted
-            access to top caregiver benefits. With the yearly plan, you will
-            save money, stay visible, and get priority access to care requests —
-            all without monthly renewals.
+       Subscribe now to access job opportunities, grow your profile. Whether you &apos;re a seasoned professional or 
+       just starting out, we make it easy to get noticed and get hired.
           </div>
+              <button className="bg-primary-foreground btn px-4 py-2 rounded-full text-[#fff] text-sm mt-3  ">
+             Get Subscription Now
+            </button>
         </div>
         <div className="lg:mt-0 mt-4">{upgradePlanIcon}</div>
       </div>

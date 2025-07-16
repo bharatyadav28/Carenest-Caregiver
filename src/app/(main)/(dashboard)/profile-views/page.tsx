@@ -28,7 +28,7 @@ function ViewProfile() {
   return (
     <div className="flex flex-col gap-8 w-full">
       <div className="text-[#233D4D] text-[28px] font-medium">
-        Who is Looking Your Profile
+        Who&apos;s is Looking Your Profile
       </div >
 {profileViews.length === 0 ? <div className="m-auto">    <img
                 src={ "/no-views.png"}

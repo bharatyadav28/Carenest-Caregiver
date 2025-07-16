@@ -21,7 +21,9 @@ function OTPForm({ isEmailVerify }: Props) {
   const router = useRouter();
 
   const handleSubmit = () => {
-    const redirectUrl = isEmailVerify ? "/signup/documents" : "/reset-password";
+    console.log(isEmailVerify)
+    const redirectUrl = isEmailVerify ? "/signup/documents" : "/resets-password";
+    console.log(redirectUrl)
     router.push(redirectUrl);
   };
 

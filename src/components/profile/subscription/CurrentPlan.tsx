@@ -20,8 +20,12 @@ function CurrentPlan() {
             money, stay visible, and get priority access to care requests — all
             without monthly renewals.
           </div>
+            <button className="bg-primary-foreground btn px-4 py-2 rounded-full text-[#fff] text-sm mt-3  ">
+              Upgrade to Yearly
+            </button>
         </div>
         <div>{upgradePlanIcon}</div>
+
       </div>
 
       <div className="card border  border-[#E5ECEB] rounded-xl mt-8 p-6 ">
@@ -63,7 +67,7 @@ function CurrentPlan() {
           </div>
 
           <div className="lg:col-start-10 col-start-1 col-end-13 flex items-center ">
-            <button className="bg-primary-foreground btn px-2 py-2 rounded-full text-[#fff] text-sm w-full ">
+            <button className="bg-primary-foreground btn px-3 py-2 rounded-full text-[#fff] text-sm ">
               Download Invoice
             </button>
           </div>

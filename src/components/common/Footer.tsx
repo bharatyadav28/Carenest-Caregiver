@@ -38,7 +38,7 @@ const link: linkSection[] = [
       { title: "Jobs", link: "/" },
       { title: "Hiring", link: "/" },
       { title: "News", link: "/" },
-      { title: "Tips and tricks", link: "/" },
+      { title: "Tips and Tricks", link: "/" },
     ],
     Help: [
       { title: "FAQ", link: "/" },
@@ -94,16 +94,16 @@ const socialLink: linkItems[] = [
 ];
 const Footer = () => {
   return (
-    <div className=" py-8 mt-auto lg:px-24 md:px-12 px-6 bg-primary-foreground text-white overflow-hidden">
-      <div className="flex flex-wrap justify-between gap-4 ">
-        <div className="sm:w-68 w-full">
+    <div className=" py-8 mt-15 lg:px-24 md:px-12 px-6 bg-primary-foreground text-white overflow-hidden">
+      <div className="flex flex-wrap justify-between gap-2  ">
+        <div className="sm:w-79 w-full ">
           <div className="relative w-24 h-24 x">
             <Image src={"/Logo.svg"} alt="Logo" fill />
           </div>
           <p className="mt-4 text-sm text-gray-300">
             CARENEST: Pioneering Advanced Medical Solutions to Elevate
             Healthcare Services and Improve Patient Outcomes
-          </p>
+          </p>  
         </div>
 
         <FooterLink title="Company" links={link[0]["Company"]} />
@@ -132,7 +132,7 @@ const Footer = () => {
         <div>
           <h1
             className="font-bold xl:text-[120px] lg:text-[80px] 
-           text-gray-400 tracking-widest sm:mt-0 mt-2"
+           text-gray-400/30 tracking-widest sm:mt-0 mt-2"
           >
             CARENEST
           </h1>

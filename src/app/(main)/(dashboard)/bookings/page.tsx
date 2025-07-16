@@ -28,7 +28,7 @@ function MyBookingPage() {
 
   return (
     <div className="flex flex-col gap-8 w-full card">
-      <div className="text-[#1B2A37] text-[28px] font-medium">My Bookings</div>
+      <div className="text-[#1B2A37] text-[30px] font-medium"> Bookings</div>
 
       {/* Tab Filters */}
       <div className="flex gap-4 flex-wrap">

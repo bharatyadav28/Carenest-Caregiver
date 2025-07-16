@@ -87,7 +87,7 @@ function JobProfileDialog({ open, handleOpen, profile, setProfile }: Props) {
                 <div>{item.ques} </div>
                 <div>
                   <RadioGroup
-                    className="gap-2"
+                    className="gap-2 "
                     onValueChange={(oid) => handleChange(item.id, oid, "radio")}
                     value={selectedOption}
                   >
@@ -99,7 +99,7 @@ function JobProfileDialog({ open, handleOpen, profile, setProfile }: Props) {
                         <RadioGroupItem value={option.id} id={option.id} />
                         <Label
                           htmlFor="option-one"
-                          className=" text-[var(--cool-gray)] text-sm"
+                          className=" text-[var(--cool-gray)] text-sm "
                         >
                           {option.text}
                         </Label>

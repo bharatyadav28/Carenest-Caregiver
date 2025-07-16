@@ -8,8 +8,8 @@ function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="my-10 grid  lg:grid-cols-24 ">
-      <div className="col-start-1 lg:col-end-7">
+    <div className="my-10 grid  xl:grid-cols-24  ">
+      <div className="col-start-1 xl:col-end-8 mr-5">
         <DashboardMenu />
       </div>
 
