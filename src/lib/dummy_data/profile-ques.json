@@ -9,7 +9,7 @@
         { "id": "opt2", "text": "I provide care only for male clients" },
         { "id": "opt3", "text": "I provide care for everybody" }
       ],
-      "placeholder": "Add type of care giving services you’re interested"
+      "placeholder": "Add type of caregiving services you’re interested in"
     },
     {
       "id": "q2",
@@ -27,12 +27,12 @@
       "type": "radio",
       "ques": "Preferred Location Range",
       "options": [
-        { "id": "opt4", "text": "Within 2 miles from my current location" },
-        { "id": "opt7", "text": "Within 10 miles" },
-        { "id": "opt8", "text": "Within 15 miles " },
-        { "id": "opt9", "text": "Within 20 miles " },
-        { "id": "opt10", "text": "Within 30 miles " },
-        { "id": "opt11", "text": "Everywhere / Open to all locations " }
+        { "id": "opt7", "text": "Within 2 miles from my current location" },
+        { "id": "opt8", "text": "Within 10 miles" },
+        { "id": "opt9", "text": "Within 15 miles" },
+        { "id": "opt10", "text": "Within 20 miles" },
+        { "id": "opt11", "text": "Within 30 miles" },
+        { "id": "opt12", "text": "Everywhere / Open to all locations" }
       ],
       "placeholder": "Add preferred location"
     },
@@ -41,8 +41,8 @@
       "type": "radio",
       "ques": "PRN (Pro re nata)",
       "options": [
-        { "id": "opt4", "text": "As Needed" },
-        { "id": "opt5", "text": "$200 - $300" }
+        { "id": "opt13", "text": "As Needed" },
+        { "id": "opt14", "text": "Scheduled" }
       ],
       "placeholder": "Add PRN"
     },
@@ -51,10 +51,10 @@
       "type": "radio",
       "ques": "Years of Experience?",
       "options": [
-        { "id": "opt1", "text": "0-1 years" },
-        { "id": "opt2", "text": "2-5 years" },
-        { "id": "opt3", "text": "6-10 years" },
-        { "id": "opt4", "text": "10+ years" }
+        { "id": "opt15", "text": "0-1 years" },
+        { "id": "opt16", "text": "2-5 years" },
+        { "id": "opt17", "text": "6-10 years" },
+        { "id": "opt18", "text": "10+ years" }
       ],
       "placeholder": "Add experience"
     },
@@ -63,8 +63,8 @@
       "type": "radio",
       "ques": "Are You Certified?",
       "options": [
-        { "id": "opt4", "text": "Yes" },
-        { "id": "opt5", "text": "No" }
+        { "id": "opt19", "text": "Yes" },
+        { "id": "opt20", "text": "No" }
       ],
       "placeholder": "Add certified status"
     },
@@ -73,18 +73,18 @@
       "type": "multiple",
       "ques": "Languages Spoken",
       "options": [
-        { "id": "opt1", "text": "English" },
-        { "id": "opt2", "text": "Spanish" },
-        { "id": "opt3", "text": "Arabic" },
-        { "id": "opt4", "text": "German" },
-        { "id": "opt5", "text": "Russia" },
-        { "id": "opt6", "text": "Chinese" },
-        { "id": "opt7", "text": "Portuguese" },
-        { "id": "opt8", "text": "Italian" },
-        { "id": "opt9", "text": "Tukish" },
-        { "id": "opt10", "text": "French" },
-        { "id": "opt11", "text": "Japanese" },
-        { "id": "opt12", "text": "Hindi" }
+        { "id": "opt21", "text": "English" },
+        { "id": "opt22", "text": "Spanish" },
+        { "id": "opt23", "text": "Arabic" },
+        { "id": "opt24", "text": "German" },
+        { "id": "opt25", "text": "Russian" },
+        { "id": "opt26", "text": "Chinese" },
+        { "id": "opt27", "text": "Portuguese" },
+        { "id": "opt28", "text": "Italian" },
+        { "id": "opt29", "text": "Turkish" },
+        { "id": "opt30", "text": "French" },
+        { "id": "opt31", "text": "Japanese" },
+        { "id": "opt32", "text": "Hindi" }
       ],
       "placeholder": "Add languages"
     }

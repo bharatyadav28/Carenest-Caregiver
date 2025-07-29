@@ -6,36 +6,66 @@ import { LiaSaveSolid as SaveIcon } from "react-icons/lia";
 import { TextInput } from "@/components/common/CustomInputs";
 import { addressIcon, EmailIcon, personIcon, phoneIcon } from "@/lib/svg_icons";
 import { CustomButton } from "@/components/common/CustomButton";
-import data from "@/lib/dummy_data/profile.json";
+
+import {
+  useGetProfileQuery,
+  useUpdateProfileMutation,
+} from "@/store/api/profileApi";
+import { toast } from "react-toastify";
 
 function MyProfilePage() {
+  const { data: profile } = useGetProfileQuery();
+  const [updateProfile, { isLoading: isUpdating }] = useUpdateProfileMutation();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState(""); 
   const [mobile, setMobile] = useState("");
   const [address, setAddress] = useState("");
 
-  const basicDetails = data?.basicDetails;
-
+  // Pre-fill form when profile is loaded
   useEffect(() => {
-    setName(basicDetails.name);
-    setEmail(basicDetails.email);
-    setGender(basicDetails.gender);
-    setAddress(basicDetails.address);
-    setMobile(basicDetails.mobile);
-  }, [basicDetails]);
+    if (profile) {
+      setName(profile.name || "");
+      setEmail(profile.email || "");
+      setAddress(profile.address || "");
+      setGender(profile.gender || "");
+      setMobile(profile.mobile || "");
+    }
+  }, [profile]);
+
+
+  const handleSave = async () => {
+    try {
+      await updateProfile({
+        name,
+        email,
+        address,
+        gender,
+        mobile,
+      }).unwrap();
+
+      toast.success("Profile updated successfully!");
+    }  catch (error) {
+  if (error instanceof Error) {
+    console.error(error.message);
+    // Use error.message in your UI
+  } else {
+    console.error("An unknown error occurred");
+    // Fallback error message
+  }
+}
+  };
 
   return (
     <div className="flex flex-col card">
       <div className="flex w-full justify-between text-3xl font-medium">
         <div>Personal Information</div>
 
-        <CustomButton className="py-2" onClick={() => {}}>
+        <CustomButton className="py-2" onClick={handleSave} >
           <div className="flex items-center gap-2 ">
-            <div>Save</div>
-            <div>
-              <SaveIcon size={18} />
-            </div>
+            <div>{isUpdating ? "Saving..." : "Save"}</div>
+            <SaveIcon size={18} />
           </div>
         </CustomButton>
       </div>

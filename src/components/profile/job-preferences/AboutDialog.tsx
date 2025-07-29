@@ -1,5 +1,4 @@
 import React from "react";
-
 import { CustomDialog } from "@/components/common/CustomDialog";
 import { CustomTextArea } from "@/components/common/CustomInputs";
 import {
@@ -12,9 +11,11 @@ interface Props {
   handleOpen: () => void;
   about: string;
   setAbout: React.Dispatch<React.SetStateAction<string>>;
+  onSave: () => void;
+  isLoading?: boolean;
 }
 
-function AboutDialog({ open, handleOpen, about, setAbout }: Props) {
+function AboutDialog({ open, handleOpen, about, setAbout, onSave, isLoading }: Props) {
   return (
     <CustomDialog
       open={open}
@@ -33,14 +34,18 @@ function AboutDialog({ open, handleOpen, about, setAbout }: Props) {
           <CustomTextArea
             text={about}
             setText={setAbout}
-            className="h-[5rem] w-full !rounded-2xl "
-            placeholder="Add a brief summary "
+            className="h-[5rem] w-full !rounded-2xl"
+            placeholder="Add a brief summary"
           />
         </div>
 
-        <div className="flex w-full gap-2 ">
+        <div className="flex w-full gap-2">
           <TransaparentButton onClick={handleOpen} />
-          <DialogConfirmButton onClick={handleOpen} title="Save" />
+          <DialogConfirmButton
+            onClick={onSave}
+            title={isLoading ? "Saving..." : "Save"}
+            // disabled={isLoading}
+          />
         </div>
       </div>
     </CustomDialog>

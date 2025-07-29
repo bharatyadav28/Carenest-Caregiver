@@ -13,7 +13,7 @@ const restrictedPaths = [
 
 export async function middleware(request: NextRequest) {
   const cookieStore = await cookies();
-  const token = cookieStore.get("care_giver_token");
+  const token = cookieStore.get("authToken");
 
   const pathname = request.nextUrl.pathname;
 

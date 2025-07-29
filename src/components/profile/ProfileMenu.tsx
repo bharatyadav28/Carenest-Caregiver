@@ -8,15 +8,18 @@ import { sidebarItemType } from "@/lib/interface-types";
 import SidebarMenu from "../common/SidebarMenu";
 import ActionDialog from "../common/ActionDialog";
 import { binIconTheme, logoutIcon } from "@/lib/svg_icons";
+import { useDeleteAccountMutation } from "@/store/api/profileApi";
 
 function ProfileMenu() {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [openLogoutDialog, setOpenLogoutDialog] = useState(false);
-
+  const [deleteAccount] = useDeleteAccountMutation();
   const router = useRouter();
 
   const handleDeleteDialog = () => {
+    
     setOpenDeleteDialog((prev) => !prev);
+
   };
 
   const handleLogoutDialog = () => {
@@ -24,9 +27,23 @@ function ProfileMenu() {
   };
 
   const handleLogout = () => {
-    Cookies.remove("care_giver_token");
+    Cookies.remove("authToken");
+     Cookies.remove("refreshToken");
     handleLogoutDialog();
     router.push("/signin");
+  };
+
+    const handleDeleteAccount = async () => {
+    try {
+      await deleteAccount().unwrap();
+      Cookies.remove("authToken");
+      Cookies.remove("refreshToken");
+      router.push("/signin"); // Redirect after successful deletion
+    } catch (error) {
+      console.error("Failed to delete account:", error);
+    } finally {
+      handleDeleteDialog(); // Close dialog
+    }
   };
 
   const items: sidebarItemType[] = [
@@ -72,7 +89,7 @@ function ProfileMenu() {
         icon={binIconTheme}
         heading="Account Deletion"
         subheading="Are you sure you want to delete your account?"
-        handleConfirm={handleDeleteDialog}
+        handleConfirm={handleDeleteAccount}
           confirmText="Delete"
       />
 
