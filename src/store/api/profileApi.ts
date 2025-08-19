@@ -31,9 +31,9 @@ interface UpdateProfilePayload {
   gender: string;
 }
 
-interface AvatarPayload {
-  avatar: string;
-}
+// interface AvatarPayload {
+//   avatar: string;
+// }
 
 // For About Section
 interface AboutData {
@@ -234,14 +234,17 @@ export const profileApi = createApi({
       invalidatesTags: ['Profile'],
     }),
 
-    // 🔹 Update Avatar
-    updateAvatar: builder.mutation<{ success: boolean; message: string }, AvatarPayload>({
-      query: (data) => ({
-        url: `/api/v1/giver/avatar`,
-        method: 'PUT',
-        body: data,
-      }),
-    }),
+// In profileApi.ts
+updateAvatar: builder.mutation<
+  { success: boolean; message: string },
+  FormData
+>({
+  query: (formData) => ({
+    url: `/api/v1/giver/avatar`,
+    method: 'PUT',
+    body: formData,
+  }),
+}),
 
     // 🔹 Delete Account
     deleteAccount: builder.mutation<{ success: boolean; message: string }, void>({

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { MdOutlineEdit as EditIcon } from "react-icons/md";
 import { useGetWhyChooseMeQuery, useDeleteWhyChooseMeMutation } from "@/store/api/profileApi"; // Update the import path
 import { AddButton } from "@/components/common/CustomButton";
-import { SimpleLine } from "@/components/common/HorizontalLines";
+// import { SimpleLine } from "@/components/common/HorizontalLines";
 import { BinIcon, binIconTheme } from "@/lib/svg_icons";
 import WhyChooseMeDialog from "./WhyChooseMeDialog";
 import ActionDialog from "@/components/common/ActionDialog";
@@ -59,7 +59,7 @@ function WhyChooseMe() {
           Add why care seekers should choose you.
         </div>
 
-        <SimpleLine />
+        {/* <SimpleLine /> */}
 
         <div className="flex flex-col gap-6 mt-2">
           {whyChooseMeEntries.length === 0 ? (
@@ -96,34 +96,7 @@ function WhyChooseMe() {
         </div>
       </div>
     
-       <div className="flex flex-col gap-6 mt-2">
-          <div className="flex justify-between">
-            <div className="text-sm flex flex-col gap-1">
-              <div className="font-medium">
-                Certified and background-checked
-              </div>
-              <div className="text-[var(--slat-gray)] ">
-                Certified and background-checked. Flexible scheduling and
-                availability. Personalized and compassionate care.
-              </div>
-            </div>
-
-            <div className="flex gap-4 ">
-              <button
-                className="hover:cursor-pointer hover:opacity-90 transition"
-              
-              >
-                <EditIcon />
-              </button>
-              <button
-                className="hover:cursor-pointer hover:opacity-90 transition"
-               
-              >
-                {BinIcon}
-              </button>
-            </div>
-          </div>
-        </div>
+      
 
       <WhyChooseMeDialog 
         open={openDialog} 

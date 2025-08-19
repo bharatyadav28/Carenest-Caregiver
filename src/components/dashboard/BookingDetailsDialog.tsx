@@ -1,20 +1,14 @@
-"use client";
 
-import React, { useState } from "react";
-
+import React from "react";
 import {  useRouter } from "next/navigation";
 import { FiPhone, FiMail } from "react-icons/fi";
 import { CustomDialog } from "@/components/common/CustomDialog";
-import bookingData from "@/lib/dummy_data/booking-details.json";
+// import bookingData from "@/lib/dummy_data/booking-details.json";
 import { arrow, message } from "@/lib/svg_icons";
-import CancelBookingDialog from "@/components/dashboard/CancelBookingDialog"; // Import
 
 interface BookingDetailsDialogProps {
-  onClose: () => void;
   open: boolean;
-}
-
-interface BookingData {
+  onClose: () => void;
   booking: {
     avatar: string;
     name: string;
@@ -32,15 +26,10 @@ interface BookingData {
 export default function BookingDetailsDialog({
   onClose,
   open,
+  booking
 }: BookingDetailsDialogProps) {
-  const data: BookingData = bookingData;
-  const [showCancelDialog, setShowCancelDialog] = useState(false);
- const router = useRouter();
-  const handleCancelConfirm = () => {
-    setShowCancelDialog(false);
-    // TODO: Add actual cancel booking logic here if needed
-    onClose(); // optionally close main dialog after cancel
-  };
+ const data = booking;
+  const router = useRouter();
     const handleMessageClick = () => {
     router.push('/inbox');
   };
@@ -57,16 +46,16 @@ export default function BookingDetailsDialog({
           {/* Header Section */}
           <div className="flex items-start gap-4">
             <img
-              src={data.booking.avatar}
+                src={data.avatar || "/profile-pic.png"}
               alt="avatar"
               className="w-12 h-12 rounded-full"
             />
             <div>
               <h2 className="text-[20px] font-semibold text-[#1B2A37] leading-[24px] mb-2">
-                {data.booking.name}
+                {data.name}
               </h2>
               <p className="text-[16px] leading-[20px] text-[#7A8B9B] flex items-start">
-                {arrow} {data.booking.address}
+                {arrow} {data.address}
               </p>
             </div>
           </div>
@@ -76,12 +65,6 @@ export default function BookingDetailsDialog({
             <button className="flex-1 bg-[#FFA629] hover:bg-[#e2941f] text-black rounded-full text-[14px] py-[10px] flex justify-center gap-2"
               onClick={handleMessageClick}>
               {message} Message
-            </button>
-            <button
-              className="flex-1 border border-[#FF5C5C] text-[#FF5C5C] rounded-full text-[14px] font-medium py-[10px]"
-              onClick={() => setShowCancelDialog(true)}
-            >
-              Request to cancel
             </button>
           </div>
 
@@ -93,23 +76,23 @@ export default function BookingDetailsDialog({
             <div className="text-[14px] leading-[20px] text-[#1B2A37] space-y-1">
               <div className="flex justify-between">
                 <span>Booking ID:</span>
-                <span className="text-[#7A8B9B]">#{data.booking.id}</span>
+                <span className="text-[#7A8B9B]">#{data.id}</span>
               </div>
               <div className="flex justify-between">
                 <span>Booked On:</span>
-                <span className="text-[#7A8B9B]">{data.booking.bookedOn}</span>
+                <span className="text-[#7A8B9B]">{data.bookedOn}</span>
               </div>
               <div className="flex justify-between">
                 <span>Care Type:</span>
-                <span className="text-[#7A8B9B]">{data.booking.careType}</span>
+                <span className="text-[#7A8B9B]">{data.careType}</span>
               </div>
               <div className="flex justify-between">
                 <span>Booking Date:</span>
-                <span className="text-[#7A8B9B]">{data.booking.bookingDate}</span>
+                <span className="text-[#7A8B9B]">{data.bookingDate}</span>
               </div>
               <div className="flex justify-between">
                 <span>Duration:</span>
-                <span className="text-[#7A8B9B]">{data.booking.duration}</span>
+                <span className="text-[#7A8B9B]">{data.duration}</span>
               </div>
             </div>
           </div>
@@ -124,7 +107,7 @@ export default function BookingDetailsDialog({
               <FiPhone className="text-white bg-[#233D4D] text-[30px] rounded-full p-2 mt-2" />
               <div>
                 <div className="mb-1">Phone number</div>
-                <span className="text-[#7A8B9B]">{data.booking.phone}</span>
+                <span className="text-[#7A8B9B]">{data.phone}</span>
               </div>
             </div>
 
@@ -132,19 +115,12 @@ export default function BookingDetailsDialog({
               <FiMail className="text-white bg-[#233D4D] text-[30px] rounded-full p-2 mt-2" />
               <div>
                 <div className="mb-1">Email ID</div>
-                <span className="text-[#7A8B9B]">{data.booking.email}</span>
+                <span className="text-[#7A8B9B]">{data.email}</span>
               </div>
             </div>
           </div>
         </div>
       </CustomDialog>
-
-      {/* Cancel Booking Dialog */}
-      <CancelBookingDialog
-        open={showCancelDialog}
-        onClose={() => setShowCancelDialog(false)}
-        onConfirm={handleCancelConfirm}
-      />
     </>
   );
 }

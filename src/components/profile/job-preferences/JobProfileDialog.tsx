@@ -319,11 +319,11 @@ function JobProfileDialog({ open, handleOpen, profile, setProfile }: Props) {
                     return (
                       <button
                         key={option.id}
-                        className={`service-card flex gap-1 items-center px-4 py-2 rounded-full text-sm font-medium ${
+                        className={`service-card flex gap-1 items-center px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                           isSelected 
-                            ? "bg-primary text-white shadow-md" 
+                            ? "bg-[#233D4D] !text-white " 
                             : "bg-white text-gray-700 border border-gray-300 hover:border-primary"
-                        } transition-all duration-200`}
+                        }`}
                         onClick={() => handleChange(item.id, option.id, "multiple")}
                         type="button"
                       >

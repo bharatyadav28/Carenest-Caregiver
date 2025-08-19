@@ -19,6 +19,7 @@ export const TextInput = ({
   className,
   divClassName,
   Icon,
+  disabled,
   iconLast,
   ...props
 }: InputProps) => {
@@ -33,9 +34,10 @@ export const TextInput = ({
 
   return (
     <div className={divClasses}>
-      {Icon && <div>{Icon}</div>}
+      {Icon && <div className="text-[#667085]">{Icon}</div>}
       <Input
         value={text}
+          disabled={disabled}
         onChange={handleChange}
         {...props}
         className={classes}

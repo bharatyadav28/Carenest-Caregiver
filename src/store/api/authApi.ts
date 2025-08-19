@@ -37,6 +37,29 @@ interface RefreshTokenResponse {
   accessToken: string;
 }
 
+// Add types for document upload and save
+interface UploadDocumentResponse {
+  success: boolean;
+  message: string;
+  data: {
+    url: string;
+  };
+}
+
+
+interface SaveDocumentsRequest {
+  documents: {
+    type: "resume" | "work_permit";
+    fileUrl: string;
+  }[];
+}
+
+interface SaveDocumentsResponse {
+  success: boolean;
+  message: string;
+ data?: unknown;
+}
+
 const baseAddr = 'https://carenest-backend-8y2y.onrender.com/api/v1/user';
 
 // Typed base queries
@@ -236,6 +259,30 @@ export const authApi = createApi({
       },
     }),
 
+    // Upload document (form-data)
+    uploadDocument: builder.mutation<UploadDocumentResponse, FormData>({
+      query: (formData) => ({
+        url: "https://carenest-backend-8y2y.onrender.com/api/v1/document/upload",
+        method: "POST",
+        body: formData,
+            headers: {
+          'Authorization': `Bearer ${Cookies.get('authToken') || ''}`
+        }
+      }),
+    }),
+
+    // Save documents (JSON)
+    saveDocuments: builder.mutation<SaveDocumentsResponse, SaveDocumentsRequest>({
+      query: (body) => ({
+        url: "https://carenest-backend-8y2y.onrender.com/api/v1/document",
+        method: "POST",
+        body,
+            headers: {
+          'Authorization': `Bearer ${Cookies.get('authToken') || ''}`
+        }
+      }),
+    }),
+
     getMe: builder.query<User, void>({
       query: () => '/me',
     }),
@@ -268,4 +315,6 @@ export const {
   useResetPasswordMutation,
   useGetMeQuery,
   useLogoutMutation,
+  useUploadDocumentMutation,   // <-- add this
+  useSaveDocumentsMutation,    // <-- add this
 } = authApi;

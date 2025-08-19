@@ -131,11 +131,12 @@ const Footer = () => {
 
         <div>
           <h1
-            className="font-bold xl:text-[120px] lg:text-[80px] 
-           text-gray-400/30 tracking-widest sm:mt-0 mt-2"
+            className="font-bold xl:text-[130px] lg:text-[80px] 
+           text-gray-400/30 mx-auto tracking-widest sm:mt-0 mt-2"
           >
             CARENEST
           </h1>
+          <div></div>
         </div>
       </div>
 
@@ -183,7 +184,7 @@ const FooterLink = ({
   return (
     <div>
       <p className="font-semibold mb-4">{title}</p>
-      <ul className="flex flex-col gap-2">
+      <ul className="flex flex-col gap-4">
         {links.map((item, index) => (
           <li className="text-sm text-gray-300" key={index}>
             {item.title}

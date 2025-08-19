@@ -1,14 +1,21 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { MdArrowForwardIos as ArrowIcon } from "react-icons/md";
 import { RiFileList3Line as MenuIcon } from "react-icons/ri";
+import { FiEdit2 } from "react-icons/fi";
 
 import CustomDrawer from "./CustomDrawer";
 import { sidebarItemType } from "@/lib/interface-types";
 import { CustomPieChart } from "./CustomPieChart";
-import data from "@/lib/dummy_data/profile.json";
+import {
+  useGetProfileQuery,
+  useUpdateAvatarMutation,
+} from "@/store/api/profileApi";
+
+// CDN URL for profile images
+export const cdnURL = "https://dev-carenest.s3.ap-south-1.amazonaws.com";
 
 interface Props {
   items: sidebarItemType[];
@@ -16,6 +23,8 @@ interface Props {
 }
 function SidebarMenu({ items, ViewProfile }: Props) {
   const [openMenu, setOpenMenu] = useState(false);
+  const [avatarUploading, setAvatarUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const pathname = usePathname();
   const router = useRouter();
@@ -39,24 +48,87 @@ function SidebarMenu({ items, ViewProfile }: Props) {
     else if (handleClick) handleClick();
   };
 
-  const basicDetails = data?.basicDetails;
+  // Fetch profile data from API
+  const { data: profile, refetch } = useGetProfileQuery();
+  const [updateAvatar] = useUpdateAvatarMutation();
+
+  const handleAvatarClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ""; // Reset file input
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleAvatarChange = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setAvatarUploading(true);
+
+    try {
+      // Use FormData for file upload
+  const formData = new FormData();
+formData.append("file", file);
+await updateAvatar(formData).unwrap();
+      refetch();
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setAvatarUploading(false);
+    }
+  };
+
+  const name = profile?.name || "Loading...";
+  const email = profile?.email || "";
+  let avatar =
+    profile?.avatar && profile.avatar !== ""
+      ? profile.avatar
+      : "/profile-pic.png";
+
+  // If avatar is not a full URL, prepend the CDN URL
+  if (avatar && avatar !== "/profile-pic.png" && !avatar.startsWith("https")) {
+    avatar = `${cdnURL}/${avatar}`;
+  }
 
   const content = (
     <div className="min-h-[20rem] w-full min-w-[18rem] px-4 py-6 bg-[#fff] rounded-lg shadow-2xl">
       <div className="flex items-center gap-4">
         <CustomPieChart percentage={80}>
-          <div className="relative rounded-full w-16 h-16 m-3">
+          <div
+            className="relative rounded-full w-16 h-16 m-3 group cursor-pointer"
+            onClick={handleAvatarClick}
+            title="Edit profile image"
+          >
             <Image
-              src="/profile-pic.png"
+              src={avatar}
               alt="profile pic"
               fill
-              className="object-cover"
+              className="object-cover rounded-full border"
+              style={{ opacity: avatarUploading ? 0.5 : 1 }}
             />
+            {avatarUploading && (
+              <div className="absolute inset-0 flex items-center justify-center bg-white/60 rounded-full text-xs">
+                Uploading...
+              </div>
+            )}
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              className="hidden"
+              onChange={handleAvatarChange}
+              disabled={avatarUploading}
+            />
+            {/* Edit icon */}
+            <span className="absolute bottom-1 right-1 bg-[#F2A307] text-white rounded-full p-1 flex items-center justify-center shadow group-hover:opacity-100 opacity-90 transition">
+              <FiEdit2 size={16} />
+            </span>
           </div>
         </CustomPieChart>
         <div className="flex flex-col ">
-          <div className="text-[1.7rem] font-semibold">{basicDetails.name}</div>
-          <div className="text-sm text-[#667085]">{basicDetails.email}</div>
+          <div className="text-[1.7rem] font-semibold">{name}</div>
+          <div className="text-sm text-[#667085]">{email}</div>
           {ViewProfile === true ? (
             <div>
               <button

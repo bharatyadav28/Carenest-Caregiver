@@ -74,7 +74,7 @@ function ResetPasswordForm() {
 
   return (
     <div className="my-6 flex flex-col gap-4 max-w-md mx-auto">
-      <h2 className="text-2xl font-bold text-center">Reset Your Password</h2>
+      {/* <h2 className="text-2xl font-bold text-center">Reset Your Password</h2> */}
       
       {error && (
         <div className="text-red-500 text-sm mb-2 text-center">
@@ -113,7 +113,7 @@ function ResetPasswordForm() {
         onClick={handleSubmit}
        // disabled={isLoading}
       >
-        {isLoading ? "Resetting Password..." : "Reset Password"}
+        {isLoading ? "Resetting Password..." : "Save & Continue"}
       </CustomButton>
     </div>
   );

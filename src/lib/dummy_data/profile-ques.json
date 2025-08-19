@@ -49,7 +49,7 @@
     {
       "id": "q7",
       "type": "radio",
-      "ques": "Years of Experience?",
+      "ques": "Years of Experience",
       "options": [
         { "id": "opt15", "text": "0-1 years" },
         { "id": "opt16", "text": "2-5 years" },

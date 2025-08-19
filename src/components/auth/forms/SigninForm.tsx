@@ -92,10 +92,10 @@ function SigninForm() {
       <RadioGroup
         value={rememberMe}
         onValueChange={setRememberMe}
-        className="gap-2"
+        className="gap-3 "
       >
         <div className="flex items-center space-x-2">
-          <RadioGroupItem value="true" id="remember-me" />
+          <RadioGroupItem value="true" id="remember-me" className="!p-2 border-black border-2"/>
           <Label htmlFor="remember-me">Remember me</Label>
         </div>
       </RadioGroup>

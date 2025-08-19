@@ -2,33 +2,57 @@
 
 import React, { useState } from "react";
 import { BookingCard } from "@/components/dashboard/BookingCard";
-import bookingData from "@/lib/dummy_data/active-booking.json";
 import { noBooking } from "@/lib/svg_icons";
+import { useGetRecentBookingsQuery } from "@/store/api/bookingApi";
 
-const tabs = ["All", "Active", "Hired", "Rejected"] as const;
+// Show "Requested" in frontend, but send "interested" to backend
+const tabs = ["All", "Requested", "Hired", "Active", "Completed"] as const;
 type Tab = typeof tabs[number];
 
 function MyBookingPage() {
   const [activeTab, setActiveTab] = useState<Tab>("All");
 
-  const filteredBookings =
+  // Map frontend tab to backend status
+  const statusParam =
     activeTab === "All"
-      ? bookingData
-      : bookingData.filter(
-          (b) => b.status?.toLowerCase() === activeTab.toLowerCase()
-        );
+      ? ""
+      : activeTab === "Requested"
+      ? "interested"
+      : activeTab === "Hired" || activeTab === "Active"
+      ? "active" // both use same backend status
+      : activeTab.toLowerCase();
 
-  // Dynamic message based on tab
+  const { data: bookingData, isLoading, isError } = useGetRecentBookingsQuery({
+    status: statusParam,
+  });
+
+  // Backend response
+  const bookings = bookingData?.data.bookings || [];
+  const today = new Date();
+
+  // Apply frontend filtering
+  let filteredBookings = bookings;
+  if (activeTab === "Hired") {
+    filteredBookings = bookings.filter(
+      (b) => new Date(b.appointmentDate) > today
+    );
+  } else if (activeTab === "Active") {
+    filteredBookings = bookings.filter(
+      (b) => new Date(b.appointmentDate) <= today
+    );
+  }
+
   const emptyMessageMap: Record<Tab, string> = {
     All: "No bookings right now",
-    Active: "There are no active bookings",
+    Requested: "There are no requested bookings",
     Hired: "There are no hired bookings",
-    Rejected: "There are no rejected bookings",
+    Active: "There are no active bookings",
+    Completed: "There are no complete bookings",
   };
 
   return (
     <div className="flex flex-col gap-8 w-full card">
-      <div className="text-[#1B2A37] text-[30px] font-medium"> Bookings</div>
+      <div className="text-[#1B2A37] text-[30px] font-medium">Bookings</div>
 
       {/* Tab Filters */}
       <div className="flex gap-4 flex-wrap">
@@ -48,7 +72,15 @@ function MyBookingPage() {
       </div>
 
       {/* Booking List */}
-      {filteredBookings.length === 0 ? (
+      {isLoading ? (
+        <div className="m-auto mt-10 text-sm font-medium text-center">
+          Loading bookings...
+        </div>
+      ) : isError ? (
+        <div className="m-auto mt-10 text-sm font-medium text-center text-red-500">
+          Failed to fetch bookings
+        </div>
+      ) : filteredBookings.length === 0 ? (
         <div className="m-auto mt-10 flex flex-col items-center justify-center">
           {noBooking}
           <p className="text-center font-medium text-sm mt-2">
@@ -57,8 +89,17 @@ function MyBookingPage() {
         </div>
       ) : (
         <div className="flex flex-col gap-4 w-full">
-          {filteredBookings.map((booking, index) => (
-            <BookingCard key={index} {...booking} />
+          {filteredBookings.map((booking) => (
+            <BookingCard
+              key={booking.bookingId}
+              bookingId={booking.bookingId}
+              status={booking.status}
+              bookedOn={booking.bookedOn}
+              appointmentDate={booking.appointmentDate}
+              duration={booking.duration}
+              service={booking.service}
+              user={booking.user}
+            />
           ))}
         </div>
       )}
