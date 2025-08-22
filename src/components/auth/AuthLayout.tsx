@@ -12,8 +12,8 @@ function AuthLayout({ image, children }: Props) {
       <div className="grid grid-cols-12 h-full flex-1 min-h-0">
         {/* Left form */}
         <div className="col-start-1 md:col-end-5 col-end-13 flex flex-col min-h-0">
-          <div className="mb-4">
-            <Image src={"/auth/logo.png"} alt="Logo" width={80} height={100} />
+          <div className="mb-0">
+            <Image src={"/auth/logoblue.png"} alt="Logo" width={180} height={100} />
           </div>
           <div className="h-full overflow-auto hide-scrollbar">{children}</div>
         </div>

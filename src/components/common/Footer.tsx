@@ -97,7 +97,7 @@ const Footer = () => {
     <div className=" py-8 mt-15 lg:px-24 md:px-12 px-6 bg-primary-foreground text-white overflow-hidden">
       <div className="flex flex-wrap justify-between gap-2  ">
         <div className="sm:w-79 w-full ">
-          <div className="relative w-24 h-24 x">
+          <div className="relative w-50 h-30 x">
             <Image src={"/Logo.svg"} alt="Logo" fill />
           </div>
           <p className="mt-4 text-sm text-gray-300">

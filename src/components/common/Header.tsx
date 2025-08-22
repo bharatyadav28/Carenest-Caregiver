@@ -5,10 +5,10 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { IoNotificationsOutline as NotificationIcon } from "react-icons/io5";
 import { MdMenu as MenuIcon } from "react-icons/md";
-
+import Image from "next/image";
 import { CustomButton } from "./CustomButton";
 import { IoMdPerson as ProfileIcon } from "react-icons/io";
-import { Logo } from "@/lib/svg_icons";
+// import { Logo } from "@/lib/svg_icons";
 import CustomDrawer from "./CustomDrawer";
 import Notification from "../Notification";
 
@@ -70,8 +70,9 @@ function Header({ className }: props) {
       <div
         className={`flex justify-between bg-primary-foreground  text-[#fff] items-center py-5 ${className}`}
       >
-        <div>{Logo}</div>
-
+ <div className="relative w-40 h-21 x">
+            <Image src={"/Logo.svg"} alt="Logo" fill  />
+          </div>
         <div className="lg:block hidden"> {navContent}</div>
 
         <button onClick={handleOpenMenu} className="lg:hidden">
