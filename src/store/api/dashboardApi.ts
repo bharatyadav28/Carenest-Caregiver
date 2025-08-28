@@ -3,7 +3,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import Cookies from "js-cookie";
-import { setAccessToken } from "../authSlice"; //clearauth
+import { setAccessToken,clearAuth } from "../authSlice"; //clearauth
 import type { RootState } from "../store";
 
 const BASE_URL = "https://carenest-backend-8y2y.onrender.com/api/v1";
@@ -82,11 +82,11 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
 
         return await baseQuery(args, api, extraOptions);
       } else {
-        // api.dispatch(clearAuth());
+        api.dispatch(clearAuth());
       }
     } catch (err) {
       console.error("Failed to refresh token:", err);
-    //   api.dispatch(clearAuth());
+      api.dispatch(clearAuth());
     }
   }
 

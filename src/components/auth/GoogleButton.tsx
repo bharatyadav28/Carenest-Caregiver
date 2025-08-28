@@ -31,7 +31,7 @@ function GoogleButton() {
         }
 
         toast.success("Google login successful!");
-        router.push("/dashboard"); // redirect after success
+        router.push("/my-profile"); // redirect after success
       } catch (err) {
         console.error("Google login error:", err);
         toast.error("Something went wrong");
