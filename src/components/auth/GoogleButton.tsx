@@ -21,8 +21,19 @@ function GoogleButton() {
         const data = await res.json();
             console.log("Google login response:", data?.data?.accessToken,);
               if(res.ok){
-                Cookies.set("authToken", data?.data?.accessToken, { expires: 7 });
-                Cookies.set("refreshToken", data?.data?.refreshToken, { expires: 7 });
+
+                Cookies.set("accessToken", data?.data?.accessToken,  {
+        path: "/",
+        sameSite: "Strict",
+        secure: process.env.NODE_ENV === "production",
+      });
+                 Cookies.set("refreshToken", data?.data?.refreshToken,  {
+        path: "/",
+        sameSite: "Strict",
+        secure: process.env.NODE_ENV === "production",
+      });
+                // Cookies.set("authToken", data?.data?.accessToken, { expires: 7 });
+                // Cookies.set("refreshToken", data?.data?.refreshToken, { expires: 7 });
               }
               
         if (!res.ok) {
@@ -31,7 +42,7 @@ function GoogleButton() {
         }
 
         toast.success("Google login successful!");
-        router.push("/my-profile"); // redirect after success
+        router.push("/dashboard"); // redirect after success
       } catch (err) {
         console.error("Google login error:", err);
         toast.error("Something went wrong");
