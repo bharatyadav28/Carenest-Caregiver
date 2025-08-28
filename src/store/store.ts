@@ -4,6 +4,7 @@ import authReducer from './authSlice';
 import { authApi } from './api/authApi';
 import { profileApi } from './api/profileApi';
 import { bookingApi } from './api/bookingApi';
+import {dashboardApi} from './api/dashboardApi';
 import profileReducer from './profileSlice';
 
 export const store = configureStore({
@@ -13,9 +14,10 @@ export const store = configureStore({
     [authApi.reducerPath]: authApi.reducer,
     [bookingApi.reducerPath]: bookingApi.reducer,
     [profileApi.reducerPath]: profileApi.reducer,
+    [dashboardApi.reducerPath]: dashboardApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(authApi.middleware, profileApi.middleware,bookingApi.middleware),
+    getDefaultMiddleware().concat(authApi.middleware, profileApi.middleware,bookingApi.middleware,dashboardApi.middleware),
 });
 
 setupListeners(store.dispatch);

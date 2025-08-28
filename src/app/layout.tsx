@@ -4,7 +4,7 @@ import "./globals.css";
 import { Providers } from "./Provider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -24,8 +24,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${roboto.className}  antialiased`}> 
+          <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}>
          <Providers>{children}</Providers>
                <ToastContainer position="top-right" autoClose={3000} />
+               </GoogleOAuthProvider>
          </body>
     </html>
   );
