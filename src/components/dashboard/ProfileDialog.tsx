@@ -9,7 +9,13 @@ import {
   TransaparentButton,
 } from "../common/CustomButton";
 
-function ProfileDialog() {
+interface ProfileDialogProps {
+  userName?: string; // new optional prop
+}
+
+export default function ProfileDialog({
+  userName,
+}: ProfileDialogProps) {
   const [openDialog, setOpenDialog] = useState(true);
   const router = useRouter();
 
@@ -33,9 +39,13 @@ function ProfileDialog() {
           <DialogIcon icon={celebrationIcon} />
         </div>
         <div className="text-xl font-semibold">
-          Welcome, <span className="text-primary">user name!</span>
-        </div>
-
+          Welcome{" "}
+          {/* <span className="text-primary">user name!</span> */}
+      
+        {userName ? (
+          <span className="text-lg font-semibold text-[#1B2A37]">{userName}</span>
+        ) : null}
+  </div>
         <div className=" w-full border-t-2 border-dashed  border-[#33333333] my-2"></div>
 
         <div className="px-4">
@@ -52,12 +62,10 @@ function ProfileDialog() {
         </div>
 
         <div className="flex gap-2 w-full mt-2">
-          <TransaparentButton onClick={handleOpenDialog}/>
+          <TransaparentButton onClick={handleOpenDialog} />
           <DialogConfirmButton onClick={handleConfirm} />
         </div>
       </div>
     </CustomDialog>
   );
 }
-
-export default ProfileDialog;

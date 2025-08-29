@@ -7,6 +7,7 @@ import { BookingCard } from "@/components/dashboard/BookingCard";
 
 import statData from "@/lib/dummy_data/dashboard-stats.json";
 import { useGetRecentBookingsQuery } from "@/store/api/bookingApi";
+import { useGetProfileQuery } from "@/store/api/profileApi"; // added import
 
 import ProfileDialog from "@/components/dashboard/ProfileDialog";
 
@@ -15,6 +16,8 @@ function MyDashboardPage() {
 
   const { data: bookingData, isLoading, isError } =
     useGetRecentBookingsQuery({ status: "active" });
+
+  const { data: profile } = useGetProfileQuery(); // fetch profile
 
   const bookings = bookingData?.data.bookings || [];
   const today = new Date();
@@ -26,7 +29,9 @@ function MyDashboardPage() {
 
   return (
     <div className="flex flex-col gap-8 w-full card ">
-      <ProfileDialog />
+      {/* pass profile name to ProfileDialog */}
+      <ProfileDialog userName={profile?.name} />
+
       <div className="text-[#fff] py-6 lg:px-12 px-4 md:px-8 test2 w-full h-max rounded-xl flex lg:flex-row flex-col justify-between lg:items-start items-center gap-4">
         <div className="max-w-[35rem] w-full">
           <div className="lg:text-xl md:text-2xl font-semibold">
