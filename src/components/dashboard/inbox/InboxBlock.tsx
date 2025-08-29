@@ -7,6 +7,7 @@ import CustomSheet from "@/components/common/CustomSheet";
 
 function InboxBlock() {
   const [openMessages, setOpenMessages] = useState(false);
+
   const myMessages = <Messages />;
 
   const handleOpenMessages = () => {
