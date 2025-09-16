@@ -21,6 +21,7 @@ function SignupForm() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
+  const [zipcode, setZipcode] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -39,12 +40,19 @@ function SignupForm() {
       setError("Please fill all fields");
       return;
     }
+      // Convert zipcode into number
+  const numericZip = Number(zipcode);
+  if (isNaN(numericZip)) {
+    setError("Zipcode must be a number");
+    return;
+  }
 
     try {
       const response = await signup({
         name,
         email,
         address,
+        zipcode: numericZip,
         mobile: phone,
         password,
         role: "giver" // or "receiver" based on your UI
@@ -98,12 +106,19 @@ function SignupForm() {
         placeholder="Enter Phone Number"
       />
 
-      <TextInput
-        text={address}
-        setText={setAddress}
-        Icon={addressIcon}
-        placeholder="Enter Address"
-      />
+        <TextInput
+          text={address}
+          setText={setAddress}
+          Icon={addressIcon}
+          placeholder="Enter Address"
+        />
+            <TextInput
+          text={zipcode}
+          setText={setZipcode}
+          Icon={addressIcon}
+          placeholder="Enter Zip Code"
+        />
+
 
       <PasswordInput
         text={password}

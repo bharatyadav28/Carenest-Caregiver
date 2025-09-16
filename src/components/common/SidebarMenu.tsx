@@ -87,8 +87,8 @@ await updateAvatar(formData).unwrap();
       : "/profile-pic.png";
 
   // If avatar is not a full URL, prepend the CDN URL
-  if (avatar && avatar !== "/profile-pic.png" && !avatar.startsWith("https")) {
-    avatar = `${cdnURL}/${avatar}`;
+  if (avatar && avatar !== "/profile-pic.png") {
+    avatar = `${cdnURL}${avatar}`;
   }
 
   const content = (

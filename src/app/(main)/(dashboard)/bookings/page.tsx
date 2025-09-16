@@ -5,49 +5,39 @@ import { BookingCard } from "@/components/dashboard/BookingCard";
 import { noBooking } from "@/lib/svg_icons";
 import { useGetRecentBookingsQuery } from "@/store/api/bookingApi";
 
-// Show "Requested" in frontend, but send "interested" to backend
-const tabs = ["All", "Requested", "Hired", "Active", "Completed"] as const;
+// Updated tabs to match the new status values, excluding "rejected"
+const tabs = ["All", "shortlisted", "hired", "active", "completed"] as const;
 type Tab = typeof tabs[number];
 
 function MyBookingPage() {
   const [activeTab, setActiveTab] = useState<Tab>("All");
 
   // Map frontend tab to backend status
-  const statusParam =
-    activeTab === "All"
-      ? ""
-      : activeTab === "Requested"
-      ? "interested"
-      : activeTab === "Hired" || activeTab === "Active"
-      ? "active" // both use same backend status
-      : activeTab.toLowerCase();
+  const statusParam = activeTab === "All" ? "" : activeTab;
 
   const { data: bookingData, isLoading, isError } = useGetRecentBookingsQuery({
     status: statusParam,
   });
 
-  // Backend response
   const bookings = bookingData?.data.bookings || [];
-  const today = new Date();
 
-  // Apply frontend filtering
-  let filteredBookings = bookings;
-  if (activeTab === "Hired") {
-    filteredBookings = bookings.filter(
-      (b) => new Date(b.appointmentDate) > today
-    );
-  } else if (activeTab === "Active") {
-    filteredBookings = bookings.filter(
-      (b) => new Date(b.appointmentDate) <= today
-    );
-  }
+
+  // Apply frontend filtering if needed (optional based on your API response)
+  const filteredBookings = bookings;
+  // You can add additional frontend filtering logic here if needed
 
   const emptyMessageMap: Record<Tab, string> = {
     All: "No bookings right now",
-    Requested: "There are no requested bookings",
-    Hired: "There are no hired bookings",
-    Active: "There are no active bookings",
-    Completed: "There are no complete bookings",
+    shortlisted: "There are no shortlisted bookings",
+    hired: "There are no hired bookings",
+    active: "There are no active bookings",
+    completed: "There are no completed bookings",
+
+  };
+
+  // Function to capitalize the first letter for display
+  const capitalizeFirst = (str: string) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
   };
 
   return (
@@ -66,7 +56,7 @@ function MyBookingPage() {
             }`}
             onClick={() => setActiveTab(tab)}
           >
-            {tab}
+            {capitalizeFirst(tab)}
           </button>
         ))}
       </div>
@@ -95,9 +85,11 @@ function MyBookingPage() {
               bookingId={booking.bookingId}
               status={booking.status}
               bookedOn={booking.bookedOn}
-              appointmentDate={booking.appointmentDate}
-              duration={booking.duration}
-              service={booking.service}
+              startDate={booking.startDate}
+              endDate={booking.endDate}
+              zipcode={booking.zipcode}
+              requiredBy={booking.requiredBy}
+              weeklySchedule={booking.weeklySchedule}
               user={booking.user}
             />
           ))}

@@ -24,7 +24,7 @@ function MyDashboardPage() {
 
   // Apply filter: only show Active ones (appointmentDate <= today)
   const activeBookings = bookings.filter(
-    (b) => new Date(b.appointmentDate) <= today
+    (b) => new Date(b.startDate) <= today
   );
 
   return (

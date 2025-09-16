@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { FiPhone, FiMail, FiMapPin, FiInfo } from "react-icons/fi";
+import {  FiMapPin, FiInfo } from "react-icons/fi";
 import { CustomDialog } from "@/components/common/CustomDialog";
 
 interface ViewDetailsDialogProps {
@@ -47,7 +47,7 @@ export default function ViewDetailsDialog({ user, onClose }: ViewDetailsDialogPr
         {/* Contact Details */}
         <div className="text-[#1B2A37] font-semibold mb-3">Contact Details</div>
         <div className="flex flex-col gap-3 mb-6 text-sm text-[#1B2A37]">
-          <div className="flex gap-2">
+          {/* <div className="flex gap-2">
             <FiPhone className="text-white bg-[#233D4D] text-[30px] rounded-full p-2 mt-2" />
             <div>
               <div>Phone number</div>
@@ -64,7 +64,7 @@ export default function ViewDetailsDialog({ user, onClose }: ViewDetailsDialogPr
                 {user.subscribed ? user.email : obfuscate(user.email)}
               </span>
             </div>
-          </div>
+          </div> */}
           <div className="flex gap-2">
             <FiMapPin className="text-white bg-[#233D4D] text-[30px] rounded-full p-2 mt-2" />
             <div>

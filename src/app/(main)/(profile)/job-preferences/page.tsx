@@ -1,8 +1,9 @@
 "use client";
 import About from "@/components/profile/job-preferences/About";
 import JobProfile from "@/components/profile/job-preferences/JobProfile";
+import MyCertificates from "@/components/profile/job-preferences/MyCertificate";
 import MyServices from "@/components/profile/job-preferences/MyServices";
-import WhyChooseMe from "@/components/profile/job-preferences/WhyChooseMe";
+import Zipcode from "@/components/profile/job-preferences/Zipcode";
 import React from "react";
 
 function JobPreferencePage() {
@@ -11,7 +12,8 @@ function JobPreferencePage() {
       <About />
       <JobProfile />
       <MyServices />
-      <WhyChooseMe />
+      <Zipcode />
+<MyCertificates/> 
     </div>
   );
 }

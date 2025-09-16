@@ -14,7 +14,13 @@ interface Profile {
   avatar: string | null;
   gender: string;
 }
-
+interface ZipcodeResponse {
+  success: boolean;
+  message: string;
+  data: {
+    zipcode: number;
+  };
+}
 interface ProfileResponse {
   success: boolean;
   message: string;
@@ -69,6 +75,36 @@ interface MyServicesResponse {
 
 interface SaveMyServicesRequest {
   serviceIds: string[];
+}
+// --------- Document Interfaces ---------
+export interface DocumentItem {
+  id: string;
+  userId: string;
+  type: "resume" | "work_permit" | "certificate";
+  fileUrl: string;
+  createdAt: string;
+}
+
+interface UploadDocumentResponse {
+  success: boolean;
+  message: string;
+  data: { url: string };
+}
+
+interface SaveDocumentsRequest {
+  documents: { type: "resume" | "work_permit"| "certificate"; fileUrl: string }[];
+}
+
+interface SaveDocumentsResponse {
+  success: boolean;
+  message: string;
+  data: { savedDocuments: DocumentItem[] };
+}
+
+interface GetDocumentsResponse {
+  success: boolean;
+  message: string;
+  data: { documents: DocumentItem[] };
 }
 
 // --------- Job Profile Interfaces ---------
@@ -215,7 +251,7 @@ const baseQueryWithReauth: BaseQueryFn<
 export const profileApi = createApi({
   reducerPath: 'profileApi',
   baseQuery: baseQueryWithReauth,
-  tagTypes: ['About', 'Profile', 'WhyChooseMe'],
+  tagTypes: ['About', 'Profile', 'WhyChooseMe','Documents'],
   endpoints: (builder) => ({
     // 🔹 Get Profile
     getProfile: builder.query<Profile, void>({
@@ -379,6 +415,49 @@ updateAvatar: builder.mutation<
       }),
       invalidatesTags: (_result, _error, { id }) => [{ type: 'WhyChooseMe', id }],
     }),
+    // 🔹 Update Zipcode
+updateZipcode: builder.mutation<
+  { success: boolean; message: string },
+  { zipcode: number }
+>({
+  query: (body) => ({
+    url: `/api/v1/giver/zipcode`,
+    method: 'PUT',
+    body,
+  }),
+  invalidatesTags: ['Profile'],
+}),
+
+getZipcode: builder.query<number | null, void>({
+  query: () => `/api/v1/giver/zipcode`,
+  transformResponse: (res: ZipcodeResponse) => res.data?.zipcode ?? null,
+  providesTags: ['Profile'],
+}),
+ // 🔹 Upload Certificate (file → returns S3 URL)
+    uploadCertificate: builder.mutation<UploadDocumentResponse, FormData>({
+      query: (formData) => ({
+        url: `/api/v1/document/upload`,
+        method: 'POST',
+        body: formData,
+      }),
+    }),
+
+    // 🔹 Save Certificate (resume / work_permit)
+    saveCertificates: builder.mutation<SaveDocumentsResponse, SaveDocumentsRequest>({
+      query: (body) => ({
+        url: `/api/v1/document`,
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['Documents'],
+    }),
+
+    // 🔹 Get Certificates
+    getCertificates: builder.query<DocumentItem[], void>({
+      query: () => `/api/v1/document`,
+      transformResponse: (res: GetDocumentsResponse) => res.data.documents,
+      providesTags: ['Documents'],
+    }),
 
     // 🔹 Delete Why Choose Me Entry
     deleteWhyChooseMe: builder.mutation<
@@ -412,7 +491,12 @@ export const {
   useGetMyServicesQuery,
   useUpdateMyServicesMutation,
   useGetWhyChooseMeQuery,
+   useGetZipcodeQuery, 
+    useUpdateZipcodeMutation,
   useCreateWhyChooseMeMutation,
   useUpdateWhyChooseMeMutation,
   useDeleteWhyChooseMeMutation,
+    useUploadCertificateMutation,
+  useSaveCertificatesMutation,
+  useGetCertificatesQuery
 } = profileApi;

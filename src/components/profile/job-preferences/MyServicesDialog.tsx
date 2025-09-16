@@ -82,7 +82,7 @@ function MyServicesDialog({
           <div className="mt-4 flex flex-wrap gap-y-3 gap-x-2 items-start w-full">
             {selectedServices.map((service) => (
               <div
-                className="service-card flex gap-1 items-center"
+                className="service-card flex gap-1 items-center !text-white  bg-[#233D4D]"
                 key={service}
               >
                 {service}
