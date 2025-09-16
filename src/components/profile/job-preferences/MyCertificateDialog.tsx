@@ -5,7 +5,7 @@ import {
   TransaparentButton,
 } from "@/components/common/CustomButton";
 import {
-  useUploadCertificateMutation,
+  // useUploadCertificateMutation,
   useSaveCertificatesMutation,
   useGetCertificatesQuery,
 } from "@/store/api/profileApi";
@@ -18,7 +18,7 @@ interface Props {
 
 function CertificateDialog({ open, handleOpen }: Props) {
   const { data: certificates = [] } = useGetCertificatesQuery();
-  const [uploadCertificate] = useUploadCertificateMutation();
+  // const [uploadCertificate] = useUploadCertificateMutation();
   const [saveCertificates] = useSaveCertificatesMutation();
 
   const [files, setFiles] = useState<File[]>([]);

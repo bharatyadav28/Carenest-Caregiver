@@ -2,7 +2,6 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { CustomDialog } from "@/components/common/CustomDialog";
 import { arrow, message } from "@/lib/svg_icons";
-import { useCancelBookingMutation } from "@/store/api/bookingApi";
 interface WeeklySchedule {
   weekDay: number; // 0 = Sunday ... 6 = Saturday
   startTime: string;

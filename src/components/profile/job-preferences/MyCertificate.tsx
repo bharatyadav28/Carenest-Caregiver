@@ -9,7 +9,7 @@ import { useGetCertificatesQuery } from "@/store/api/profileApi";
 interface Certificate {
   id: string;
   type: string;
-  [key: string]: any; // optional, if there are extra fields you don't know yet
+// optional, if there are extra fields you don't know yet
 }
 
 function MyCertificates() {
