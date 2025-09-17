@@ -43,13 +43,7 @@ interface CertificateResponse {
   };
 }
 
-interface UploadResponse {
-  success: boolean;
-  message: string;
-  data: {
-    url: string;
-  };
-}
+
 interface UpdateProfilePayload {
   name: string;
   email: string;
