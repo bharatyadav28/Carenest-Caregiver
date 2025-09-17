@@ -133,13 +133,18 @@ console.log(resumeFile, workPermitFile, uploadedDocs);
         </div>
       ))}
 
-      <CustomButton
-        className="w-full mt-8"
-        onClick={handleSubmit}
-        // disabled={isUploading || isSaving}
-      >
-        {isUploading || isSaving ? "Processing..." : "Save & Continue"}
-      </CustomButton>
+    <CustomButton
+  className="w-full mt-8"
+  onClick={handleSubmit}
+  disabled={
+    isUploading ||
+    isSaving ||
+    !uploadedDocs.find((d) => d.type === "resume") ||
+    !uploadedDocs.find((d) => d.type === "work_permit")
+  }
+>
+  {isUploading || isSaving ? "Processing..." : "Save & Continue"}
+</CustomButton>
     </div>
   );
 }

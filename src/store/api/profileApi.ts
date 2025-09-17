@@ -28,7 +28,28 @@ interface ProfileResponse {
     user: Profile;
   };
 }
+// --------- Certificate Interfaces ---------
+interface Certificate {
+  id: string;
+  fileUrl: string;
+  createdAt: string;
+}
 
+interface CertificateResponse {
+  success: boolean;
+  message: string;
+  data: {
+    certificates: Certificate[];
+  };
+}
+
+interface UploadResponse {
+  success: boolean;
+  message: string;
+  data: {
+    url: string;
+  };
+}
 interface UpdateProfilePayload {
   name: string;
   email: string;
@@ -76,36 +97,7 @@ interface MyServicesResponse {
 interface SaveMyServicesRequest {
   serviceIds: string[];
 }
-// --------- Document Interfaces ---------
-export interface DocumentItem {
-  id: string;
-  userId: string;
-  type: "resume" | "work_permit" | "certificate";
-  fileUrl: string;
-  createdAt: string;
-}
 
-interface UploadDocumentResponse {
-  success: boolean;
-  message: string;
-  data: { url: string };
-}
-
-interface SaveDocumentsRequest {
-  documents: { type: "resume" | "work_permit"| "certificate"; fileUrl: string }[];
-}
-
-interface SaveDocumentsResponse {
-  success: boolean;
-  message: string;
-  data: { savedDocuments: DocumentItem[] };
-}
-
-interface GetDocumentsResponse {
-  success: boolean;
-  message: string;
-  data: { documents: DocumentItem[] };
-}
 
 // --------- Job Profile Interfaces ---------
 export interface JobProfile {
@@ -324,6 +316,47 @@ updateAvatar: builder.mutation<
       }),
       invalidatesTags: ['About'],
     }),
+    // --------- Certificate Endpoints ---------
+getCertificates: builder.query<Certificate[], void>({
+  query: () => `/api/v1/document/certificates`,
+  transformResponse: (res: CertificateResponse) => res.data.certificates,
+  providesTags: ['Documents'],
+}),
+
+uploadDocument: builder.mutation<
+  { success: boolean; message: string; data: { url: string } },
+  FormData
+>({
+  query: (formData) => ({
+    url: `/api/v1/document/upload`,
+    method: 'POST',
+    body: formData,
+  }),
+}),
+
+saveCertificate: builder.mutation<
+  { success: boolean; message: string },
+  { fileUrl: string }
+>({
+  query: (body) => ({
+    url: `/api/v1/document/certificates`,
+    method: 'POST',
+    body,
+  }),
+  invalidatesTags: ['Documents'],
+}),
+
+deleteCertificate: builder.mutation<
+  { success: boolean; message: string },
+  { id: string; fileUrl: string }
+>({
+  query: ({ id, fileUrl }) => ({
+    url: `/api/v1/document/${id}`,
+    method: 'DELETE',
+    body: { fileUrl },
+  }),
+  invalidatesTags: ['Documents'],
+}),
 
     // 🔹 Get Job Profile
     getJobProfile: builder.query<JobProfile, void>({
@@ -433,31 +466,8 @@ getZipcode: builder.query<number | null, void>({
   transformResponse: (res: ZipcodeResponse) => res.data?.zipcode ?? null,
   providesTags: ['Profile'],
 }),
- // 🔹 Upload Certificate (file → returns S3 URL)
-    uploadCertificate: builder.mutation<UploadDocumentResponse, FormData>({
-      query: (formData) => ({
-        url: `/api/v1/document/upload`,
-        method: 'POST',
-        body: formData,
-      }),
-    }),
 
-    // 🔹 Save Certificate (resume / work_permit)
-    saveCertificates: builder.mutation<SaveDocumentsResponse, SaveDocumentsRequest>({
-      query: (body) => ({
-        url: `/api/v1/document`,
-        method: 'POST',
-        body,
-      }),
-      invalidatesTags: ['Documents'],
-    }),
 
-    // 🔹 Get Certificates
-    getCertificates: builder.query<DocumentItem[], void>({
-      query: () => `/api/v1/document`,
-      transformResponse: (res: GetDocumentsResponse) => res.data.documents,
-      providesTags: ['Documents'],
-    }),
 
     // 🔹 Delete Why Choose Me Entry
     deleteWhyChooseMe: builder.mutation<
@@ -492,11 +502,13 @@ export const {
   useUpdateMyServicesMutation,
   useGetWhyChooseMeQuery,
    useGetZipcodeQuery, 
+   useGetCertificatesQuery,
+useUploadDocumentMutation,
+useSaveCertificateMutation,
+useDeleteCertificateMutation,
     useUpdateZipcodeMutation,
   useCreateWhyChooseMeMutation,
   useUpdateWhyChooseMeMutation,
   useDeleteWhyChooseMeMutation,
-    useUploadCertificateMutation,
-  useSaveCertificatesMutation,
-  useGetCertificatesQuery
+
 } = profileApi;

@@ -9,13 +9,18 @@ interface ButtonProps {
   children: React.ReactNode;
   onClick: () => void;
   className?: string;
+    disabled?: boolean;
 }
 
-export const CustomButton = ({ children, onClick, className }: ButtonProps) => {
+export const CustomButton = ({
+  children,
+  onClick,
+  className,
+  disabled = false,
+}: ButtonProps) => {
   const classes = `py-6 rounded-full hover:cursor-pointer transition-all ${className}`;
   return (
-    <Button className={classes} onClick={onClick}>
-      {" "}
+    <Button className={classes} onClick={onClick} disabled={disabled}>
       {children}
     </Button>
   );

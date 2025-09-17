@@ -6,14 +6,14 @@ import { noBooking } from "@/lib/svg_icons";
 import { useGetRecentBookingsQuery } from "@/store/api/bookingApi";
 
 // Updated tabs to match the new status values, excluding "rejected"
-const tabs = ["All", "shortlisted", "hired", "active", "completed"] as const;
+const tabs = ["All", "ProfilePicks", "hired", "active", "completed"] as const;
 type Tab = typeof tabs[number];
 
 function MyBookingPage() {
   const [activeTab, setActiveTab] = useState<Tab>("All");
 
   // Map frontend tab to backend status
-  const statusParam = activeTab === "All" ? "" : activeTab;
+  const statusParam = activeTab === "All" ? "" : activeTab==="ProfilePicks"? "shortlisted": activeTab;
 
   const { data: bookingData, isLoading, isError } = useGetRecentBookingsQuery({
     status: statusParam,
@@ -28,7 +28,7 @@ function MyBookingPage() {
 
   const emptyMessageMap: Record<Tab, string> = {
     All: "No bookings right now",
-    shortlisted: "There are no shortlisted bookings",
+    ProfilePicks: "There are no shortlisted bookings",
     hired: "There are no hired bookings",
     active: "There are no active bookings",
     completed: "There are no completed bookings",
@@ -56,7 +56,7 @@ function MyBookingPage() {
             }`}
             onClick={() => setActiveTab(tab)}
           >
-            {capitalizeFirst(tab)}
+            {capitalizeFirst(tab=="ProfilePicks"?"Profile Picks" :tab)}
           </button>
         ))}
       </div>

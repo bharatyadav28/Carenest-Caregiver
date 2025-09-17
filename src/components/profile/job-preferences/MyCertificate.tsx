@@ -3,24 +3,27 @@ import { AddButton } from "@/components/common/CustomButton";
 import { BinIcon, binIconTheme, pdfIcons } from "@/lib/svg_icons";
 import ActionDialog from "@/components/common/ActionDialog";
 import CertificateDialog from "./MyCertificateDialog";
-import { useGetCertificatesQuery } from "@/store/api/profileApi";
+import {
+  useGetCertificatesQuery,
+  useDeleteCertificateMutation,
+} from "@/store/api/profileApi"; // ✅ adjust path
 
-// Define a proper type for certificates
 interface Certificate {
   id: string;
-  type: string;
-// optional, if there are extra fields you don't know yet
+  fileUrl: string;
+  createdAt: string;
 }
 
 function MyCertificates() {
-  const { data: certificates = [] } = useGetCertificatesQuery();
+  const { data: certificates = [], isLoading, isError } = useGetCertificatesQuery();
+  const [deleteCertificate] = useDeleteCertificateMutation();
 
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedCert, setSelectedCert] = useState<Certificate | null>(null);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
-  const handleOpenDialog = (cert: Certificate | null) => {
-    setSelectedCert(cert);
+  const handleOpenDialog = () => {
+    setSelectedCert(null);
     setOpenDialog(true);
   };
 
@@ -29,9 +32,14 @@ function MyCertificates() {
     setOpenDeleteDialog(true);
   };
 
-  // 🔹 For now, just close dialog on delete (no API call)
   const handleDelete = async () => {
-    console.log("Pretend delete:", selectedCert);
+    if (selectedCert) {
+      try {
+        await deleteCertificate({ id: selectedCert.id, fileUrl: selectedCert.fileUrl }).unwrap();
+      } catch (err) {
+        console.error("❌ Failed to delete certificate:", err);
+      }
+    }
     setOpenDeleteDialog(false);
   };
 
@@ -40,24 +48,24 @@ function MyCertificates() {
       <div className="card flex flex-col gap-2">
         <div className="flex justify-between items-center">
           <div className="heading2">My Certification</div>
-          <AddButton onClick={() => handleOpenDialog(null)} />
+          <AddButton onClick={handleOpenDialog} />
         </div>
 
-        <div className="text-[var(--slat-gray)]">
-          Upload your certificates.
-        </div>
+        <div className="text-[var(--slat-gray)]">Upload your certificates.</div>
 
         <div className="flex flex-col gap-6 mt-2">
-          {certificates.length === 0 ? (
-            <div className="text-[var(--slat-gray)]">
-              No certificates added yet.
-            </div>
+          {isLoading ? (
+            <div>Loading certificates...</div>
+          ) : isError ? (
+            <div className="text-red-500">Failed to load certificates</div>
+          ) : certificates.length === 0 ? (
+            <div className="text-[var(--slat-gray)]">No certificates added yet.</div>
           ) : (
-            certificates.map((cert: Certificate) => (
+            certificates.map((cert) => (
               <div key={cert.id} className="flex justify-between">
                 <div className="text-sm flex flex-row justify-between gap-1 border rounded-xl px-4 py-4 w-full">
                   <div className="font-medium uppercase flex-row flex gap-3">
-                    {pdfIcons} {cert.type}
+                    {pdfIcons} {cert.fileUrl.split(".").pop()?.toUpperCase()}
                   </div>
                   <button
                     className="hover:cursor-pointer hover:opacity-90 transition"
@@ -76,7 +84,6 @@ function MyCertificates() {
       <CertificateDialog
         open={openDialog}
         handleOpen={() => setOpenDialog(false)}
-        // selectedCert={selectedCert} // pass selected certificate if needed
       />
 
       {/* Delete Confirmation */}
