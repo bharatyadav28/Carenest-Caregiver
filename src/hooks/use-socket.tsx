@@ -1,11 +1,10 @@
+"use client";
 import { useEffect, useRef } from "react";
-
 import { io, Socket } from "socket.io-client";
 
-const SOCKET_URL =
-  process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:4000";
+const SOCKET_URL = "https://carenest-backend-8y2y.onrender.com";
 
-export const useSocket = (token: string | undefined) => {
+export const useSocket = (token?: string) => {
   const socketRef = useRef<Socket | null>(null);
 
   useEffect(() => {
@@ -16,7 +15,14 @@ export const useSocket = (token: string | undefined) => {
       transports: ["websocket"],
     });
 
-    socketRef.current.emit("join");
+    socketRef.current.on("connect", () => {
+      console.log("Socket connected:", socketRef.current?.id);
+      socketRef.current?.emit("join");
+    });
+
+    socketRef.current.on("connect_error", (err) => {
+      console.error("Socket connection error:", err.message);
+    });
 
     return () => {
       socketRef.current?.disconnect();
@@ -24,12 +30,16 @@ export const useSocket = (token: string | undefined) => {
   }, [token]);
 
   const sendMessage = (toUserId: string, message: string) => {
-    socketRef.current?.emit("send_message", { toUserId, message });
+    if (socketRef.current?.connected) {
+      socketRef.current.emit("send_message", { toUserId, message });
+    } else {
+      console.error("Socket not connected yet");
+    }
   };
 
   const onNewMessage = (callback: (msg: any) => void) => {
     socketRef.current?.on("new_message", callback);
   };
 
-  return { socket: socketRef.current, sendMessage, onNewMessage };
+  return { sendMessage, onNewMessage };
 };

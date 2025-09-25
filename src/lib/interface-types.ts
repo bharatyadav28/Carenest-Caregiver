@@ -24,3 +24,12 @@ export interface reasonType {
   title: string;
   description: string;
 }
+
+export interface chatMessageType {
+  id: string;
+  conversationId: string;
+  isOtherUserMessage: boolean;
+  message: string;
+  createdAt: string;
+  hasRead: boolean;
+}
