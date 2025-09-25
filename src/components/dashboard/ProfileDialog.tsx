@@ -43,7 +43,7 @@ export default function ProfileDialog({
           {/* <span className="text-primary">user name!</span> */}
       
         {userName ? (
-          <span className="text-lg font-semibold text-[#1B2A37]">{userName}</span>
+          <span className="text-lg font-semibold text-[#F2A307]">{userName}!</span>
         ) : null}
   </div>
         <div className=" w-full border-t-2 border-dashed  border-[#33333333] my-2"></div>
@@ -63,7 +63,7 @@ export default function ProfileDialog({
 
         <div className="flex gap-2 w-full mt-2">
           <TransaparentButton onClick={handleOpenDialog} />
-          <DialogConfirmButton onClick={handleConfirm} />
+          <DialogConfirmButton onClick={handleConfirm} title={"Continue"} />
         </div>
       </div>
     </CustomDialog>

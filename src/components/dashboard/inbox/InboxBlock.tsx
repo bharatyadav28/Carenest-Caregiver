@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 
-import MessageList from "./MessageList";
+// import MessageList from "./MessageList";
 import Messages from "./Messages";
 import CustomSheet from "@/components/common/CustomSheet";
 
@@ -14,12 +14,10 @@ function InboxBlock() {
   };
 
   return (
-    <div className="  grid grid-cols-12 gap-6 ">
-      <div className="col-start-1 md:col-end-6 col-end-13 card ">
-        <MessageList handleOpenMessages={handleOpenMessages} />
-      </div>
+    <div className="  ms-10">
+   
 
-      <div className="col-start-6 col-end-13 card md:flex flex-grow overflow-y-auto hidden  ">
+      <div className=" card md:flex flex-grow overflow-y-auto hidden  ">
         {myMessages}
       </div>
 

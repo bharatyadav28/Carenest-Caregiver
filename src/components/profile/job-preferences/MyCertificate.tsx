@@ -59,7 +59,7 @@ function MyCertificates() {
           ) : isError ? (
             <div className="text-red-500">Failed to load certificates</div>
           ) : certificates.length === 0 ? (
-            <div className="text-[var(--slat-gray)]">No certificates added yet.</div>
+            <div className="text-[var(--slat-gray)]"></div>
           ) : (
             certificates.map((cert) => (
               <div key={cert.id} className="flex justify-between">

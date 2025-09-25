@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/input-otp";
 import { formatTime } from "@/lib/resuable_funs";
 import Cookies from 'js-cookie';
-
+import { toast } from "react-toastify";
 interface Props {
   isEmailVerify?: boolean;
 }
@@ -88,7 +88,8 @@ function OTPForm({ isEmailVerify }: Props) {
       }).unwrap();
 
       if (response.success) {
-        setTime(30); // Reset timer
+             toast.success(`OTP is sent Successfully`);
+        setTime(60); // Reset timer
         setError(null);
       } else {
         setError(response.message || "Failed to resend OTP");

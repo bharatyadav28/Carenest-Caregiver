@@ -1,4 +1,5 @@
 import React from "react";
+import { toast } from "react-toastify";
 import { CustomDialog } from "@/components/common/CustomDialog";
 import { CustomTextArea } from "@/components/common/CustomInputs";
 import {
@@ -16,6 +17,14 @@ interface Props {
 }
 
 function AboutDialog({ open, handleOpen, about, setAbout, onSave, isLoading }: Props) {
+  const handleSave = () => {
+    if (!about.trim()) {
+      toast.error("Please fill the required details!");
+      return;
+    }
+    onSave();
+  };
+
   return (
     <CustomDialog
       open={open}
@@ -23,7 +32,7 @@ function AboutDialog({ open, handleOpen, about, setAbout, onSave, isLoading }: P
       showCrossButton={true}
       className="preference-dialog"
     >
-      <div className="flex flex-col gap-1 items-center text-center ">
+      <div className="flex flex-col gap-1 items-center text-center">
         <div className="text-2xl font-semibold">About</div>
         <div className="text-[var(--cool-gray)] text-sm">
           Add a brief summary about yourself so care seekers can learn more
@@ -42,7 +51,7 @@ function AboutDialog({ open, handleOpen, about, setAbout, onSave, isLoading }: P
         <div className="flex w-full gap-2">
           <TransaparentButton onClick={handleOpen} />
           <DialogConfirmButton
-            onClick={onSave}
+            onClick={handleSave}
             title={isLoading ? "Saving..." : "Save"}
             // disabled={isLoading}
           />

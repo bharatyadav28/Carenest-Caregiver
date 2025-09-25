@@ -126,7 +126,7 @@ export default function BookingDetailsDialog({
    {/* Weekly Schedule Section */}
         <div>
           <h3 className="text-[16px] font-semibold text-[#1B2A37] mb-3">
-            Weekly Schedule (This Schedule may vary)
+            Weekly Schedule  <span className="text-xs font-medium text-gray-600">  (This Schedule may vary)</span> 
           </h3>
           <div className="bg-white rounded-[16px] p-4">
             <div className="space-y-3">

@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import data from "@/lib/dummy_data/profile-ques.json";
 import { jobProfileType } from "@/lib/interface-types";
 import { useUpdateJobProfileMutation } from "@/store/api/profileApi";
-
+import { Check } from "lucide-react";
 interface Props {
   open: boolean;
   handleOpen: () => void;
@@ -290,6 +290,7 @@ function JobProfileDialog({ open, handleOpen, profile, setProfile }: Props) {
                           htmlFor={option.id}
                           className="text-[var(--cool-gray)] text-sm"
                         >
+
                           {option.text}
                         </Label>
                       </div>
@@ -311,7 +312,7 @@ function JobProfileDialog({ open, handleOpen, profile, setProfile }: Props) {
                 key={item.id}
                 className="flex flex-col gap-2 items-start text-lg font-medium"
               >
-                <div>{item.ques}</div>
+                <div>{item.ques} <span className="text-xs text-gray-600/60">(You can select multiple fields)</span> </div>
                 <div className="mb-4 flex flex-wrap gap-y-3 gap-x-2 items-start w-full">
                   {item.options?.map((option) => {
                     const isSelected = selectedOids.includes(option.id);
@@ -327,6 +328,9 @@ function JobProfileDialog({ open, handleOpen, profile, setProfile }: Props) {
                         onClick={() => handleChange(item.id, option.id, "multiple")}
                         type="button"
                       >
+                            {isSelected && (
+      <Check size={18} className="text-white " />
+      )}
                         {option.text}
                       </button>
                     );

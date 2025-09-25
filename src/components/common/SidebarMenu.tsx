@@ -54,7 +54,7 @@ function SidebarMenu({ items, ViewProfile }: Props) {
 
   const handleAvatarClick = () => {
     if (fileInputRef.current) {
-      fileInputRef.current.value = ""; // Reset file input
+      fileInputRef.current.value = ""; 
       fileInputRef.current.click();
     }
   };
@@ -80,7 +80,7 @@ await updateAvatar(formData).unwrap();
   };
 
   const name = profile?.name || "Loading...";
-  const email = profile?.email || "";
+  // const email = profile?.email || "";
   let avatar =
     profile?.avatar && profile.avatar !== ""
       ? profile.avatar
@@ -92,7 +92,7 @@ await updateAvatar(formData).unwrap();
   }
 
   const content = (
-    <div className="min-h-[20rem] w-full min-w-[18rem] px-4 py-6 bg-[#fff] rounded-lg shadow-2xl">
+    <div className="min-h-[20rem] w-full min-w-[22rem] px-4  py-6 bg-[#fff] rounded-lg shadow-2xl">
       <div className="flex items-center gap-4">
         <CustomPieChart percentage={80}>
           <div
@@ -121,19 +121,19 @@ await updateAvatar(formData).unwrap();
               disabled={avatarUploading}
             />
             {/* Edit icon */}
-            <span className="absolute bottom-1 right-1 bg-[#F2A307] text-white rounded-full p-1 flex items-center justify-center shadow group-hover:opacity-100 opacity-90 transition">
-              <FiEdit2 size={16} />
-            </span>
+          <span className="absolute bottom-3 right-4 text-white/80 rounded-full p-1 flex items-center justify-center shadow opacity-0 group-hover:opacity-100 transition">
+    <FiEdit2 size={22} />
+  </span>
           </div>
         </CustomPieChart>
         <div className="flex flex-col ">
-          <div className="text-[1.7rem] font-semibold">{name}</div>
-          <div className="text-sm text-[#667085]">{email}</div>
+          <div className="text-[1.2rem] font-semibold">{name}</div>
+          {/* <div className="text-[1rem] text-[#667085]">{email}</div> */}
           {ViewProfile === true ? (
             <div>
               <button
                 onClick={handleViewProfileClick}
-                className="text-[#F2A307] border-1 border-[#F2A307] font-medium rounded-full bg-[#F2A3071A] px-2 py-1 m-2 hover:bg-[#F2A307]/40"
+                className="text-[#1B2A37] border-1 border-[#F2A307] font-medium rounded-full bg-[#F2A307] px-2 py-1 m-2 "
               >
                 View Profile
               </button>
@@ -151,7 +151,7 @@ await updateAvatar(formData).unwrap();
 
           return (
             <div
-              className={`flex justify-between border-cool-gray py-3 px-4 font-medium hover:cursor-pointer hover:opacity-90 transition-all  w-full ${
+              className={`flex justify-between border-cool-gray py-3 px-4 text-[#1B2A37] font-medium hover:cursor-pointer  transition-all  w-full ${
                 isCurrentPage ? "bg-primary rounded-full" : "#fff"
               } ${!lastItem ? "border-b" : ""}`}
               key={item.id}

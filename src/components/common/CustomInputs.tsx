@@ -25,7 +25,7 @@ export const TextInput = ({
 }: InputProps) => {
   const classes = `w-full border-none focus-visible:ring-[0px] shadow-none ${className}`;
   const divClasses = `flex items-center rounded-full bg-[#ffffff] py-2 px-4 ${
-    iconLast ? "flex-row-reverse" : ""
+    iconLast ? "flex-row-reverse font-normal" : ""
   } ${divClassName}`;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,7 +82,7 @@ export const PasswordInput = ({
           className="p-0 m-0"
           onClick={() => setShowPassword((prev) => !prev)}
         >
-          {showPassword ? eyeClosedIcon : eyeOpenIcon}
+          {showPassword ?   eyeOpenIcon :eyeClosedIcon}
         </button>
       )}
     </div>

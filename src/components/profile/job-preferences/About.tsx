@@ -42,7 +42,7 @@ function About() {
           )}
         </div>
 
-        <div className="text-[var(--slat-gray)] min-h-[4rem]">
+        <div className="text-[var(--slat-gray)] min-h-[4rem] w-[90%]">
           {isLoading
             ? "Loading..."
             : about ||

@@ -14,13 +14,20 @@ function Page() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const [changePassword] = useChangePasswordMutation();
+  const [changePassword, { isLoading }] = useChangePasswordMutation();
 
   const handleChangePassword = async () => {
+    // Check for empty fields
     if (!currentPassword || !newPassword || !confirmPassword) {
       return toast.error("All fields are required");
     }
 
+    // Check new password length
+    if (newPassword.length < 6) {
+      return toast.error("New password must be at least 6 characters");
+    }
+
+    // Check confirm password match
     if (newPassword !== confirmPassword) {
       return toast.error("New and Confirm passwords do not match");
     }
@@ -29,27 +36,27 @@ function Page() {
       const res = await changePassword({ currentPassword, newPassword }).unwrap();
       toast.success(res.message || "Password updated successfully");
 
+      // Reset fields
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
-    }  catch (error) {
-  if (error instanceof Error) {
-    console.error(error.message);
-    // Use error.message in your UI
-  } else {
-    console.error("An unknown error occurred");
-    // Fallback error message
-  }
-}
+    } catch (error) {
+      const message =
+"An error occurred";
+      toast.error(message);
+      console.error(error);
+    }
   };
 
   return (
     <div className="flex flex-col card">
       <div className="flex w-full justify-between text-3xl font-medium">
         <div>Reset Password</div>
-        <CustomButton className="py-2" onClick={handleChangePassword}
-        // disabled={isLoading}
-         >
+        <CustomButton
+          className="py-2"
+          onClick={handleChangePassword}
+          disabled={isLoading}
+        >
           <div className="flex items-center gap-2">
             <div>Save</div>
             <div>
@@ -61,7 +68,7 @@ function Page() {
 
       <SimpleLine className="my-3" />
 
-      <div className="mt-5 flex flex-col gap-3 mb-2 ">
+      <div className="mt-5 flex flex-col gap-3 mb-2">
         <PasswordInput
           text={currentPassword}
           setText={setCurrentPassword}

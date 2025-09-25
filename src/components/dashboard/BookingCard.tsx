@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import BookingDetailsDialog from "@/components/dashboard/BookingDetailsDialog";
-
+import {
+  calendar
+} from "@/lib/svg_icons";
 interface WeeklySchedule {
   weekDay: number; // 0 = Sunday ... 6 = Saturday
   startTime: string;
@@ -64,13 +66,25 @@ export function BookingCard({
       <div className="bg-white rounded-xl px-4 sm:px-6 py-4 flex flex-wrap justify-between items-start gap-4 shadow-sm border w-full">
         {/* Booking ID and Care Type */}
         <div className="flex flex-col gap-1 text-sm min-w-[150px] w-full sm:w-auto">
-          <div className="text-[14px] sm:text-[20px] font-medium text-[#1B2A37]">
-            Booking ID: #{bookingId}
-          </div>
+    <div className="text-[14px] sm:text-[20px] font-medium text-[#1B2A37]">
+  Booking ID: #{bookingId?.toString().slice(-5)}
+</div>
+
           <div>
             Care Type: <span className="text-[#7A8B9B]">Home Care</span>
           </div>
    
+        </div>
+             <div className="flex items-center gap-3 w-full sm:w-auto">
+      
+          <div className="flex flex-row gap-2 mt-3 ">
+            
+            <div>{calendar}</div>
+            <div className="text-[1rem]  text-[#1B2A37]">
+              {startDate}
+            </div>
+         
+          </div>
         </div>
 
         {/* User Info */}
@@ -89,6 +103,9 @@ export function BookingCard({
             </div>
           </div>
         </div>
+
+              {/* User Info */}
+   
 
         {/* Action Buttons */}
         <div className="w-full sm:w-auto mt-2 sm:mt-0 flex flex-col gap-2">

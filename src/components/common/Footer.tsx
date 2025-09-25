@@ -22,28 +22,30 @@ type linkSection = {
 const link: linkSection[] = [
   {
     Company: [
-      { title: "Features", link: "/" },
+      { title: "About Us", link: "/" },
       { title: "Pricing", link: "/" },
-      { title: "About us", link: "/" },
-      { title: "Contact", link: "/" },
+    
+        { title: "Features", link: "/" },
+      { title: "We accept Medicaid", link: "/" },
     ],
     Resource: [
-      { title: "Blog", link: "/" },
-      { title: "Customer stories", link: "/" },
-      { title: "Information", link: "/" },
-      { title: "Legal", link: "/" },
-      { title: "Payments", link: "/" },
+      { title: "Transportation", link: "/" },
+      { title: "Veteran Homecare", link: "/" },
+      { title: "Private Sitters", link: "/" },
+      { title: "Homemakers", link: "/" },
+  
     ],
     Carrer: [
-      { title: "Jobs", link: "/" },
-      { title: "Hiring", link: "/" },
-      { title: "News", link: "/" },
-      { title: "Tips and Tricks", link: "/" },
+      { title: "Sugarland, TX", link: "/" },
+      { title: "Katy, TX", link: "/" },
+      { title: "Spring, TX", link: "/" },
+      { title: "Cypress, TX", link: "/" },
     ],
     Help: [
-      { title: "FAQ", link: "/" },
-      { title: "Help Center", link: "/" },
-      { title: "Support", link: "/" },
+      { title: "FAQ's", link: "/" },
+      { title: "Privacy Policy", link: "/" },
+      { title: "Resources", link: "/" },
+        { title: "Veterans Finacial Assistance", link: "/" },
     ],
   },
 ];
@@ -94,22 +96,24 @@ const socialLink: linkItems[] = [
 ];
 const Footer = () => {
   return (
-    <div className=" py-8 mt-15 lg:px-24 md:px-12 px-6 bg-primary-foreground text-white overflow-hidden">
-      <div className="flex flex-wrap justify-between gap-2  ">
+      <>
+    <div className=" py-8 mt-15 lg:px-24 md:px-12 px-6 bg-primary-foreground text-white overflow-hidden ">
+      <div className="flex flex-wrap justify-between gap-2 ">
         <div className="sm:w-79 w-full ">
           <div className="relative w-50 h-30 x">
+             <Link href={"/dashboard"}>
             <Image src={"/Logo.svg"} alt="Logo" fill />
+            </Link>
           </div>
           <p className="mt-4 text-sm text-gray-300">
-            CARENEST: Pioneering Advanced Medical Solutions to Elevate
-            Healthcare Services and Improve Patient Outcomes
+          CareWorks provides compassionate, personalized eldercare services that support seniors and their families with dignity and respect.
           </p>  
         </div>
 
         <FooterLink title="Company" links={link[0]["Company"]} />
-        <FooterLink title="Resource" links={link[0]["Resource"]} />
-        <FooterLink title="Carrer" links={link[0]["Carrer"]} />
-        <FooterLink title="Help" links={link[0]["Help"]} />
+        <FooterLink title="Other Services" links={link[0]["Resource"]} />
+        <FooterLink title="Location we Cover" links={link[0]["Carrer"]} />
+        <FooterLink title="Quick Links" links={link[0]["Help"]} />
       </div>
 
       <div className="my-7 flex items-center justify-between flex-wrap gap-y-5">
@@ -134,13 +138,13 @@ const Footer = () => {
             className="font-bold xl:text-[130px] lg:text-[80px] 
            text-gray-400/30 mx-auto tracking-widest sm:mt-0 mt-2"
           >
-            CARENEST
+            CAREWORKS
           </h1>
           <div></div>
         </div>
       </div>
 
-      <hr />
+    
 
       <div className="flex flex-wrap gap-y-4 items-center justify-between sm:my-4 sm:mt-4 mt-8">
         <div className="flex items-center justify-around sm:w-auto w-full gap-x-5">
@@ -171,6 +175,8 @@ const Footer = () => {
         </div>
       </div>
     </div>
+    <div className="relative bottom-25">  <hr /></div>
+  </>
   );
 };
 

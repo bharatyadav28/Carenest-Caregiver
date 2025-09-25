@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import {toast} from "react-toastify";
 import { CustomDialog } from "@/components/common/CustomDialog";
 import {
   DialogConfirmButton,
@@ -11,7 +11,7 @@ import { useUpdateZipcodeMutation } from "@/store/api/profileApi";
 interface Props {
   open: boolean;
   handleOpen: () => void;
-  zipcodes: number[]; // parent still provides array
+  zipcodes: number[]; 
   setZipcodes: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
@@ -24,8 +24,8 @@ function ZipcodeDialog({ open, handleOpen, zipcodes, setZipcodes }: Props) {
   const handleSave = async () => {
     const numericZip = Number(zipcode.trim());
 
-    if (isNaN(numericZip) || zipcode.length < 4 || zipcode.length > 6) {
-      alert("Please enter a valid zipcode (4–6 digits).");
+    if (isNaN(numericZip) ) {
+      toast.error("Please enter a valid zipcode ");
       return;
     }
 

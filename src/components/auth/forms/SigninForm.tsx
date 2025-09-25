@@ -12,68 +12,72 @@ import { Label } from "../../ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import Link from "next/link";
 import Cookies from "js-cookie";
+import { toast } from "react-toastify"; 
 
 function SigninForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState("false");
-  const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  
+
   const router = useRouter();
   const [signin] = useSigninMutation();
 
   const handleSubmit = async () => {
-    if (!email || !password) {
-      setError("Please fill in all fields");
+    // ✅ Validation
+    if (!email) {
+      toast.error("Email is required");
+      return;
+    }
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+    if (!password) {
+      toast.error("Password is required");
+      return;
+    }
+    if (password.length < 6) {
+      toast.error("Password must be at least 6 characters");
       return;
     }
 
     setIsLoading(true);
-    setError(null);
 
     try {
       const response = await signin({
         email,
         password,
-        role: "giver" // or "receiver" based on your application
+        role: "giver", // adjust if needed
       }).unwrap();
 
       if (response.success) {
-        // Set tokens with appropriate expiration
+        // ✅ Success toast
+        toast.success("Signed in successfully 🎉");
+
+        // Store tokens
         if (rememberMe === "true") {
-          Cookies.set("authToken", response.data.accessToken, { expires: 7 }); // 1 week
-          Cookies.set("refreshToken", response.data.refreshToken, { expires: 30 }); // 1 month
+          Cookies.set("authToken", response.data.accessToken, { expires: 7 });
+          Cookies.set("refreshToken", response.data.refreshToken, { expires: 30 });
         } else {
-          Cookies.set("authToken", response.data.accessToken); // Session cookie
-          Cookies.set("refreshToken", response.data.refreshToken); // Session cookie
+          Cookies.set("authToken", response.data.accessToken);
+          Cookies.set("refreshToken", response.data.refreshToken);
         }
-        
+
         router.push("/dashboard");
       } else {
-        setError(response.message || "Sign in failed");
+        toast.error(response.message || "Sign in failed");
       }
     } catch (error) {
-  if (error instanceof Error) {
-    console.error(error.message);
-    // Use error.message in your UI
-  } else {
-    console.error("An unknown error occurred");
-    // Fallback error message
-  }
-} finally {
+      toast.error( "Invalid credentials");
+      console.log(error)
+    } finally {
       setIsLoading(false);
     }
   };
 
   return (
     <div className="my-6 flex flex-col gap-4">
-      {error && (
-        <div className="text-red-500 text-sm mb-2 text-center">
-          {error}
-        </div>
-      )}
-
       <TextInput
         text={email}
         setText={setEmail}
@@ -92,18 +96,22 @@ function SigninForm() {
       <RadioGroup
         value={rememberMe}
         onValueChange={setRememberMe}
-        className="gap-3 "
+        className="gap-3"
       >
         <div className="flex items-center space-x-2">
-          <RadioGroupItem value="true" id="remember-me" className="!p-2 border-black border-2"/>
+          <RadioGroupItem
+            value="true"
+            id="remember-me"
+            className="!p-2 border-black border-2"
+          />
           <Label htmlFor="remember-me">Remember me</Label>
         </div>
       </RadioGroup>
 
-      <CustomButton 
-        className="mt-4 mb-3" 
+      <CustomButton
+        className="mt-4 mb-3"
         onClick={handleSubmit}
-       // disabled={isLoading}
+        disabled={isLoading}
       >
         {isLoading ? "Signing In..." : "Sign In"}
       </CustomButton>

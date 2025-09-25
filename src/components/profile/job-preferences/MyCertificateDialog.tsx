@@ -9,11 +9,22 @@ import {
   useUploadDocumentMutation,
   useSaveCertificateMutation,
 } from "@/store/api/profileApi";
+import { toast } from "react-toastify"; 
+import "react-toastify/dist/ReactToastify.css";
 
 interface CertificateDialogProps {
   open: boolean;
   handleOpen: () => void;
 }
+
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+const ALLOWED_TYPES = [
+  "application/pdf",
+  "application/msword",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "image/png",
+  "image/jpeg",
+];
 
 const CertificateDialog: React.FC<CertificateDialogProps> = ({
   open,
@@ -24,19 +35,42 @@ const CertificateDialog: React.FC<CertificateDialogProps> = ({
   const [saveCertificate] = useSaveCertificateMutation();
   const [loading, setLoading] = useState(false);
 
-const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  const fileList = e.target.files;
-  if (!fileList) return; // TS now knows it's not null
-  setFiles((prev) => [...prev, ...Array.from(fileList)]);
-  e.target.value = ""; // reset input
-};
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const fileList = e.target.files;
+    if (!fileList) return;
+
+    const newFiles = Array.from(fileList);
+
+    const validFiles: File[] = [];
+    newFiles.forEach((file) => {
+      if (!ALLOWED_TYPES.includes(file.type)) {
+        toast.error(`Invalid file type: ${file.name}`);
+        return;
+      }
+      if (file.size > MAX_FILE_SIZE) {
+        toast.error(` ${file.name} exceeds 10MB limit`);
+        return;
+      }
+      validFiles.push(file);
+    });
+
+    if (validFiles.length > 0) {
+      setFiles((prev) => [...prev, ...validFiles]);
+    }
+
+    e.target.value = ""; // reset input
+  };
 
   const removeFile = (index: number) => {
     setFiles((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleSubmit = async () => {
-    if (files.length === 0) return;
+    if (files.length === 0) {
+      toast.warning("Please upload at least one document before saving.");
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -51,10 +85,13 @@ const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         // Step 2: Save certificate reference
         await saveCertificate({ fileUrl }).unwrap();
       }
+
+      toast.success("✅ Certificate(s) uploaded successfully!");
       setFiles([]);
       handleOpen(); // close dialog
     } catch (err) {
-      console.error("❌ Upload failed:", err);
+      console.error(" Upload failed:", err);
+      toast.error("Failed to upload certificate(s). Please try again.");
     } finally {
       setLoading(false);
     }
@@ -69,13 +106,13 @@ const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     >
       <div className="flex flex-col gap-4 items-center text-center w-full">
         <div className="text-2xl font-semibold">My Certification</div>
-        <div className="text-[var(--cool-gray)] text-sm">
-          Upload your documents
-        </div>
 
         <div className="w-full my-4 flex flex-col gap-3">
+          <span className="text-sm me-70">
+            Upload your documents <span className="text-red-600">*</span>
+          </span>
           <div className="border-2 border-dashed rounded-xl p-6 flex flex-col items-center gap-2">
-            <label className="text-[var(--primary-color)] cursor-pointer text-sm underline">
+            <label className="text-[#F2A307] cursor-pointer text-sm underline">
               Upload your document
               <input
                 type="file"
@@ -122,7 +159,6 @@ const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
           <DialogConfirmButton
             onClick={handleSubmit}
             title={loading ? "Saving..." : "Save"}
-          
           />
         </div>
       </div>

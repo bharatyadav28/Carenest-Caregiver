@@ -10,7 +10,7 @@ function page() {
         <DashboardMenu />
       </div>
 
-      <div className="lg:col-start-7 lg:col-end-25 col-start-1 col-end-25 g:mt-0 mt-8  ">
+      <div className="lg:col-start-7 lg:col-end-25 col-start-1 col-end-25 g:mt-0 ">
         {<InboxBlock />}
       </div>
     </div>

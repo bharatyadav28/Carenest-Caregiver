@@ -31,8 +31,8 @@ function HeroSection({ title }: Props) {
         }}
       ></div>
 
-      <div className="z-20 absolute lg:left-28 left-8 top-1/2 -translate-y-1/2 text-[#fff] text-6xl font-medium capitalize">
-        {formatTitle || title}
+      <div className="z-20 absolute lg:left-28 left-8 top-1/2 -translate-y-1/2 text-[#fff] text-5xl font-medium capitalize">
+    {title || formatTitle=="profile views" ?"Who's Looking  Your Profile" :formatTitle }
       </div>
     </div>
   );

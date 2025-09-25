@@ -10,7 +10,7 @@ function Layout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const commonClasses = "lg:px-28 px-8";
+  const commonClasses = "lg:px-28 px-8 ";
 
   return (
     <div className="min-h-screen flex flex-col ">

@@ -68,11 +68,15 @@ function Header({ className }: props) {
   return (
     <>
       <div
-        className={`flex justify-between bg-primary-foreground  text-[#fff] items-center py-5 ${className}`}
+        className={`flex justify-between bg-primary-foreground sticky top-0 z-9999 text-[#fff] items-center py-2 ${className}`}
       >
+         <Link href={"/dashboard"}>
  <div className="relative w-40 h-21 x">
+  
             <Image src={"/Logo.svg"} alt="Logo" fill  />
+          
           </div>
+            </Link>
         <div className="lg:block hidden"> {navContent}</div>
 
         <button onClick={handleOpenMenu} className="lg:hidden">

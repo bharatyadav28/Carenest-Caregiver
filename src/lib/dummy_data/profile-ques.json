@@ -9,7 +9,7 @@
         { "id": "opt2", "text": "I provide care only for male clients" },
         { "id": "opt3", "text": "I provide care for everybody" }
       ],
-      "placeholder": "Add type of caregiving services you’re interested in"
+      "placeholder": "Add type of caregiving services you’re interested"
     },
     {
       "id": "q2",
@@ -42,7 +42,7 @@
       "ques": "PRN (Pro re nata)",
       "options": [
         { "id": "opt13", "text": "As Needed" },
-        { "id": "opt14", "text": "Scheduled" }
+        { "id": "opt14", "text": " Fixed Scheduled" }
       ],
       "placeholder": "Add PRN"
     },
