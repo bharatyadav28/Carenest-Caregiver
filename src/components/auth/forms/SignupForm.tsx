@@ -121,9 +121,9 @@ function SignupForm() {
       } else {
         toast.error(response.message || "Signup failed");
       }
-    } catch (error) {
-      console.log(error)
-      toast.error( "Something went wrong. Try again.");
+    } catch (error:any) {
+      console.log(error);
+      toast.error(error.data.message);
     }
   };
 

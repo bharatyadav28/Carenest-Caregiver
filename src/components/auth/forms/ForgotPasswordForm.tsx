@@ -36,11 +36,10 @@ function ForgotPasswordForm() {
       } else {
         toast.error(response.message || "Failed to send OTP");
       }
-    } catch (error) {
-      const message =  "An unknown error occurred";
-      toast.error(message);
-      console.error(error);
-    } finally {
+    } catch (error:any) {
+          console.log(error);
+          toast.error(error.data.message);
+        } finally {
       setIsLoading(false);
     }
   };

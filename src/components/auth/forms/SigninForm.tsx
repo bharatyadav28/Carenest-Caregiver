@@ -68,9 +68,10 @@ function SigninForm() {
       } else {
         toast.error(response.message || "Sign in failed");
       }
-    } catch (error) {
-      toast.error( "Invalid credentials");
-      console.log(error)
+    } catch (error:any) {
+          console.log(error);
+          toast.error(error.data.message);
+        
     } finally {
       setIsLoading(false);
     }
