@@ -1,4 +1,5 @@
 import React from "react";
+import Cookies from "js-cookie";
 
 import { CustomDialog } from "@/components/common/CustomDialog";
 import { plansType } from "./ViewPlans";
@@ -7,6 +8,7 @@ import {
   DialogConfirmButton,
   TransaparentButton,
 } from "@/components/common/CustomButton";
+import { Button } from "@/components/ui/button";
 
 interface Props {
   open: boolean;
@@ -25,8 +27,34 @@ function Checkout({
 }: Props) {
   const planPeroid = visiblePlan?.period;
 
-  const handleConfirm = () => {
-    setHasSubscription(true);
+  const baseUrl = "https://carenest-backend-8y2y.onrender.com";
+  // const baseUrl = "http://localhost:4000";
+
+  const handleConfirm = async () => {
+    // setHasSubscription(true);
+    const token = Cookies.get("authToken");
+    console.log("token", token);
+    const response = await fetch(
+      `${baseUrl}/api/v1/order/create-checkout-session`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          priceID: "jImwwUm308mwmExVFhCXj",
+        }),
+      }
+    );
+    const responseData = await response.json();
+    const checkoutUrl = responseData?.data?.checkoutUrl;
+    console.log("checkoutUrl", checkoutUrl, responseData);
+    if (checkoutUrl) {
+      console.log("Redirecting to:", checkoutUrl);
+      window.location.href = checkoutUrl;
+    }
+
     handleOpen();
   };
 
