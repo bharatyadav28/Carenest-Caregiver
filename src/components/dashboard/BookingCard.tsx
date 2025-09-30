@@ -9,6 +9,7 @@ interface WeeklySchedule {
   startTime: string;
   endTime: string;
 }
+export const cdnURL = "https://dev-carenest.s3.ap-south-1.amazonaws.com";
 
 interface BookingCardProps {
   bookingId: string;
@@ -90,7 +91,7 @@ export function BookingCard({
         {/* User Info */}
         <div className="flex items-center gap-3 min-w-[180px] w-full sm:w-auto">
           <img
-            src={avatar || "/profile-pic.png"}
+            src={ avatar || "/profile-pic.png"}
             alt="avatar"
             className="w-10 h-10 rounded-full object-cover"
           />

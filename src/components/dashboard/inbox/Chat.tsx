@@ -2,8 +2,8 @@
 import React, { useEffect, useRef } from "react";
 import DP from "@/components/common/DP";
 import user1ProfilePic from "@/assets/profilepic1.png";
-import user2ProfilePic from "@/assets/profilepic2.png";
 import { chatMessageType } from "@/lib/interface-types";
+import ProfilePic from "@/assets/profilepic1.png";
 
 
 interface Props {
@@ -40,10 +40,10 @@ const Chat = ({ messages, otherUserDetails }: Props) => {
             <DP
               url={
                 isOther && otherUserDetails?.avatar
-                  ? `https://dev-carenest.s3.ap-south-1.amazonaws.com${otherUserDetails.avatar}`
+                  ? ProfilePic
                   : isOther
                   ? user1ProfilePic
-                  : user2ProfilePic
+                  :ProfilePic
               }
               alt={isOther ? otherUserDetails?.name || "User" : "You"}
               className="!w-10 !h-10 rounded-full"

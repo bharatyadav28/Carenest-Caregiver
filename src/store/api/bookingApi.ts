@@ -115,7 +115,7 @@ export const bookingApi = createApi({
             user: {
               ...b.user,
               avatar: b.user.avatar && !b.user.avatar.startsWith('http')
-                ? `${cdnURL}/${b.user.avatar}`
+                ? `${cdnURL}${b.user.avatar}`
                 : b.user.avatar,
             },
           })),
@@ -154,7 +154,7 @@ export const bookingApi = createApi({
           user: {
             ...response.data.user,
             avatar: response.data.user.avatar && !response.data.user.avatar.startsWith('http')
-              ? `${cdnURL}/${response.data.user.avatar}`
+              ? `${cdnURL}${response.data.user.avatar}`
               : response.data.user.avatar,
           },
         },

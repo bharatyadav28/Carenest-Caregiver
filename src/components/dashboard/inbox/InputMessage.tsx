@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { LuSend as SendIcon } from "react-icons/lu";
-import { IoIosAttach as AttachmentIcon } from "react-icons/io";
+// import { IoIosAttach as AttachmentIcon } from "react-icons/io";
 import { Input } from "@/components/ui/input";
 import { chatMessageType } from "@/lib/interface-types";
 
@@ -33,9 +33,7 @@ const InputMessage = ({ userId, addMessage, sendMessage }: Props) => {
 
   return (
     <div className="flex items-center rounded-lg px-4 py-2 bg-[#F7F7F3] gap-2">
-      <button>
-        <AttachmentIcon size={21} className="text-gray-400" />
-      </button>
+   
       <Input
         value={message}
         onChange={(e) => setMessage(e.target.value)}
