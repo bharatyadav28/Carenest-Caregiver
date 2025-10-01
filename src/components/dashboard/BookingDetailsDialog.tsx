@@ -117,7 +117,8 @@ export default function BookingDetailsDialog({
             <div className="flex justify-between">
               <span>Service End Date:</span>
               <span className="text-[#7A8B9B]">
-                {new Date(data.endDate).toLocaleDateString()}
+              {data.endDate ? new Date(data.endDate).toLocaleDateString() : "N/A"}
+
               </span>
             </div>
           </div>

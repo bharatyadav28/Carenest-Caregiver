@@ -14,7 +14,7 @@ function DashboardMenu() {
     },
     {
       id: 2,
-      text: "Profile Views (543)",
+      text: "Profile Views",
       path: "/profile-views",
     },
     {

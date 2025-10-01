@@ -110,7 +110,7 @@ export const dashboardApi = createApi({
         const seekers = response.data.seekers.map((s) => {
           let avatar = s.avatar;
           if (avatar && !avatar.startsWith("http")) {
-            avatar = `${cdnURL}/${avatar}`;
+            avatar = `${cdnURL}${avatar}`;
           }
           return { ...s, avatar };
         });
