@@ -126,14 +126,16 @@ await updateAvatar(formData).unwrap();
   </span>
           </div>
         </CustomPieChart>
-        <div className="flex flex-col ">
-          <div className="text-[1.2rem] font-semibold">{name}</div>
+        <div className="flex flex-col items-center">
+          <div className="text-[1.4rem] font-semibold mb-1 capitalize">{name}</div>
           {/* <div className="text-[1rem] text-[#667085]">{email}</div> */}
           {ViewProfile === true ? (
             <div>
               <button
                 onClick={handleViewProfileClick}
-                className="text-[#1B2A37] border-1 border-[#F2A307] font-medium rounded-full bg-[#F2A307] px-2 py-1 m-2 "
+                className="text-[#F2A307] border-1 border-[#F2A307] font-medium rounded-full bg-[#F2A3071A] px-2 py-1 mt-1 text-md"
+
+
               >
                 View Profile
               </button>

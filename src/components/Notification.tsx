@@ -19,7 +19,7 @@ function Notification({ open, handleOpen }: Props) {
     <CustomSheet
       open={open}
       handleOpen={handleOpen}
-      className="md:!max-w-[25rem] !w-full rounded-l-3xl px-5 text-[var(--blue-gray] mx-0 ] "
+      className="md:!max-w-[25rem] !w-full rounded-l-3xl px-5 text-[var(--blue-gray] mx-0 ] z-99999"
     >
       <div className="mt-12">
         <div className="flex items-center">

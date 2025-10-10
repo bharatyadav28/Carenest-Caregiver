@@ -15,7 +15,7 @@ function AuthLayout({ image, children }: Props) {
           <div className="mb-0">
             <Image src={"/auth/logoblue.png"} alt="Logo" width={180} height={100} />
           </div>
-          <div className="h-full overflow-auto hide-scrollbar">{children}</div>
+          <div className="h-full ">{children}</div>
         </div>
 
         {/* Right image */}
@@ -51,7 +51,7 @@ function AuthLayout({ image, children }: Props) {
               <div className="mt-6 mb-3 items-center text-center font-semibold text-4xl">
              Join a Trusted Network of Professional Elderly Caregivers
               </div>
-              <div className="text-[#98A2B3] text-sm text-center px-0">
+              <div className="text-[#98A2B3]  text-center px-0 text-xl">
                Offer your caregiving skills, connect with families in need, and find caregiving jobs that match your skills and location.
               </div>
             </div>

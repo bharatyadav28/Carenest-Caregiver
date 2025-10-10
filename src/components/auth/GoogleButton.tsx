@@ -16,6 +16,8 @@ function GoogleButton() {
     onSuccess: async (response) => {
       try {
         const res = await fetch("https://carenest-backend-8y2y.onrender.com/api/v1/user/google-auth", {
+       //const res = await fetch("http://localhost:4000/api/v1/user/google-auth", {
+
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ googleToken: response.access_token,role:"giver" }),
@@ -57,7 +59,7 @@ function GoogleButton() {
       className="bg-[#ffffff] hover:bg-[#ffffff] text-[var(--blue-gray)]"
       onClick={() => googleLogin()}
     >
-      <div className="flex gap-2 items-center">
+      <div className="flex gap-2 items-center mb-4 text-xl">
         <div>{googleIcon}</div>
         <div>Continue with Google</div>
       </div>

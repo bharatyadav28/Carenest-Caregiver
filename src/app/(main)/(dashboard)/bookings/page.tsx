@@ -45,14 +45,14 @@ function MyBookingPage() {
       <div className="text-[#1B2A37] text-[30px] font-medium">Bookings</div>
 
       {/* Tab Filters */}
-      <div className="flex gap-4 flex-wrap">
+      <div className="flex gap-4 flex-wrap ">
         {tabs.map((tab) => (
           <button
             key={tab}
-            className={`px-5 py-2 rounded-full text-sm font-medium transition ${
+            className={`px-5 py-2 rounded-full text-lg font-medium transition ${
               activeTab === tab
                 ? "bg-[#1B2A37] text-white"
-                : "bg-[#F4F4F4] text-[#1B2A37]"
+                : "text-[#1B2A37] border border-[#233D4D]"  
             }`}
             onClick={() => setActiveTab(tab)}
           >

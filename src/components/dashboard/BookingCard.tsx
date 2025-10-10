@@ -77,15 +77,7 @@ export function BookingCard({
    
         </div>
              <div className="flex items-center gap-3 w-full sm:w-auto">
-      
-          <div className="flex flex-row gap-2 mt-3 ">
-            
-            <div>{calendar}</div>
-            <div className="text-[1rem]  text-[#1B2A37]">
-              {startDate}
-            </div>
-         
-          </div>
+     
         </div>
 
         {/* User Info */}
@@ -103,6 +95,15 @@ export function BookingCard({
               {email}
             </div>
           </div>
+           
+          <div className="flex flex-row gap-2 mt-3 ms-2 ">
+            
+            <div>{calendar}</div>
+            <div className="text-[1rem]  text-[#1B2A37]">
+              {startDate}
+            </div>
+         
+          </div>
         </div>
 
               {/* User Info */}
@@ -111,7 +112,7 @@ export function BookingCard({
         {/* Action Buttons */}
         <div className="w-full sm:w-auto mt-2 sm:mt-0 flex flex-col gap-2">
           <Button
-            className="bg-[#1B2A37] text-white px-4 py-2 rounded-full text-sm w-full sm:w-auto"
+            className="bg-[#1B2A37] text-white px-4 py-2 mt-2 rounded-full text-sm w-full sm:w-auto"
             onClick={() => setShowDialog(true)}
           >
             View Details

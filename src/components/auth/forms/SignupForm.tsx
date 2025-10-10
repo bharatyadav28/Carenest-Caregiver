@@ -128,7 +128,7 @@ function SignupForm() {
   };
 
   return (
-    <div className="my-6 flex flex-col gap-4">
+    <div className="my-6 flex flex-col gap-2">
       <TextInput
         text={name}
         setText={setName}

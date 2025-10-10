@@ -30,7 +30,7 @@ export function DashboardStatCard({ label, value, index }: DashboardStatCardProp
       <div className="text-2xl font-semibold text-[#1B2A37]">
         {value.toString().padStart(2, "0")}
       </div>
-      <div className="text-[#7A8B9B] text-sm">{label}</div>
+      <div className="text-[#7A8B9B] text-xl">{label}</div>
     </div>
   );
 }

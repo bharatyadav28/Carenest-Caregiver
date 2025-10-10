@@ -64,7 +64,7 @@ function ViewProfile() {
         subscribed: true, // not available in backend response
         createdAt: s.createdAt, // Keep original timestamp for sorting
       }))
-      // Sort in reverse chronological order (newest first)
+      
       .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()) || [];
 
   const handleView = (viewer: ProfileView) => {

@@ -27,7 +27,7 @@ function NameHeader() {
           <div className="text-lg font-medium">Admin</div>
         </div>
         <div>
-          <DropdownMenu>
+          {/* <DropdownMenu>
             <DropdownMenuTrigger>
               <OptionsIcon size={20} />
             </DropdownMenuTrigger>
@@ -41,7 +41,7 @@ function NameHeader() {
                 </button>
               </DropdownMenuItem>
             </DropdownMenuContent>
-          </DropdownMenu>
+          </DropdownMenu> */}
         </div>
       </div>
 

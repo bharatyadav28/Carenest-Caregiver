@@ -62,7 +62,7 @@ interface SaveDocumentsResponse {
 }
 
 const baseAddr = 'https://carenest-backend-8y2y.onrender.com/api/v1/user';
-
+// const baseAddr = 'http://localhost:4000/api/v1/user';
 // Typed base queries
 const baseQuery = fetchBaseQuery({
   baseUrl: baseAddr,
@@ -265,6 +265,7 @@ export const authApi = createApi({
     uploadDocument: builder.mutation<UploadDocumentResponse, FormData>({
       query: (formData) => ({
         url: "https://carenest-backend-8y2y.onrender.com/api/v1/document/upload",
+       // url: "http://localhost:4000/api/v1/document/upload",
         method: "POST",
         body: formData,
             headers: {
@@ -277,6 +278,7 @@ export const authApi = createApi({
     saveDocuments: builder.mutation<SaveDocumentsResponse, SaveDocumentsRequest>({
       query: (body) => ({
         url: "https://carenest-backend-8y2y.onrender.com/api/v1/document",
+        // url: "http://localhost:4000/api/v1/document",
         method: "POST",
         body,
             headers: {

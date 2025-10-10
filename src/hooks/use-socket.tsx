@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import { io, Socket } from "socket.io-client";
 
 const SOCKET_URL = "https://carenest-backend-8y2y.onrender.com";
-
+//const SOCKET_URL = "http://localhost:4000";
 export const useSocket = (token?: string) => {
   const socketRef = useRef<Socket | null>(null);
 

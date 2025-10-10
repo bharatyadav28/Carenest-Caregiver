@@ -42,7 +42,7 @@ const InputMessage = ({ userId, addMessage, sendMessage }: Props) => {
         onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
       />
       <button onClick={handleSendMessage}>
-        <SendIcon size={18} className="text-blue-500" />
+        <SendIcon size={18} className="text-[#233D4D]" />
       </button>
     </div>
   );

@@ -18,42 +18,36 @@ function MyProfilePage() {
   const [mobile, setMobile] = useState("");
   const [address, setAddress] = useState("");
 
-  // Pre-fill form when profile is loaded
+  // ✅ Pre-fill form with normalized gender
   useEffect(() => {
     if (profile) {
       setName(profile.name || "");
       setEmail(profile.email || "");
       setAddress(profile.address || "");
-      setGender(profile.gender || "");
+      setGender(profile.gender || ""); // normalize to lowercase
       setMobile(profile.mobile || "");
     }
   }, [profile]);
 
   const handleSave = async () => {
-    // Validate all fields
-    if (!name.trim()) {
-      return toast.error("Name is required");
-    }
-
-    if (!gender.trim()) {
-      return toast.error("Gender is required");
-    }
-
-    if (!address.trim()) {
-      return toast.error("Address is required");
-    }
-
-   
-    if (!mobile.trim()) {
-      return toast.error("Please enter phone number");
-    }
+    if (!name.trim()) return toast.error("Name is required");
+    if (!gender.trim()) return toast.error("Gender is required");
+    if (!address.trim()) return toast.error("Address is required");
+    if (!mobile.trim()) return toast.error("Please enter phone number");
 
     try {
-      await updateProfile({ name, email, address, gender, mobile }).unwrap();
+      // ✅ send gender in same lowercase format or capitalize if backend expects that
+      await updateProfile({
+        name,
+        email,
+        address,
+        gender, // or gender.charAt(0).toUpperCase() + gender.slice(1)
+        mobile,
+      }).unwrap();
+
       toast.success("Profile updated successfully!");
     } catch (error) {
-      const message =  "An error occurred";
-      toast.error(message);
+      toast.error("An error occurred");
       console.error(error);
     }
   };
@@ -62,7 +56,6 @@ function MyProfilePage() {
     <div className="flex flex-col card">
       <div className="flex w-full justify-between text-3xl font-medium">
         <div>Personal Information</div>
-
         <CustomButton className="py-2" onClick={handleSave} disabled={isUpdating}>
           <div className="flex items-center gap-2">
             <div>{isUpdating ? "Saving..." : "Save"}</div>
@@ -72,14 +65,14 @@ function MyProfilePage() {
       </div>
 
       <div className="w-full border-t-1 border-[#33333333] my-3">
-        <div className="mt-6 flex flex-col gap-3">
+        <div className="mt-6 flex flex-col  gap-3">
           <TextInput
             text={name}
             setText={setName}
             Icon={personIcons}
             placeholder="Enter User Name"
             iconLast={true}
-            divClassName="!bg-[#F8F8F8] text-[#667085] font-medium"
+            divClassName="!bg-[#F8F8F8] !text-[#667085] font-medium"
           />
 
           <TextInput
@@ -87,20 +80,26 @@ function MyProfilePage() {
             setText={setEmail}
             Icon={EmailIcons}
             type="email"
-            disabled={true} // Email field disabled
+            disabled={true}
             placeholder="Enter Email ID"
             iconLast={true}
             divClassName="text-[#667085] font-medium"
           />
 
-          <TextInput
-            text={gender}
-            setText={setGender}
-            Icon={personIcons}
-            placeholder="Enter Gender"
-            iconLast={true}
-            divClassName="!bg-[#F8F8F8] text-[#667085] font-medium"
-          />
+          {/* ✅ Gender Dropdown (lowercase values) */}
+          <div className="flex items-center gap-2 !bg-[#F8F8F8] py-3 rounded-full font-normal ps-4 ms-1 pe-3 text-[#667085]">
+            <select
+              className="flex-1 bg-transparent outline-none"
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
+            >
+              <option value="">Select Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+            <div className="w-6">{personIcons}</div>
+          </div>
 
           <TextInput
             text={address}

@@ -69,10 +69,10 @@ export default function BookingDetailsDialog({
             className="w-12 h-12 rounded-full"
           />
           <div>
-            <h2 className="text-[20px] font-semibold text-[#1B2A37] leading-[24px] mb-2">
+            <h2 className="text-[24px] font-semibold text-[#1B2A37] leading-[24px] mb-2">
               {data.name}
             </h2>
-            <p className="text-[16px] leading-[20px] text-[#7A8B9B] flex items-start">
+            <p className="text-[18px] leading-[20px] text-[#7A8B9B] flex items-start">
               {arrow} {data.address}
             </p>
           </div>
@@ -92,10 +92,10 @@ export default function BookingDetailsDialog({
 
         {/* Booking Details */}
         <div>
-          <h3 className="text-[16px] font-semibold text-[#1B2A37] mb-3">
+          <h3 className="text-[20px] font-semibold text-[#1B2A37] mb-3">
             Booking Details
           </h3>
-          <div className="text-[14px] leading-[20px] text-[#1B2A37] space-y-3">
+          <div className="text-[16px] leading-[20px] text-[#1B2A37] space-y-3">
             <div className="flex justify-between">
               <span>Booking ID:</span>
               <span className="text-[#7A8B9B]">#{data.id}</span>
@@ -126,8 +126,8 @@ export default function BookingDetailsDialog({
 
    {/* Weekly Schedule Section */}
         <div>
-          <h3 className="text-[16px] font-semibold text-[#1B2A37] mb-3">
-            Weekly Schedule  <span className="text-xs font-medium text-gray-600">  (This Schedule may vary)</span> 
+          <h3 className="text-[20px] font-semibold text-[#1B2A37] mb-3">
+            Weekly Schedule  <span className="text-[16px] font-medium text-gray-600">  (This Schedule may vary)</span> 
           </h3>
           <div className="bg-white rounded-[16px] p-4">
             <div className="space-y-3">
@@ -152,10 +152,7 @@ export default function BookingDetailsDialog({
           </div>
         </div>
     
-        {/* Divider */}
-        <div className="border-t border-[#E5E7EB] my-2"></div>
-
-        {/* Contact Details */}
+      
       
       </div>
     </CustomDialog>

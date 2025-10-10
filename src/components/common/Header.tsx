@@ -39,12 +39,12 @@ function Header({ className }: props) {
           href={"/dashboard"}
           className={`font-medium ${
             pathName === "/dashboard" ? "text-primary" : "#fff"
-          } lg:mt-0 mt-4`}
+          } lg:mt-0 mt-4 text-2xl`}
         >
           Dashboard
         </Link>
         <button className="relative" onClick={handleNotificationOpen}>
-          <NotificationIcon size={20} />
+          <NotificationIcon size={30} />
           {unseenNotifications && (
             <div className="w-2 h-2 rounded-full bg-primary absolute top-0 right-[0.1rem]" />
           )}
@@ -52,14 +52,14 @@ function Header({ className }: props) {
       </div>
 
       <CustomButton
-        className="py-[1.1rem] lg:mb-0 mb-4"
+        className="py-[1.3rem] lg:mb-0 mb-4"
         onClick={() => {
           router.push("/my-profile");
         }}
       >
         <div className="flex items-center gap-2">
           <ProfileIcon />
-          <div className="font-medium">My Profile</div>
+          <div className="font-medium text-lg">My Profile</div>
         </div>
       </CustomButton>
     </div>
