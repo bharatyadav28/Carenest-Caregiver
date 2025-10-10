@@ -1,36 +1,48 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { upgradePlanIcon, noBooking } from "@/lib/svg_icons";
 import { DashboardStatCard } from "@/components/dashboard/DashboardStatCard";
 import { BookingCard } from "@/components/dashboard/BookingCard";
-
 import statData from "@/lib/dummy_data/dashboard-stats.json";
 import { useGetRecentBookingsQuery } from "@/store/api/bookingApi";
-import { useGetProfileQuery } from "@/store/api/profileApi"; // added import
-
+import { useGetProfileQuery } from "@/store/api/profileApi";
 import ProfileDialog from "@/components/dashboard/ProfileDialog";
 
 function MyDashboardPage() {
   const data = statData.data;
+  const { data: bookingData, isLoading, isError } = useGetRecentBookingsQuery({
+    status: "active",
+  });
+  const { data: profile } = useGetProfileQuery();
 
-  const { data: bookingData, isLoading, isError } =
-    useGetRecentBookingsQuery({ status: "active" });
+  const [showProfileDialog, setShowProfileDialog] = useState(false);
 
-  const { data: profile } = useGetProfileQuery(); // fetch profile
+  // ✅ Show dialog only once per browser session
+  useEffect(() => {
+    const hasSeenDialogThisSession = sessionStorage.getItem("hasSeenProfileDialog");
+    if (!hasSeenDialogThisSession) {
+      setShowProfileDialog(true);
+      sessionStorage.setItem("hasSeenProfileDialog", "true");
+    }
+  }, []);
 
   const bookings = bookingData?.data.bookings || [];
   const today = new Date();
 
-  // Apply filter: only show Active ones (appointmentDate <= today)
   const activeBookings = bookings.filter(
     (b) => new Date(b.startDate) <= today
   );
 
   return (
-    <div className="flex flex-col gap-8 w-full card ">
-      {/* pass profile name to ProfileDialog */}
-      <ProfileDialog userName={profile?.name} />
+    <div className="flex flex-col gap-8 w-full card">
+   
+      {showProfileDialog && (
+        <ProfileDialog
+          userName={profile?.name}
+      
+        />
+      )}
 
       <div className="text-[#fff] py-6 lg:px-12 px-4 md:px-8 test2 w-full h-max rounded-xl flex lg:flex-row flex-col justify-between lg:items-start items-center gap-4">
         <div className="max-w-[35rem] w-full">
