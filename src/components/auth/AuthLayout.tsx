@@ -8,7 +8,7 @@ interface Props {
 
 function AuthLayout({ image, children }: Props) {
   return (
-    <div className="w-full h-screen py-8 md:px-20 px-5 bg-[var(--secondary-backgound)] flex flex-col">
+    <div className="w-full h-full py-8 md:px-20 px-5 bg-[var(--secondary-backgound)] flex flex-col">
       <div className="grid grid-cols-12 h-full flex-1 min-h-0">
         {/* Left form */}
         <div className="col-start-1 md:col-end-5 col-end-13 flex flex-col min-h-0">
