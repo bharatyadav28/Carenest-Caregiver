@@ -69,6 +69,7 @@ function ResetPasswordForm() {
         setText={(value) => setPassword(value)}
         Icon={passwordIcon}
         placeholder="Enter New Password"
+          className="!text-lg"
       />
 
       <PasswordInput
@@ -76,10 +77,11 @@ function ResetPasswordForm() {
         setText={(value) => setConfirmPassword(value)}
         Icon={passwordIcon}
         placeholder="Confirm New Password"
+          className="!text-lg"
       />
 
       <CustomButton 
-        className="mt-4 mb-3 w-full" 
+        className="mt-4 mb-3 w-full text-lg" 
         onClick={handleSubmit}
         disabled={isLoading}
       >

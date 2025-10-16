@@ -53,10 +53,11 @@ function ForgotPasswordForm() {
         type="email"
         placeholder="Enter Email ID"
         onChange={(e) => setEmail(e.target.value)}
+          className="!text-lg"
       />
 
       <CustomButton
-        className="mt-6"
+        className="mt-6 text-lg"
         onClick={handleSubmit}
         disabled={isLoading}
       >

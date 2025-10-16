@@ -59,7 +59,7 @@ function GoogleButton() {
       className="bg-[#ffffff] hover:bg-[#ffffff] text-[var(--blue-gray)]"
       onClick={() => googleLogin()}
     >
-      <div className="flex gap-2 items-center mb-4 text-xl">
+      <div className="flex gap-2 items-center  text-lg">
         <div>{googleIcon}</div>
         <div>Continue with Google</div>
       </div>

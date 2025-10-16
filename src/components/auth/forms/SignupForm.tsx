@@ -128,12 +128,13 @@ function SignupForm() {
   };
 
   return (
-    <div className="my-6 flex flex-col gap-2">
+    <div className="my-6 flex flex-col gap-y-4 ">
       <TextInput
         text={name}
         setText={setName}
         Icon={personIcon}
         placeholder="Enter User Name"
+        className="!text-lg"
       />
 
       <TextInput
@@ -142,11 +143,12 @@ function SignupForm() {
         Icon={EmailIcon}
         type="email"
         placeholder="Enter Email ID"
+           className="!text-lg"
       />
 
       <div className="flex gap-2">
         {/* Country Code */}
-        <div className="w-30">
+        <div className="w-30 !text-lg">
  <TextInput
   text={countryCode}
   setText={(val) => {
@@ -157,6 +159,7 @@ function SignupForm() {
   }}
   placeholder="+91"
   Icon={phoneIcon}
+    className="!text-lg"
 />
         </div>
 
@@ -171,6 +174,7 @@ function SignupForm() {
     }
   }}
   placeholder="Enter Phone Number"
+    className="!text-lg"
 />
         </div>
       </div>
@@ -180,6 +184,7 @@ function SignupForm() {
         setText={setAddress}
         Icon={addressIcon}
         placeholder="Enter Address"
+          className="!text-lg"
       />
 
       <TextInput
@@ -187,6 +192,7 @@ function SignupForm() {
         setText={setZipcode}
         Icon={addressIcon}
         placeholder="Enter Zip Code"
+          className="!text-lg"
       />
 
       <PasswordInput
@@ -194,6 +200,7 @@ function SignupForm() {
         setText={setPassword}
         Icon={passwordIcon}
         placeholder="Enter Password"
+          className="!text-lg"
       />
 
       <PasswordInput
@@ -201,6 +208,7 @@ function SignupForm() {
         setText={setConfirmPassword}
         Icon={passwordIcon}
         placeholder="Enter Confirm Password"
+          className="!text-lg"
       />
 
       <CustomButton onClick={handleSubmit}>

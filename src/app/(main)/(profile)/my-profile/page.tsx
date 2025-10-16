@@ -72,7 +72,7 @@ function MyProfilePage() {
             Icon={personIcons}
             placeholder="Enter User Name"
             iconLast={true}
-            divClassName="!bg-[#F8F8F8] !text-[#667085] font-medium"
+            divClassName="!bg-[#F8F8F8] !text-[#667085] !text-lg font-medium"
           />
 
           <TextInput
@@ -87,7 +87,7 @@ function MyProfilePage() {
           />
 
           {/* ✅ Gender Dropdown (lowercase values) */}
-          <div className="flex items-center gap-2 !bg-[#F8F8F8] py-3 rounded-full font-normal ps-4 ms-1 pe-3 text-[#667085]">
+          <div className="flex items-center gap-2 !bg-[#F8F8F8] text-lg py-3 rounded-full font-normal ps-4 ms-1 pe-3 text-[#667085]">
             <select
               className="flex-1 bg-transparent outline-none"
               value={gender}
@@ -120,7 +120,7 @@ function MyProfilePage() {
             Icon={phoneIcons}
             placeholder="Enter Phone Number"
             iconLast={true}
-            divClassName="!bg-[#F8F8F8] text-[#667085] font-medium"
+            divClassName="!bg-[#F8F8F8] text-[#667085] !text-lg"
           />
         </div>
       </div>

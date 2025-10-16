@@ -19,6 +19,7 @@ interface BookingDetailsDialogProps {
     careType: string;
     startDate: string;
     endDate: string;
+    meetingDate: string;
     zipcode: number;
     requiredBy: string;
     weeklySchedule:WeeklySchedule[] ; 
@@ -111,7 +112,14 @@ export default function BookingDetailsDialog({
             <div className="flex justify-between">
               <span>Meeting Date:</span>
               <span className="text-[#7A8B9B]">
-                {new Date(data.startDate).toLocaleDateString()}
+                {new Date(data.meetingDate).toLocaleDateString()}
+              </span>
+            </div>
+                  <div className="flex justify-between">
+              <span>Service Start Date:</span>
+              <span className="text-[#7A8B9B]">
+              {data.startDate ? new Date(data.startDate).toLocaleDateString() : "N/A"}
+
               </span>
             </div>
             <div className="flex justify-between">

@@ -29,6 +29,7 @@ function ProfileMenu() {
   const handleLogout = () => {
     Cookies.remove("authToken");
      Cookies.remove("refreshToken");
+     sessionStorage.clear();
     handleLogoutDialog();
     router.push("/signin");
   };

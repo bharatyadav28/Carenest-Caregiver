@@ -14,11 +14,11 @@ function page() {
           need.
         </div>
 
-        <div className="flex items-center gap-1 mt-5">
+        <div className="flex items-center gap-1 mt-5 text-xl">
           <div>Don’t have an account?</div>
           <Link
             href="/signup"
-            className="p-0 m-0 text-[var(--primary)] font-medium"
+            className="p-0 m-0 text-[var(--primary)]  font-medium"
           >
             Sign Up
           </Link>

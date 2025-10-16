@@ -31,6 +31,7 @@ export interface Booking {
   bookedOn: string;
   startDate: string;
   endDate: string;
+  meetingDate: string;
   zipcode: number;
   requiredBy: string;
   weeklySchedule: WeeklySchedule[];

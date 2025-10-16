@@ -42,6 +42,7 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
       Cookies.remove('authToken');
       Cookies.remove('refreshToken');
+      sessionStorage.clear();
     },
     
     logout: (state) => {
@@ -50,6 +51,7 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
       Cookies.remove('authToken');
       Cookies.remove('refreshToken');
+      sessionStorage.clear();
     },
   },
 });

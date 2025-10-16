@@ -85,6 +85,7 @@ function SigninForm() {
         Icon={EmailIcon}
         type="email"
         placeholder="Enter Email ID"
+          className="!text-lg"
       />
 
       <PasswordInput
@@ -92,6 +93,7 @@ function SigninForm() {
         setText={setPassword}
         Icon={passwordIcon}
         placeholder="Enter Password"
+          className="!text-lg"
       />
 
       <RadioGroup
@@ -110,7 +112,7 @@ function SigninForm() {
       </RadioGroup>
 
       <CustomButton
-        className="mt-4 mb-3"
+        className="mt-4 mb-3 text-xl"
         onClick={handleSubmit}
         disabled={isLoading}
       >

@@ -23,8 +23,8 @@ export const TextInput = ({
   iconLast,
   ...props
 }: InputProps) => {
-  const classes = `w-full border-none focus-visible:ring-[0px] shadow-none ${className}`;
-  const divClasses = `flex items-center rounded-full bg-[#ffffff] py-2 px-4 ${
+  const classes = `w-full border-none focus-visible:ring-[0px] shadow-none !text-lg  ${className}`;
+  const divClasses = `flex items-center rounded-full bg-[#ffffff] py-2 px-4  ${
     iconLast ? "flex-row-reverse font-normal" : ""
   } ${divClassName}`;
 

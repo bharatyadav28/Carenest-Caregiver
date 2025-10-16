@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { BookingCard } from "@/components/dashboard/BookingCard";
 import { noBooking } from "@/lib/svg_icons";
 import { useGetRecentBookingsQuery } from "@/store/api/bookingApi";
@@ -21,10 +21,15 @@ function MyBookingPage() {
 
   const bookings = bookingData?.data.bookings || [];
 
+  // Sort bookings by bookedOn date (newest first)
+  const sortedBookings = useMemo(() => {
+    return [...bookings].sort((a, b) => {
+      return new Date(b.bookedOn).getTime() - new Date(a.bookedOn).getTime();
+    });
+  }, [bookings]);
 
   // Apply frontend filtering if needed (optional based on your API response)
-  const filteredBookings = bookings;
-  // You can add additional frontend filtering logic here if needed
+  const filteredBookings = sortedBookings;
 
   const emptyMessageMap: Record<Tab, string> = {
     All: "No bookings right now",
@@ -32,7 +37,6 @@ function MyBookingPage() {
     hired: "There are no hired bookings",
     active: "There are no active bookings",
     completed: "There are no completed bookings",
-
   };
 
   // Function to capitalize the first letter for display
@@ -41,11 +45,11 @@ function MyBookingPage() {
   };
 
   return (
-    <div className="flex flex-col gap-8 w-full card">
+    <div className="flex flex-col gap-8 w-full card h-screen">
       <div className="text-[#1B2A37] text-[30px] font-medium">Bookings</div>
 
       {/* Tab Filters */}
-      <div className="flex gap-4 flex-wrap ">
+      <div className="flex gap-4 flex-wrap">
         {tabs.map((tab) => (
           <button
             key={tab}
@@ -61,7 +65,7 @@ function MyBookingPage() {
         ))}
       </div>
 
-      {/* Booking List */}
+      {/* Booking List with Scrollable Container */}
       {isLoading ? (
         <div className="m-auto mt-10 text-sm font-medium text-center">
           Loading bookings...
@@ -78,21 +82,24 @@ function MyBookingPage() {
           </p>
         </div>
       ) : (
-        <div className="flex flex-col gap-4 w-full">
-          {filteredBookings.map((booking) => (
-            <BookingCard
-              key={booking.bookingId}
-              bookingId={booking.bookingId}
-              status={booking.status}
-              bookedOn={booking.bookedOn}
-              startDate={booking.startDate}
-              endDate={booking.endDate}
-              zipcode={booking.zipcode}
-              requiredBy={booking.requiredBy}
-              weeklySchedule={booking.weeklySchedule}
-              user={booking.user}
-            />
-          ))}
+        <div className="flex-1 overflow-y-auto max-h-screen pr-2"> {/* Added scrollable container */}
+          <div className="flex flex-col gap-4 w-full pb-4"> {/* Added padding bottom */}
+            {filteredBookings.map((booking) => (
+              <BookingCard
+                key={booking.bookingId}
+                bookingId={booking.bookingId}
+                status={booking.status}
+                bookedOn={booking.bookedOn}
+                meetingDate={booking.meetingDate}
+                startDate={booking.startDate}
+                endDate={booking.endDate}
+                zipcode={booking.zipcode}
+                requiredBy={booking.requiredBy}
+                weeklySchedule={booking.weeklySchedule}
+                user={booking.user}
+              />
+            ))}
+          </div>
         </div>
       )}
     </div>
