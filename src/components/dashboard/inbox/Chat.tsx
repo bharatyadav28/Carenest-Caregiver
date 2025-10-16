@@ -71,7 +71,7 @@ const Chat = ({ messages, otherUserDetails }: Props) => {
         <div key={date} className="flex flex-col gap-4">
           {/* Date Header */}
           <div className="flex justify-center">
-            <div className="bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full">
+            <div className="bg-gray-100 text-black text-xs px-3 py-1 rounded-full">
               {formatDateHeader(date)}
             </div>
           </div>
@@ -97,19 +97,21 @@ const Chat = ({ messages, otherUserDetails }: Props) => {
                   alt={isOther ? otherUserDetails?.name || "User" : "You"}
                   className="!w-10 !h-10 rounded-full"
                 />
-                <div className="flex flex-col  text-[#667085] max-w-[21rem] text-lg">
+                <div className="flex flex-col  text-[#667085] max-w-[21rem] text-lg  ">
                   <div
                     className={`rounded-2xl px-4 py-2 ${
-                      isOther ? "bg-[#F8F9FA]" : "bg-[#233D4D33] text-black text-lg"
+                      isOther ? "bg-[#F8F9FA]" : "bg-[#233D4D33] text-black "
                     }`}
                   >
                     {msg.message}
                   </div>
-                  <div className={isOther ? "ms-1" : "self-end mr-1"}>
+                  <div className="text-sm">
+                  <div className={isOther ? "ms-1" : "self-end mr-1 text-sm"}>
                     {new Date(msg.createdAt).toLocaleTimeString([], {
                       hour: "2-digit",
                       minute: "2-digit",
                     })}
+                  </div>
                   </div>
                 </div>
               </div>
