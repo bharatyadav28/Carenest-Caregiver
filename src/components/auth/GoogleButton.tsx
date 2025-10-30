@@ -15,8 +15,8 @@ function GoogleButton() {
   const googleLogin = useGoogleLogin({
     onSuccess: async (response) => {
       try {
-        // const res = await fetch("https://carenest-backend-8y2y.onrender.com/api/v1/user/google-auth", {
-       const res = await fetch("http://localhost:4000/api/v1/user/google-auth", {
+        const res = await fetch("https://carenest-backend-8y2y.onrender.com/api/v1/user/google-auth", {
+      //  const res = await fetch("http://localhost:4000/api/v1/user/google-auth", {
 
           method: "POST",
           headers: { "Content-Type": "application/json" },
