@@ -105,7 +105,7 @@ const Footer = () => {
             <Image src={"/Logo.svg"} alt="Logo" fill />
             </Link>
           </div>
-          <p className="mt-4 text-sm text-gray-300">
+          <p className="mt-4 text-lg text-gray-300">
           CareWorks provides compassionate, personalized eldercare services that support seniors and their families with dignity and respect.
           </p>  
         </div>
@@ -192,7 +192,7 @@ const FooterLink = ({
       <p className="font-semibold mb-4">{title}</p>
       <ul className="flex flex-col gap-4">
         {links.map((item, index) => (
-          <li className="text-sm text-gray-300" key={index}>
+          <li className="text-lg text-gray-300" key={index}>
             {item.title}
           </li>
         ))}
