@@ -8,7 +8,7 @@ import {
   DialogConfirmButton,
   TransaparentButton,
 } from "@/components/common/CustomButton";
-import { Button } from "@/components/ui/button";
+
 
 interface Props {
   open: boolean;
@@ -23,7 +23,7 @@ function Checkout({
   handleOpen,
   visiblePlan,
   handleVisiblePlan,
-  setHasSubscription,
+  // setHasSubscription,
 }: Props) {
   const planPeroid = visiblePlan?.period;
 

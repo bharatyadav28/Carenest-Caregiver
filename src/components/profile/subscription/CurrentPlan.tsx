@@ -29,7 +29,7 @@ function CurrentPlan() {
       </div>
 
       <div className="card border  border-[#E5ECEB] rounded-xl mt-8 p-6 ">
-        <div className="text-3xl font-semibold mb-2">Subscription Details</div>
+        <div className="text-3xl font-semibold mb-2">Pro Caregiver Plantion Details</div>
         <SimpleLine />
         <div className="border  border-[#E5ECEB] rounded-xl p-6 grid grid-cols-12  gap-x-2 gap-y-8 mt-6">
           <div className="col-start-1 lg:col-end-10 col-end-13 grid lg:grid-cols-3 gap-y-3 ">

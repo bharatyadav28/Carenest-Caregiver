@@ -211,7 +211,7 @@ function SignupForm() {
           className="!text-lg"
       />
 
-      <CustomButton onClick={handleSubmit}>
+      <CustomButton onClick={handleSubmit} className="mt-1 text-lg">
         {isLoading ? "Signing Up..." : "Sign Up"}
       </CustomButton>
 
