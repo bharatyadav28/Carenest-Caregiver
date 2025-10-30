@@ -15,7 +15,7 @@ import {
 } from "@/store/api/profileApi";
 
 // CDN URL for profile images
-export const cdnURL = "https://dev-carenest.s3.ap-south-1.amazonaws.com";
+export const cdnURL = "https://creative-story.s3.us-east-1.amazonaws.com";
 
 interface Props {
   items: sidebarItemType[];

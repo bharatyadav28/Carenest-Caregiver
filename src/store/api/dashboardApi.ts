@@ -9,7 +9,7 @@ import type { RootState } from "../store";
 const BASE_URL = "https://carenest-backend-8y2y.onrender.com/api/v1";
 // const BASE_URL = 'http://localhost:4000/api/v1';
 
-export const cdnURL = "https://dev-carenest.s3.ap-south-1.amazonaws.com";
+export const cdnURL = "https://creative-story.s3.us-east-1.amazonaws.com";
 
 // =============================
 // Types

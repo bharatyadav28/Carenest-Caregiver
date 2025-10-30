@@ -265,7 +265,7 @@ export const authApi = createApi({
     uploadDocument: builder.mutation<UploadDocumentResponse, FormData>({
       query: (formData) => ({
         url: "https://carenest-backend-8y2y.onrender.com/api/v1/document/upload",
-       // url: "http://localhost:4000/api/v1/document/upload",
+      //  url: "http://localhost:4000/api/v1/document/upload",
         method: "POST",
         body: formData,
             headers: {

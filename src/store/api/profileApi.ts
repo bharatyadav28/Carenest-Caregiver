@@ -162,7 +162,7 @@ interface RefreshTokenResponse {
 
 // --------- Base URLs ---------
 const baseUrl = 'https://carenest-backend-8y2y.onrender.com';
-// const baseUrl = 'http://localhost:4000/api/v1';
+// const baseUrl = 'http://localhost:4000';
 // --------- Base Queries ---------
 const baseQuery = fetchBaseQuery({
   baseUrl,

@@ -9,7 +9,7 @@ interface WeeklySchedule {
   startTime: string;
   endTime: string;
 }
-export const cdnURL = "https://dev-carenest.s3.ap-south-1.amazonaws.com";
+export const cdnURL = "https://creative-story.s3.us-east-1.amazonaws.com";
 
 interface BookingCardProps {
   bookingId: string;
