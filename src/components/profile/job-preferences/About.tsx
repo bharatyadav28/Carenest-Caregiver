@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { AddButton, EditButton } from "@/components/common/CustomButton";
 import AboutDialog from "./AboutDialog";
 import { useGetAboutQuery, useUpdateAboutMutation } from "@/store/api/profileApi";
@@ -8,7 +9,7 @@ function About() {
   const [about, setAbout] = useState("");
 
   const { data, isLoading } = useGetAboutQuery();
-  const [updateAbout] = useUpdateAboutMutation();
+  const [updateAbout, { isLoading: isUpdating }] = useUpdateAboutMutation();
 
   // Update local state when data is fetched
   useEffect(() => {
@@ -19,14 +20,33 @@ function About() {
 
   const handleOpenDialog = () => {
     setOpenDialog((prev) => !prev);
+    // Show edit toast when opening dialog with existing content
+
   };
 
-  const handleSave = async () => {
+  const handleSave = async (content: string) => {
     try {
-      await updateAbout({ content: about }).unwrap();
+      await updateAbout({ content }).unwrap();
+      setAbout(content); // Update local state with saved content
+      toast.success("About section updated successfully!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
       handleOpenDialog(); // Close dialog on success
     } catch (err) {
       console.error("Failed to update About:", err);
+      toast.error("Failed to update about section. Please try again.", {
+        position: "top-right",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     }
   };
 
@@ -56,7 +76,7 @@ function About() {
         about={about}
         setAbout={setAbout}
         onSave={handleSave}
-        // isLoading={isUpdating}
+        isLoading={isUpdating}
       />
     </>
   );

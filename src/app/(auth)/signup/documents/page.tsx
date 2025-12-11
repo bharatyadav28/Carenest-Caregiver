@@ -4,7 +4,7 @@ import React from "react";
 function page() {
   return (
     <div className="h-full overflow-y-auto hide-scrollbar">
-      <div className="font-semibold text-2xl mt-4">
+      <div className="font-semibold text-4xl mt-4">
         Complete Your Profile with Required Documents
       </div>
       <div className="mt-2 font-medium">

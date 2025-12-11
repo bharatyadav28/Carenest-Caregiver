@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import {  FiMapPin, FiInfo } from "react-icons/fi";
+import { FiMapPin, FiInfo } from "react-icons/fi";
 import { CustomDialog } from "@/components/common/CustomDialog";
 
 interface ViewDetailsDialogProps {
@@ -38,38 +38,27 @@ export default function ViewDetailsDialog({ user, onClose }: ViewDetailsDialogPr
             className="w-12 h-12 rounded-full object-cover"
           />
           <div>
-            <div className="text-xl font-medium text-[#233D4D]">{user.name}</div>
+            <div className="text-xl font-medium text-[#233D4D] p-1">{user.name}</div>
             <div className="text-sm text-[#7A8B9B]">{user.role}</div>
             <div className="text-sm text-[#233D4D]">{user.time}</div>
           </div>
         </div>
 
         {/* Contact Details */}
-        <div className="text-[#1B2A37] font-semibold mb-3">Contact Details</div>
+        <div className="text-[#1B2A37] font-semibold mb-3 text-xl">Contact Details</div>
+        
+        {/* Location with fixed icon that won't compress */}
         <div className="flex flex-col gap-3 mb-6 text-sm text-[#1B2A37]">
-          {/* <div className="flex gap-2">
-            <FiPhone className="text-white bg-[#233D4D] text-[30px] rounded-full p-2 mt-2" />
-            <div>
-              <div>Phone number</div>
-              <span className="text-xs text-[#7A8B9B]">
-                {user.subscribed ? user.phone : obfuscate(user.phone)}
-              </span>
+          <div className="flex gap-3 items-start"> {/* Use items-start instead of default */}
+            {/* Icon container with fixed width to prevent compression */}
+            <div className="flex-shrink-0 w-8 h-8 mt-2">
+              <FiMapPin className="text-white bg-[#233D4D] text-[10px] rounded-full p-2 w-full h-full" />
             </div>
-          </div>
-          <div className="flex gap-2">
-            <FiMail className="text-white bg-[#233D4D] text-[30px] rounded-full p-2 mt-2" />
-            <div>
-              <div>Email</div>
-              <span className="text-xs text-[#7A8B9B]">
-                {user.subscribed ? user.email : obfuscate(user.email)}
-              </span>
-            </div>
-          </div> */}
-          <div className="flex gap-2">
-            <FiMapPin className="text-white bg-[#233D4D] text-[30px] rounded-full p-2 mt-2" />
-            <div>
-              <div>Location</div>
-              <span className="text-xs text-[#7A8B9B]">
+            
+            {/* Text container that will wrap but not affect icon */}
+            <div className="min-w-0 flex-1">
+              <div className="font-medium mb-1 text-lg">Location</div>
+              <span className="text-xs text-[#7A8B9B] break-words block leading-relaxed">
                 {user.subscribed ? user.location : obfuscate(user.location)}
               </span>
             </div>
@@ -80,8 +69,8 @@ export default function ViewDetailsDialog({ user, onClose }: ViewDetailsDialogPr
         {!user.subscribed && (
           <>
             <div className="bg-[#F1F5F9] text-sm text-[#1B2A37] px-4 py-3 rounded-full flex items-center gap-2 mb-4">
-              <FiInfo className="text-[#7A8B9B]" />
-              <span>
+              <FiInfo className="text-[#7A8B9B] flex-shrink-0" />
+              <span className="break-words">
                 Want to view contact details? Subscribe now to unlock full access.
               </span>
             </div>

@@ -5,7 +5,6 @@ import { SimpleLine } from "@/components/common/HorizontalLines";
 import data from "@/lib/dummy_data/profile-ques.json";
 import JobProfileDialog from "./JobProfileDialog";
 
-// ✅ RTK Query
 import {
   useGetJobProfileQuery,
  

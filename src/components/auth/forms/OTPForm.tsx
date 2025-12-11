@@ -162,7 +162,7 @@ function OTPForm({ isEmailVerify }: Props) {
         </div>
 
         <CustomButton 
-          className="mt-6" 
+          className="mt-6 text-xl" 
           onClick={handleSubmit}
           //disabled={isLoading || otp.length !== 4}
         >

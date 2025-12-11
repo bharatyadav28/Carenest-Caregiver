@@ -33,9 +33,9 @@ function Checkout({
   const handleConfirm = async () => {
     // setHasSubscription(true);
     const token = Cookies.get("authToken");
-    console.log("token", token);
+    console.log("token", token);  
     const response = await fetch(
-      `${baseUrl}/api/v1/order/create-checkout-session`,
+      `${baseUrl}/api/v1/subscriptions/checkout`,
       {
         method: "POST",
         headers: {
@@ -43,7 +43,7 @@ function Checkout({
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          priceID: "jImwwUm308mwmExVFhCXj",
+          priceID: "price_1Sd5onJyndNyjMDu4jUzOaWX",
         }),
       }
     );

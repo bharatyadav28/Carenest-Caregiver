@@ -36,7 +36,7 @@ export const DialogConfirmButton = ({
   onClick,
   className,
 }: ActionButtonProps) => {
-  const classes = `flex-1 py-5 ${className}`;
+  const classes = `flex-1 py-5  ${className}`;
   return (
     <CustomButton className={classes} onClick={onClick}>
       {" "}
@@ -61,7 +61,7 @@ export const TransaparentButton = ({
 
 export const AddButton = ({ onClick }: ActionButtonProps) => {
   return (
-    <CustomButton onClick={onClick} className="py-1 ps-2">
+    <CustomButton onClick={onClick} className="py-1 ps-2 text-lg">
       <div className=" flex gap-1 items-center ">
         <div>
           <AddIcon />
@@ -74,7 +74,7 @@ export const AddButton = ({ onClick }: ActionButtonProps) => {
 
 export const EditButton = ({ onClick }: ActionButtonProps) => {
   return (
-    <CustomButton onClick={onClick} className="py-1 pe-2">
+    <CustomButton onClick={onClick} className="py-1 pe-2 text-lg">
       <div className="flex gap-1 items-center ">
         Edit
         <div>

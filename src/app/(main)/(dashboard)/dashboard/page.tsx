@@ -30,9 +30,13 @@ function MyDashboardPage() {
   const bookings = bookingData?.data.bookings || [];
   const today = new Date();
 
-  const activeBookings = bookings.filter(
-    (b) => new Date(b.startDate) <= today
-  );
+  // Filter active bookings and sort by most recent (descending order)
+  const activeBookings = bookings
+    .filter((b) => new Date(b.startDate) <= today)
+    .sort((a, b) => {
+      // Sort by most recent first
+      return new Date(b.startDate).getTime() - new Date(a.startDate).getTime();
+    });
 
   return (
     <div className="flex flex-col gap-8 w-full card">
@@ -40,7 +44,6 @@ function MyDashboardPage() {
       {showProfileDialog && (
         <ProfileDialog
           userName={profile?.name}
-      
         />
       )}
 

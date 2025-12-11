@@ -20,7 +20,7 @@ import { toast } from "react-toastify";
 function SignupForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [countryCode, setCountryCode] = useState("+91");
+  const [countryCode, setCountryCode] = useState("+1");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [zipcode, setZipcode] = useState("");
@@ -51,9 +51,14 @@ function SignupForm() {
       return false;
     }
 
-    const countryCodeRegex = /^\d{1,4}$/;
+    // Updated country code validation to allow + sign
+    const countryCodeRegex = /^\+\d{1,4}$/;
+    if (!countryCode.trim()) {
+      toast.error("Country code is required");
+      return false;
+    }
     if (!countryCodeRegex.test(countryCode)) {
-      toast.error("Country code must be 1 to 4 digits ");
+      toast.error("Country code must start with + followed by 1-4 digits");
       return false;
     }
 
@@ -72,13 +77,13 @@ function SignupForm() {
       return false;
     }
 
-    const zipRegex = /^\d{7}$/; // exactly 7 digits
+    const zipRegex = /^\d{5}$/;
     if (!zipcode.trim()) {
       toast.error("Zipcode is required");
       return false;
     }
     if (!zipRegex.test(zipcode)) {
-      toast.error("Zipcode must be  7 digits");
+      toast.error("Zipcode must be 5 digits");
       return false;
     }
 
@@ -121,10 +126,51 @@ function SignupForm() {
       } else {
         toast.error(response.message || "Signup failed");
       }
-    } catch (error:any) {
+    } catch (error: any) {
       console.log(error);
       toast.error(error.data.message);
     }
+  };
+
+  // Function to handle country code input
+  const handleCountryCodeChange: React.Dispatch<React.SetStateAction<string>> = (val) => {
+    // Handle both string and function types
+    const inputValue = typeof val === 'function' ? val(countryCode) : val;
+    
+    let input = inputValue;
+    
+    // If user types just numbers, prepend +
+    if (/^\d+$/.test(input)) {
+      input = `+${input}`;
+    }
+    
+    // Remove any non-digit characters except the leading +
+    input = input.replace(/[^\d+]/g, '');
+    
+    // Ensure only one + at the beginning
+    if (input.startsWith('++')) {
+      input = `+${input.slice(2)}`;
+    }
+    
+    // If it doesn't start with +, add it
+    if (!input.startsWith('+')) {
+      input = `+${input}`;
+    }
+    
+    // Limit to 1-4 digits after +
+    const match = input.match(/^\+(\d{0,4})/);
+    if (match) {
+      setCountryCode(`+${match[1]}`);
+    }
+  };
+
+  // Function to handle phone number input
+  const handlePhoneChange: React.Dispatch<React.SetStateAction<string>> = (val) => {
+    // Handle both string and function types
+    const inputValue = typeof val === 'function' ? val(phone) : val;
+    
+    const cleaned = inputValue.replace(/\D/g, "").slice(0, 10);
+    setPhone(cleaned);
   };
 
   return (
@@ -143,39 +189,29 @@ function SignupForm() {
         Icon={EmailIcon}
         type="email"
         placeholder="Enter Email ID"
-           className="!text-lg"
+        className="!text-lg"
       />
 
       <div className="flex gap-2">
         {/* Country Code */}
         <div className="w-30 !text-lg">
- <TextInput
-  text={countryCode}
-  setText={(val) => {
-    if (typeof val === "string") {
-      const cleaned = val.replace(/\D/g, "").slice(0, 4);
-      setCountryCode(cleaned ? `${cleaned}` : "");
-    }
-  }}
-  placeholder="+91"
-  Icon={phoneIcon}
-    className="!text-lg"
-/>
+          <TextInput
+            text={countryCode}
+            setText={handleCountryCodeChange}
+            placeholder="+1"
+            Icon={phoneIcon}
+            className="!text-lg"
+          />
         </div>
 
         {/* Phone Number */}
         <div className="flex-1">
- <TextInput
-  text={phone}
-  setText={(val) => {
-    if (typeof val === "string") {
-      const cleaned = val.replace(/\D/g, "").slice(0, 10);
-      setPhone(cleaned);
-    }
-  }}
-  placeholder="Enter Phone Number"
-    className="!text-lg"
-/>
+          <TextInput
+            text={phone}
+            setText={handlePhoneChange}
+            placeholder="Enter Phone Number"
+            className="!text-lg"
+          />
         </div>
       </div>
 
@@ -184,7 +220,7 @@ function SignupForm() {
         setText={setAddress}
         Icon={addressIcon}
         placeholder="Enter Address"
-          className="!text-lg"
+        className="!text-lg"
       />
 
       <TextInput
@@ -192,7 +228,7 @@ function SignupForm() {
         setText={setZipcode}
         Icon={addressIcon}
         placeholder="Enter Zip Code"
-          className="!text-lg"
+        className="!text-lg"
       />
 
       <PasswordInput
@@ -200,7 +236,7 @@ function SignupForm() {
         setText={setPassword}
         Icon={passwordIcon}
         placeholder="Enter Password"
-          className="!text-lg"
+        className="!text-lg"
       />
 
       <PasswordInput
@@ -208,7 +244,7 @@ function SignupForm() {
         setText={setConfirmPassword}
         Icon={passwordIcon}
         placeholder="Enter Confirm Password"
-          className="!text-lg"
+        className="!text-lg"
       />
 
       <CustomButton onClick={handleSubmit} className="mt-1 text-lg">

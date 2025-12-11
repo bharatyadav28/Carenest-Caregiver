@@ -11,6 +11,7 @@ interface Profile {
   email: string;
   address: string;
   mobile: string;
+  zipcode:string;
   avatar: string | null;
   gender: string;
 }

@@ -1,4 +1,3 @@
-import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -26,7 +25,7 @@ const link: linkSection[] = [
       { title: "Pricing", link: "/" },
     
         { title: "Features", link: "/" },
-      { title: "We accept Medicaid", link: "/" },
+      { title: "We Accept Medicaid", link: "/" },
     ],
     Resource: [
       { title: "Transportation", link: "/" },
@@ -40,12 +39,13 @@ const link: linkSection[] = [
       { title: "Katy, TX", link: "/" },
       { title: "Spring, TX", link: "/" },
       { title: "Cypress, TX", link: "/" },
+      { title: "Pearland, TX", link: "/" },
     ],
     Help: [
       { title: "FAQ's", link: "/" },
       { title: "Privacy Policy", link: "/" },
       { title: "Resources", link: "/" },
-        { title: "Veterans Finacial Assistance", link: "/" },
+        { title: "Veterans Financial Assistance", link: "/" },
     ],
   },
 ];
@@ -116,22 +116,8 @@ const Footer = () => {
         <FooterLink title="Quick Links" links={link[0]["Help"]} />
       </div>
 
-      <div className="my-7 flex items-center justify-between flex-wrap gap-y-5">
-        <div>
-          <h3 className="text-lg font-medium lg:mb-3">
-            Subscribe to our newsletter
-          </h3>
-          <div className="flex">
-            <input
-              type="text"
-              placeholder="Email address"
-              className="outline-none border-b py-2 sm:w-60 w-70"
-            />
-            <button className="bg-primary text-black px-4 py-4 rounded-t-lg cursor-pointer">
-              <ChevronRight />{" "}
-            </button>
-          </div>
-        </div>
+      <div className="my-7 flex items-center justify-center flex-wrap gap-y-5">
+      
 
         <div>
           <h1
@@ -149,14 +135,14 @@ const Footer = () => {
       <div className="flex flex-wrap gap-y-4 items-center justify-between sm:my-4 sm:mt-4 mt-8">
         <div className="flex items-center justify-around sm:w-auto w-full gap-x-5">
           {footerLink.map((item, i) => (
-            <Link href={item.link} key={i} className="text-sm text-gray-200">
+            <Link href={item.link} key={i} className="text-lg text-gray-200">
               {item.title}
             </Link>
           ))}
         </div>
 
         <div className="sm:w-auto w-full flex justify-center sm:order-0 order-1">
-          <p className="text-sm text-gray-100 ">
+          <p className="text-lg text-gray-100 ">
             {" "}
             © 2024 Copyright By Sansbro - IMEDIC
           </p>
@@ -189,7 +175,7 @@ const FooterLink = ({
 }) => {
   return (
     <div>
-      <p className="font-semibold mb-4">{title}</p>
+      <p className="font-semibold mb-4 text-xl">{title}</p>
       <ul className="flex flex-col gap-4">
         {links.map((item, index) => (
           <li className="text-lg text-gray-300" key={index}>

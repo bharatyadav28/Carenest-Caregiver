@@ -1,34 +1,66 @@
 "use client";
 import React, { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify"; // Import toast for success message
 
 import UploadFiles from "@/components/auth/UploadFiles";
 import { CustomButton } from "@/components/common/CustomButton";
-import { pdfIcon } from "@/lib/svg_icons";
+import { pdfIcon, imageIcon } from "@/lib/svg_icons";
 import { PiDotOutlineFill as DotIcon } from "react-icons/pi";
 import { RxCross2 as CrossIcon } from "react-icons/rx";
 
 import {
   useUploadDocumentMutation,
   useSaveDocumentsMutation,
-} from "@/store/api/authApi"; // ✅ adjust path if needed
+} from "@/store/api/authApi";
+
+// Helper function to get file icon based on type
+const getFileIcon = (fileName: string) => {
+  const extension = fileName.split('.').pop()?.toLowerCase();
+  
+  if (extension === 'pdf') return pdfIcon;
+  if (['png', 'jpg', 'jpeg', 'gif', 'bmp', 'svg', 'webp'].includes(extension || '')) 
+    return imageIcon;
+  if (['doc', 'docx', 'txt', 'rtf'].includes(extension || '')) 
+    return pdfIcon;
+  
+  return pdfIcon; // default
+};
+
+// Helper function to get file type string
+const getFileType = (fileName: string) => {
+  const extension = fileName.split('.').pop()?.toUpperCase();
+  return extension || 'FILE';
+};
+
+// Helper function to format file size
+const formatFileSize = (bytes: number): string => {
+  if (bytes === 0) return '0 Bytes';
+  
+  const k = 1024;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+};
 
 function DocumentsUpload() {
   const resumeRef = useRef<HTMLInputElement>(null);
   const workPermitRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
-  const [resumeFile, setResumeFile] = useState<File | null>(null);
-  const [workPermitFile, setWorkPermitFile] = useState<File | null>(null);
-
   const [uploadedDocs, setUploadedDocs] = useState<
-    { type: "resume" | "work_permit"; fileUrl: string; name: string }[]
+    { 
+      type: "resume" | "work_permit"; 
+      fileUrl: string; 
+      name: string;
+      size: number;
+      file: File;
+    }[]
   >([]);
 
-  const [uploadDocument, { isLoading: isUploading }] =
-    useUploadDocumentMutation();
-  const [saveDocuments, { isLoading: isSaving }] =
-    useSaveDocumentsMutation();
+  const [uploadDocument, { isLoading: isUploading }] = useUploadDocumentMutation();
+  const [saveDocuments, { isLoading: isSaving }] = useSaveDocumentsMutation();
 
   // Handle upload
   const handleFileUpload = async (
@@ -46,20 +78,25 @@ function DocumentsUpload() {
 
       if (res.success) {
         setUploadedDocs((prev) => [
-          ...prev.filter((doc) => doc.type !== type), // overwrite if same type uploaded again
-          { type, fileUrl: res.data.url, name: file.name },
+          ...prev.filter((doc) => doc.type !== type),
+          { 
+            type, 
+            fileUrl: res.data.url, 
+            name: file.name,
+            size: file.size,
+            file: file
+          },
         ]);
+        toast.success(`${file.name} uploaded successfully!`);
       }
 
-      if (type === "resume") setResumeFile(file);
-      if (type === "work_permit") setWorkPermitFile(file);
-
-      if (e.target) e.target.value = ""; // reset input
-    } catch (err) {
+      if (e.target) e.target.value = "";
+    } catch (err: any) {
       console.error("Upload failed:", err);
+      toast.error(err.data?.message || "Failed to upload file");
     }
   };
-console.log(resumeFile, workPermitFile, uploadedDocs);
+
   // Handle submit (save uploaded docs to backend)
   const handleSubmit = async () => {
     try {
@@ -67,18 +104,29 @@ console.log(resumeFile, workPermitFile, uploadedDocs);
         documents: uploadedDocs.map((doc) => ({
           type: doc.type,
           fileUrl: doc.fileUrl,
+          fileName: doc.name,
+          fileSize: doc.size,
         })),
       };
 
       const res = await saveDocuments(payload).unwrap();
 
       if (res.success) {
-        console.log("Documents saved:", res.message);
+        toast.success("Documents saved successfully!");
         router.push("/dashboard");
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error("Save documents failed:", err);
+      toast.error(err.data?.message || "Failed to save documents");
     }
+  };
+
+  // Handle remove file
+  const handleRemoveFile = (type: "resume" | "work_permit", name: string) => {
+    setUploadedDocs((prev) =>
+      prev.filter((d) => !(d.type === type && d.name === name))
+    );
+    toast.info(`${name} removed`);
   };
 
   return (
@@ -101,50 +149,56 @@ console.log(resumeFile, workPermitFile, uploadedDocs);
 
       {uploadedDocs.map((doc) => (
         <div
-          key={doc.type}
-          className="flex rounded-xl bg-[#fff] py-4 px-5 justify-between mt-4 "
+          key={`${doc.type}-${doc.name}`}
+          className="flex items-center rounded-xl bg-white py-4 px-5 mt-4 gap-4"
         >
-          <div className=" flex gap-4 items-center">
-            <div>{pdfIcon}</div>
-            <div>
-              <div>{doc.name}</div>
-              <div className="text-[var(--cool-gray)] text-sm flex items-center gap-1">
-                <div>Uploaded</div>
-                <div>
-                  <DotIcon />
-                </div>
-                <div>PDF</div>
-              </div>
+          {/* File icon */}
+          <div className="flex-shrink-0">
+            {getFileIcon(doc.name)}
+          </div>
+          
+          {/* File info - takes available space but doesn't overflow */}
+          <div className="flex-grow min-w-0">
+            {/* File name with truncation */}
+            <div className="font-medium truncate pr-2" title={doc.name}>
+              {doc.name}
+            </div>
+            
+            {/* File details */}
+            <div className="text-[var(--cool-gray)] text-sm flex items-center gap-1 flex-wrap">
+              <span>Uploaded</span>
+              <DotIcon />
+              <span className="font-medium">{getFileType(doc.name)}</span>
+              <DotIcon />
+              <span>{formatFileSize(doc.size)}</span>
             </div>
           </div>
-
-          <div>
+          
+          {/* Remove button - fixed position on the right */}
+          <div className="flex-shrink-0">
             <button
-              onClick={() =>
-                setUploadedDocs((prev) =>
-                  prev.filter((d) => d.type !== doc.type)
-                )
-              }
-              className="hover:cursor-pointer"
+              onClick={() => handleRemoveFile(doc.type, doc.name)}
+              className="hover:cursor-pointer hover:text-red-500 transition-colors p-1"
+              aria-label={`Remove ${doc.name}`}
             >
-              <CrossIcon size={15} />
+              <CrossIcon size={18} />
             </button>
           </div>
         </div>
       ))}
 
-    <CustomButton
-  className="w-full mt-8"
-  onClick={handleSubmit}
-  disabled={
-    isUploading ||
-    isSaving ||
-    !uploadedDocs.find((d) => d.type === "resume") ||
-    !uploadedDocs.find((d) => d.type === "work_permit")
-  }
->
-  {isUploading || isSaving ? "Processing..." : "Save & Continue"}
-</CustomButton>
+      <CustomButton
+        className="w-full mt-8 text-xl"
+        onClick={handleSubmit}
+        disabled={
+          isUploading ||
+          isSaving ||
+          !uploadedDocs.find((d) => d.type === "resume") ||
+          !uploadedDocs.find((d) => d.type === "work_permit")
+        }
+      >
+        {isUploading || isSaving ? "Processing..." : "Save & Continue"}
+      </CustomButton>
     </div>
   );
 }

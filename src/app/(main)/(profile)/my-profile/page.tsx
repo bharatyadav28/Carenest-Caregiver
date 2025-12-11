@@ -57,9 +57,9 @@ function MyProfilePage() {
       <div className="flex w-full justify-between text-3xl font-medium">
         <div>Personal Information</div>
         <CustomButton className="py-2" onClick={handleSave} disabled={isUpdating}>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 text-xl">
             <div>{isUpdating ? "Saving..." : "Save"}</div>
-            <SaveIcon size={18} />
+            <SaveIcon size={22} />
           </div>
         </CustomButton>
       </div>

@@ -2,11 +2,13 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { CustomDialog } from "@/components/common/CustomDialog";
 import { arrow, message } from "@/lib/svg_icons";
+
 interface WeeklySchedule {
   weekDay: number; // 0 = Sunday ... 6 = Saturday
   startTime: string;
   endTime: string;
 }
+
 interface BookingDetailsDialogProps {
   open: boolean;
   onClose: () => void;
@@ -22,7 +24,7 @@ interface BookingDetailsDialogProps {
     meetingDate: string;
     zipcode: number;
     requiredBy: string;
-    weeklySchedule:WeeklySchedule[] ; 
+    weeklySchedule: WeeklySchedule[];
     phone: string;
     email: string;
     status?: string;
@@ -40,9 +42,10 @@ export default function BookingDetailsDialog({
   const handleMessageClick = () => {
     router.push("/inbox");
   };
+
   // Map weekDay numbers to day names
   const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-  
+
   // Format time from "HH:MM:SS" to "HH:MM AM/PM"
   const formatTime = (timeString: string) => {
     const [hours, minutes] = timeString.split(':');
@@ -52,43 +55,49 @@ export default function BookingDetailsDialog({
     return `${displayHour}:${minutes} ${period}`;
   };
 
- 
-
   return (
     <CustomDialog
       open={open}
       handleOpen={onClose}
       showCrossButton={true}
-      className="max-w-[496px] w-full rounded-[24px] bg-[#F9FAFB] p-6 overflow-auto "
+      className="max-w-[496px] w-full rounded-[24px] bg-[#F9FAFB] p-6 overflow-auto"
     >
       <div className="flex flex-col gap-6 h-full">
         {/* Header Section */}
         <div className="flex items-start gap-4">
-          <img
-            src={data.avatar || "/profile-pic.png"}
-            alt="avatar"
-            className="w-12 h-12 rounded-full"
-          />
-          <div>
-            <h2 className="text-[24px] font-semibold text-[#1B2A37] leading-[24px] mb-2">
+          <div className="flex-shrink-0">
+            <img
+              src={data.avatar || "/profile-pic.png"}
+              alt="avatar"
+              className="w-12 h-12 rounded-full object-cover"
+            />
+          </div>
+          
+          <div className="min-w-0 flex-1"> {/* Added min-w-0 to enable text truncation */}
+            <h2 className="text-[24px] p-2 font-semibold text-[#1B2A37] leading-[24px] mb-2 ">
               {data.name}
             </h2>
-            <p className="text-[18px] leading-[20px] text-[#7A8B9B] flex items-start">
-              {arrow} {data.address}
-            </p>
+            
+            {/* Address with icon - fixed layout */}
+            <div className="flex items-start gap-2">
+              <div className="flex-shrink-0 mt-0.5"> {/* Fixed icon container */}
+                {arrow}
+              </div>
+              <p className="text-[18px] leading-[20px] text-[#7A8B9B] break-words flex-1 min-w-0">
+                {data.address}
+              </p>
+            </div>
           </div>
         </div>
 
         {/* Action Buttons */}
         <div className="flex gap-4 flex-wrap">
           <button
-            className="flex-1 bg-[#FFA629] hover:bg-[#e2941f] text-black rounded-full text-[14px] py-[10px] flex justify-center gap-2"
+            className="flex-1 bg-[#FFA629] hover:bg-[#e2941f] text-black rounded-full text-[14px] py-[10px] flex justify-center items-center gap-2"
             onClick={handleMessageClick}
           >
             {message} Message
           </button>
-
-    
         </div>
 
         {/* Booking Details */}
@@ -115,34 +124,31 @@ export default function BookingDetailsDialog({
                 {new Date(data.meetingDate).toLocaleDateString()}
               </span>
             </div>
-                  <div className="flex justify-between">
+            <div className="flex justify-between">
               <span>Service Start Date:</span>
               <span className="text-[#7A8B9B]">
-              {data.startDate ? new Date(data.startDate).toLocaleDateString() : "N/A"}
-
+                {data.startDate ? new Date(data.startDate).toLocaleDateString() : "N/A"}
               </span>
             </div>
             <div className="flex justify-between">
               <span>Service End Date:</span>
               <span className="text-[#7A8B9B]">
-              {data.endDate ? new Date(data.endDate).toLocaleDateString() : "N/A"}
-
+                {data.endDate ? new Date(data.endDate).toLocaleDateString() : "N/A"}
               </span>
             </div>
           </div>
         </div>
 
-   {/* Weekly Schedule Section */}
+        {/* Weekly Schedule Section */}
         <div>
           <h3 className="text-[20px] font-semibold text-[#1B2A37] mb-3">
-            Weekly Schedule  <span className="text-[16px] font-medium text-gray-600">  (This Schedule may vary)</span> 
+            Weekly Schedule  <span className="text-[16px] font-medium text-gray-600">  (This Schedule may vary)</span>
           </h3>
           <div className="bg-white rounded-[16px] p-4">
             <div className="space-y-3">
               {data.weeklySchedule && data.weeklySchedule.length > 0 ? (
-                // Create a copy of the array before sorting to avoid mutating props
                 [...data.weeklySchedule]
-                  .sort((a, b) => a.weekDay - b.weekDay) // Sort by day of week
+                  .sort((a, b) => a.weekDay - b.weekDay)
                   .map((schedule, index) => (
                     <div key={index} className="flex justify-between">
                       <span className="font-medium text-[#1B2A37]">
@@ -159,9 +165,6 @@ export default function BookingDetailsDialog({
             </div>
           </div>
         </div>
-    
-      
-      
       </div>
     </CustomDialog>
   );

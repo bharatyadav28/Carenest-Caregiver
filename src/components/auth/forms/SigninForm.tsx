@@ -9,7 +9,7 @@ import { CustomButton } from "../../common/CustomButton";
 import GoogleButton from "../GoogleButton";
 import TextWithLines from "../../common/HorizontalLines";
 import { Label } from "../../ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Checkbox } from "@/components/ui/checkbox"; // Import Checkbox
 import Link from "next/link";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify"; 
@@ -17,7 +17,7 @@ import { toast } from "react-toastify";
 function SigninForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState("false");
+  const [rememberMe, setRememberMe] = useState(false); // Change to boolean
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
@@ -56,7 +56,7 @@ function SigninForm() {
         toast.success("Signed in successfully 🎉");
 
         // Store tokens
-        if (rememberMe === "true") {
+        if (rememberMe) { // Change to boolean check
           Cookies.set("authToken", response.data.accessToken, { expires: 7 });
           Cookies.set("refreshToken", response.data.refreshToken, { expires: 30 });
         } else {
@@ -85,7 +85,7 @@ function SigninForm() {
         Icon={EmailIcon}
         type="email"
         placeholder="Enter Email ID"
-          className="!text-lg"
+        className="!text-lg"
       />
 
       <PasswordInput
@@ -93,23 +93,21 @@ function SigninForm() {
         setText={setPassword}
         Icon={passwordIcon}
         placeholder="Enter Password"
-          className="!text-lg"
+        className="!text-lg"
       />
 
-      <RadioGroup
-        value={rememberMe}
-        onValueChange={setRememberMe}
-        className="gap-3"
-      >
-        <div className="flex items-center space-x-2">
-          <RadioGroupItem
-            value="true"
-            id="remember-me"
-            className="!p-2 border-black border-2"
-          />
-          <Label htmlFor="remember-me">Remember me</Label>
-        </div>
-      </RadioGroup>
+      {/* Replace RadioGroup with Checkbox */}
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          id="remember-me"
+          checked={rememberMe}
+          onCheckedChange={(checked) => setRememberMe(checked === true)}
+          className="border-black border-2 m-1" // Add your custom styling
+        />
+        <Label htmlFor="remember-me" className="cursor-pointer">
+          Remember me
+        </Label>
+      </div>
 
       <CustomButton
         className="mt-4 mb-3 text-xl"

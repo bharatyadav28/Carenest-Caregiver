@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { RxCross2 as CrossIcon } from "react-icons/rx";
 import { IoIosAdd as AddIcon } from "react-icons/io";
+import { toast } from "react-toastify"; // Import toast
 
 import { CustomDialog } from "@/components/common/CustomDialog";
 import {
@@ -43,22 +44,46 @@ function MyServicesDialog({
   };
 
   const handleSave = async () => {
-    const serviceData = newService
-      ? [...selectedServices, newService]
-      : [...selectedServices];
+    try {
+      const serviceData = newService
+        ? [...selectedServices, newService]
+        : [...selectedServices];
 
-    setServices(serviceData);
-    setNewService("");
+      setServices(serviceData);
+      setNewService("");
 
-    // 🔁 Convert selected names to IDs
-    const selectedIds = allServices
-      .filter((s) => serviceData.includes(s.name))
-      .map((s) => s.id);
+      // 🔁 Convert selected names to IDs
+      const selectedIds = allServices
+        .filter((s) => serviceData.includes(s.name))
+        .map((s) => s.id);
 
-    // ⬆️ Save to backend
-    await updateMyServices({ serviceIds: selectedIds });
-
-    handleOpen();
+      // ⬆️ Save to backend
+      await updateMyServices({ serviceIds: selectedIds }).unwrap();
+      
+      // Show success toast message
+      toast.success("Services updated successfully!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      
+      handleOpen();
+    } catch (err) {
+      console.error("Failed to update services:", err);
+      
+      // Show error toast message
+      toast.error("Failed to update services. Please try again.", {
+        position: "top-right",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    }
   };
 
   useEffect(() => {
@@ -75,7 +100,7 @@ function MyServicesDialog({
       <div className="flex flex-col gap-1 items-center text-center">
         <div className="text-2xl font-semibold">My Services</div>
         <div className="text-[var(--cool-gray)] text-sm">
-          Please add type of care giving services you’re interested.
+          Please add type of care giving services you are interested.
         </div>
 
         {selectedServices?.length > 0 && (
@@ -109,9 +134,10 @@ function MyServicesDialog({
         </div>
 
         <div className="flex w-full gap-2">
-          <TransaparentButton onClick={handleOpen} />
+          <TransaparentButton onClick={handleOpen} className="text-lg" />
           <DialogConfirmButton
             onClick={handleSave}
+            className="text-lg"
             title={isLoading ? "Saving..." : "Save"}
           />
         </div>

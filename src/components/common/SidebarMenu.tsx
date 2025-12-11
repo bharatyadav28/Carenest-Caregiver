@@ -68,9 +68,9 @@ function SidebarMenu({ items, ViewProfile }: Props) {
 
     try {
       // Use FormData for file upload
-  const formData = new FormData();
-formData.append("file", file);
-await updateAvatar(formData).unwrap();
+      const formData = new FormData();
+      formData.append("file", file);
+      await updateAvatar(formData).unwrap();
       refetch();
     } catch (err) {
       console.log(err);
@@ -79,8 +79,44 @@ await updateAvatar(formData).unwrap();
     }
   };
 
+  // Calculate profile completion percentage
+  const calculateProfileCompletion = () => {
+    if (!profile) return 0;
+    
+    let completedFields = 0;
+    const totalFields = 7; // Total number of fields to check
+    
+    // Check name
+    if (profile.name && profile.name.trim() !== "") completedFields++;
+    
+    // Check email
+    if (profile.email && profile.email.trim() !== "") completedFields++;
+    
+    // Check mobile
+    if (profile.mobile && profile.mobile.trim() !== "") completedFields++;
+    
+    // Check address
+    if (profile.address && profile.address.trim() !== "") completedFields++;
+    
+    // Check zipcode
+    if (profile.zipcode) completedFields++;
+    
+    // Check gender
+    if (profile.gender && profile.gender.trim() !== "") completedFields++;
+    
+    // Check avatar
+    if (profile.avatar && profile.avatar.trim() !== "" && profile.avatar !== "/profile-pic.png") completedFields++;
+    
+  
+    
+    // Calculate percentage
+    const percentage = Math.round((completedFields / totalFields) * 100);
+    return percentage;
+  };
+
   const name = profile?.name || "Loading...";
-  // const email = profile?.email || "";
+  const profileCompletionPercentage = calculateProfileCompletion();
+  
   let avatar =
     profile?.avatar && profile.avatar !== ""
       ? profile.avatar
@@ -92,9 +128,10 @@ await updateAvatar(formData).unwrap();
   }
 
   const content = (
-    <div className="min-h-[20rem] w-full min-w-[22rem] px-4  py-6 bg-[#fff] rounded-lg shadow-2xl">
+    <div className="min-h-[20rem] w-full min-w-[22rem] px-4 py-6 bg-[#fff] rounded-lg shadow-2xl">
       <div className="flex items-center gap-4">
-        <CustomPieChart percentage={80}>
+        {/* Pass dynamic percentage to CustomPieChart */}
+        <CustomPieChart percentage={profileCompletionPercentage}>
           <div
             className="relative rounded-full w-16 h-16 m-3 group cursor-pointer"
             onClick={handleAvatarClick}
@@ -121,40 +158,42 @@ await updateAvatar(formData).unwrap();
               disabled={avatarUploading}
             />
             {/* Edit icon */}
-          <span className="absolute bottom-3 right-4 text-white/80 rounded-full p-1 flex items-center justify-center shadow opacity-0 group-hover:opacity-100 transition">
-    <FiEdit2 size={22} />
-  </span>
+            <span className="absolute bottom-3 right-4 text-white/80 rounded-full p-1 flex items-center justify-center shadow opacity-0 group-hover:opacity-100 transition">
+              <FiEdit2 size={22} />
+            </span>
           </div>
         </CustomPieChart>
-        <div className="flex flex-col items-center">
-          <div className="text-[1.4rem] font-semibold mb-1 capitalize">{name}</div>
-          {/* <div className="text-[1rem] text-[#667085]">{email}</div> */}
-          {ViewProfile === true ? (
-            <div>
+        
+        {/* Change: Removed items-center to keep name and button aligned to start */}
+        <div className="flex flex-col">
+          <div className="text-[1.4rem] font-semibold mb-1 capitalize break-words max-w-[180px]">
+            {name}
+          </div>
+          
+          {ViewProfile === true && (
+            <div className="mt-1">
               <button
                 onClick={handleViewProfileClick}
-                className="text-[#F2A307] border-1 border-[#F2A307] font-medium rounded-full bg-[#F2A3071A] px-2 py-1 mt-1 text-md"
-
-
+                className="text-[#F2A307] border-1 border-[#F2A307] font-medium rounded-full bg-[#F2A3071A] px-4 py-1.5 text-md hover:bg-[#F2A3071A]/80 transition-colors"
               >
                 View Profile
               </button>
             </div>
-          ) : null}
+          )}
         </div>
       </div>
 
-      <div className=" w-full border-t-1 border-[#33333333] my-2"></div>
+      <div className="w-full border-t-1 border-[#33333333] my-2"></div>
 
-      <div className="flex flex-col gap-2 mt-3 ">
+      <div className="flex flex-col gap-2 mt-3">
         {items?.map((item, index) => {
           const isCurrentPage = pathname === item.path;
           const lastItem = lastIndex === index;
 
           return (
             <div
-              className={`flex justify-between border-cool-gray py-3 px-4 text-[#1B2A37] font-medium hover:cursor-pointer  transition-all  w-full ${
-                isCurrentPage ? "bg-primary rounded-full" : "#fff"
+              className={`flex justify-between border-cool-gray py-3 px-4 text-[#1B2A37] font-medium hover:cursor-pointer transition-all w-full ${
+                isCurrentPage ? "bg-primary rounded-full" : ""
               } ${!lastItem ? "border-b" : ""}`}
               key={item.id}
               onClick={() =>
@@ -174,6 +213,7 @@ await updateAvatar(formData).unwrap();
       </div>
     </div>
   );
+  
   return (
     <>
       <div className="lg:block hidden">{content}</div>

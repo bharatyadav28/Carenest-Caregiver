@@ -36,7 +36,7 @@ function UploadFiles({ label, uploadTitle, handleUpload, inputRef }: Props) {
             >
               {uploadTitle}
             </button>{" "}
-            or drag and drop it here
+           
           </div>
           <div>Only .doc, pdf, png, jpeg, </div>
           <div>(10mb max file size)</div>

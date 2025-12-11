@@ -8,7 +8,7 @@ function page() {
   return (
     <AuthLayout image="/auth/signin.png">
       <div className="mt-6">
-        <div className="font-semibold text-3xl">Welcome back!</div>
+        <div className="font-semibold text-3xl">Welcome Back!</div>
         <div className="mt-1 text-xl">
           Join the caregiving community—log in and start supporting those in
           need.

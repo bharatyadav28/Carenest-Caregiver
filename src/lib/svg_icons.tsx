@@ -9,6 +9,19 @@ export const Logo = (
 </svg>
 
 );
+// In your svg_icons.ts file
+export const imageIcon = (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM5 19L8.5 15.5L11 18.5L14.5 14L19 19H5Z" fill="currentColor"/>
+    <path d="M10 9C10 10.1046 9.10457 11 8 11C6.89543 11 6 10.1046 6 9C6 7.89543 6.89543 7 8 7C9.10457 7 10 7.89543 10 9Z" fill="currentColor"/>
+  </svg>
+);
+
+export const docIcon = (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8L14 2ZM18 20H6V4H13V9H18V20ZM8 12H16V14H8V12ZM8 16H16V18H8V16Z" fill="currentColor"/>
+  </svg>
+);
 
 export const callIcon = (
   <svg

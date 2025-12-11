@@ -32,24 +32,31 @@ export default function ProfileDialog({
       open={openDialog}
       handleOpen={handleOpenDialog}
       showCrossButton={false}
-      className="!lg:min-w-[25rem] lg:w-[25rem]  pb-4"
+      className="!lg:min-w-[25rem] lg:w-[25rem] pb-4"
     >
-      <div className=" flex flex-col items-center w-full ">
+      <div className="flex flex-col items-center w-full">
         <div>
           <DialogIcon icon={celebrationIcon} />
         </div>
-        <div className="text-xl font-semibold">
-          Welcome{" "}
-          {/* <span className="text-primary">user name!</span> */}
-      
-        {userName ? (
-          <span className="text-lg font-semibold text-[#F2A307]">{userName}!</span>
-        ) : null}
-  </div>
-        <div className=" w-full border-t-2 border-dashed  border-[#33333333] my-2"></div>
+        
+        {/* Fixed welcome text with proper alignment for long names */}
+        <div className="text-xl font-semibold text-center w-full px-4">
+          <div className="inline-flex flex-wrap justify-center items-center gap-1">
+            <span>Welcome, </span>
+            {userName ? (
+              <span className="text-lg font-semibold text-[#F2A307] break-words max-w-full">
+                {userName}!
+              </span>
+            ) : (
+              <span className="text-lg font-semibold text-[#F2A307]">user name!</span>
+            )}
+          </div>
+        </div>
+        
+        <div className="w-full border-t-2 border-dashed border-[#33333333] my-2"></div>
 
         <div className="px-4">
-          <div className="text-2xl font-bold text-center mt-1 ">
+          <div className="text-2xl font-bold text-center mt-1">
             Complete Your Profile to Start Getting Jobs
           </div>
 
@@ -62,8 +69,8 @@ export default function ProfileDialog({
         </div>
 
         <div className="flex gap-2 w-full mt-2">
-          <TransaparentButton onClick={handleOpenDialog} />
-          <DialogConfirmButton onClick={handleConfirm} title={"Continue"} />
+          <TransaparentButton onClick={handleOpenDialog} className="text-xl" />
+          <DialogConfirmButton onClick={handleConfirm} title={"Continue"} className="text-xl" />
         </div>
       </div>
     </CustomDialog>

@@ -17,7 +17,7 @@ function page() {
           href="signin"
           className="p-0 m-0 text-[var(--primary)] font-medium"
         >
-          Signin
+          Sign In
         </Link>
       </div>
 

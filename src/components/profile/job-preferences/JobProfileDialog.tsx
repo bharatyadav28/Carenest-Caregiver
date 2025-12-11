@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify"; // Import toast
 import { CustomDialog } from "@/components/common/CustomDialog";
 import {
   DialogConfirmButton,
@@ -10,6 +11,7 @@ import data from "@/lib/dummy_data/profile-ques.json";
 import { jobProfileType } from "@/lib/interface-types";
 import { useUpdateJobProfileMutation } from "@/store/api/profileApi";
 import { Check } from "lucide-react";
+
 interface Props {
   open: boolean;
   handleOpen: () => void;
@@ -237,9 +239,30 @@ function JobProfileDialog({ open, handleOpen, profile, setProfile }: Props) {
       });
       
       setProfile(updatedProfile);
+      
+      // Show success toast message
+      toast.success("Job profile updated successfully!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      
       handleOpen();
     } catch (err) {
       console.error("Failed to update job profile:", err);
+      
+      // Show error toast message
+      toast.error("Failed to update job profile. Please try again.", {
+        position: "top-right",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     }
   };
 
@@ -290,7 +313,6 @@ function JobProfileDialog({ open, handleOpen, profile, setProfile }: Props) {
                           htmlFor={option.id}
                           className="text-[var(--cool-gray)] text-sm"
                         >
-
                           {option.text}
                         </Label>
                       </div>
@@ -328,9 +350,9 @@ function JobProfileDialog({ open, handleOpen, profile, setProfile }: Props) {
                         onClick={() => handleChange(item.id, option.id, "multiple")}
                         type="button"
                       >
-                            {isSelected && (
-      <Check size={18} className="text-white " />
-      )}
+                        {isSelected && (
+                          <Check size={18} className="text-white " />
+                        )}
                         {option.text}
                       </button>
                     );
@@ -342,11 +364,11 @@ function JobProfileDialog({ open, handleOpen, profile, setProfile }: Props) {
         </div>
 
         <div className="flex mt-auto w-full gap-2">
-          <TransaparentButton onClick={handleOpen} />
+          <TransaparentButton onClick={handleOpen} className="text-lg" />
           <DialogConfirmButton
+          className="text-lg"
             onClick={handleSave}
             title={isLoading ? "Saving..." : "Save"}
-          
           />
         </div>
       </div>

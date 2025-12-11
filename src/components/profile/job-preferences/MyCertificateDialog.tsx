@@ -86,7 +86,7 @@ const CertificateDialog: React.FC<CertificateDialogProps> = ({
         await saveCertificate({ fileUrl }).unwrap();
       }
 
-      toast.success("✅ Certificate(s) uploaded successfully!");
+      toast.success(" Certificate uploaded successfully!");
       setFiles([]);
       handleOpen(); // close dialog
     } catch (err) {
@@ -108,11 +108,11 @@ const CertificateDialog: React.FC<CertificateDialogProps> = ({
         <div className="text-2xl font-semibold">My Certification</div>
 
         <div className="w-full my-4 flex flex-col gap-3">
-          <span className="text-sm me-70">
+          <span className="text-lg justify-start flex w-full">
             Upload your documents <span className="text-red-600">*</span>
           </span>
           <div className="border-2 border-dashed rounded-xl p-6 flex flex-col items-center gap-2">
-            <label className="text-[#F2A307] cursor-pointer text-sm underline">
+            <label className="text-[#F2A307] cursor-pointer text-lg underline">
               Upload your document
               <input
                 type="file"
@@ -122,7 +122,7 @@ const CertificateDialog: React.FC<CertificateDialogProps> = ({
                 accept=".pdf,.doc,.docx,.png,.jpeg,.jpg"
               />
             </label>
-            <p className="text-xs text-gray-500 text-center">
+            <p className="text-lg text-gray-500 text-center">
               Only .doc, .docx, .pdf, .png, .jpeg (max 10MB)
             </p>
           </div>
@@ -155,9 +155,10 @@ const CertificateDialog: React.FC<CertificateDialogProps> = ({
         </div>
 
         <div className="flex w-full gap-2 mt-2">
-          <TransaparentButton onClick={handleOpen} title="Cancel" />
+          <TransaparentButton onClick={handleOpen} title="Cancel" className="text-lg" />
           <DialogConfirmButton
             onClick={handleSubmit}
+            className="text-lg"
             title={loading ? "Saving..." : "Save"}
           />
         </div>

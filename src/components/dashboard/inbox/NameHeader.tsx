@@ -1,15 +1,7 @@
+"use client";
 import React, { useState } from "react";
-// import { PiDotsThreeVerticalBold as OptionsIcon } from "react-icons/pi";
+import Image from "next/image";
 import { binIconTheme } from "@/lib/svg_icons";
-
-// import {
-//   DropdownMenu,
-//   DropdownMenuContent,
-//   DropdownMenuItem,
-//   DropdownMenuTrigger,
-// } from "@/components/ui/dropdown-menu";
-import ProfilePic from "@/assets/profilepic1.png";
-import DP from "@/components/common/DP";
 import ActionDialog from "@/components/common/ActionDialog";
 
 function NameHeader() {
@@ -23,7 +15,21 @@ function NameHeader() {
     <>
       <div className="flex justify-between items-center border-b border-dashed border-[#EEEEEE] pb-4">
         <div className="flex gap-3 items-center">
-          <DP url={ProfilePic} alt="Me" />
+          {/* Admin profile image from public folder */}
+          <div className="relative w-10 h-10">
+            <Image
+              src="/admin.png" // Admin image from public folder
+              alt="Admin"
+              fill
+              className="object-cover rounded-full"
+              sizes="40px"
+              onError={(e) => {
+                // Fallback to default image if admin.png doesn't exist
+                const target = e.target as HTMLImageElement;
+                target.src = "/profile-pic.png";
+              }}
+            />
+          </div>
           <div className="text-lg font-medium">Admin</div>
         </div>
         <div>
@@ -31,7 +37,7 @@ function NameHeader() {
             <DropdownMenuTrigger>
               <OptionsIcon size={20} />
             </DropdownMenuTrigger>
-            <DropdownMenuContent className=" !min-w-0 w-max ">
+            <DropdownMenuContent className="!min-w-0 w-max">
               <DropdownMenuItem>
                 <button
                   className="m-0 p-0 hover:cursor-pointer"

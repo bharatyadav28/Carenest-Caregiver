@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import { CustomDialog } from "@/components/common/CustomDialog";
 import {
   DialogConfirmButton,
   TransaparentButton,
 } from "@/components/common/CustomButton";
-
 import { useUpdateZipcodeMutation } from "@/store/api/profileApi";
 
 interface Props {
@@ -20,12 +19,41 @@ function ZipcodeDialog({ open, handleOpen, zipcodes, setZipcodes }: Props) {
 
   const [updateZipcode, { isLoading }] = useUpdateZipcodeMutation();
 
+  // Handle input change with 5-digit restriction
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    
+    // Only allow numbers
+    if (!/^\d*$/.test(value)) {
+      return;
+    }
+    
+    // Limit to 5 digits
+    if (value.length > 5) {
+      return;
+    }
+    
+    setZipcode(value);
+  };
+
   // 🔹 Save zipcode to backend
   const handleSave = async () => {
-    const numericZip = Number(zipcode.trim());
+    const trimmedZip = zipcode.trim();
+    const numericZip = Number(trimmedZip);
 
-    if (isNaN(numericZip) ) {
-      toast.error("Please enter a valid zipcode ");
+    // Validation
+    if (!trimmedZip) {
+      toast.error("Please enter a zipcode");
+      return;
+    }
+
+    if (isNaN(numericZip)) {
+      toast.error("Please enter a valid zipcode");
+      return;
+    }
+
+    if (trimmedZip.length !== 5) {
+      toast.error("Zipcode must be exactly 5 digits");
       return;
     }
 
@@ -34,13 +62,44 @@ function ZipcodeDialog({ open, handleOpen, zipcodes, setZipcodes }: Props) {
 
       if (res.success) {
         setZipcodes([numericZip]); // sync with parent
+        
+        // Show success toast
+        toast.success("Zipcode updated successfully!", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+        
         handleOpen();
       } else {
-        alert(res.message || "Failed to update zipcode.");
+        toast.error(res.message || "Failed to update zipcode.", {
+          position: "top-right",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error("Update zipcode failed:", err);
-      alert("Something went wrong while updating zipcode.");
+      
+      // Show error toast
+      toast.error(
+        err?.data?.message || 
+        "Something went wrong while updating zipcode. Please try again.",
+        {
+          position: "top-right",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        }
+      );
     }
   };
 
@@ -62,32 +121,42 @@ function ZipcodeDialog({ open, handleOpen, zipcodes, setZipcodes }: Props) {
     >
       <div className="flex flex-col gap-1 items-center text-center">
         <div className="text-2xl font-semibold">Zip Code</div>
-   
+        
+        <div className="text-[var(--cool-gray)] text-sm mb-4">
+          Enter your 5-digit zipcode
+        </div>
 
         {/* Input for zipcode */}
         <div className="mt-4 flex gap-2 w-full">
           <input
             type="text"
-            className="input flex-1  rounded-4xl border border-gray-300 px-4 py-4"
-            placeholder="Enter Zip Code"
+            inputMode="numeric"
+            pattern="[0-9]*"
+            maxLength={5}
+            className="input flex-1 rounded-4xl border border-gray-300 px-4 py-4 text-center"
+            placeholder="Enter 5-digit zipcode"
             value={zipcode}
-            onChange={(e) => setZipcode(e.target.value)}
+            onChange={handleInputChange}
+            onKeyDown={(e) => {
+              // Allow only numbers and control keys
+              if (!/^\d$/.test(e.key) && 
+                  !['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(e.key)) {
+                e.preventDefault();
+              }
+            }}
           />
-          {/* {zipcode && (
-            <button
-              className="btn"
-              onClick={() => setZipcode("")}
-              title="Clear"
-            >
-              <CrossIcon />
-            </button>
-          )} */}
         </div>
+
+   
 
         {/* Actions */}
         <div className="flex w-full gap-2 mt-6">
-          <TransaparentButton onClick={handleOpen} />
+          <TransaparentButton 
+            onClick={handleOpen}  
+            className="text-lg"
+          />
           <DialogConfirmButton
+            className="text-lg"
             onClick={handleSave}
             title={isLoading ? "Saving..." : "Save"}
           />

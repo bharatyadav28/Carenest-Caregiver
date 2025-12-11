@@ -41,8 +41,7 @@ function Page() {
       setNewPassword("");
       setConfirmPassword("");
     } catch (error) {
-      const message =
-"An error occurred";
+      const message = "Old password is incorrect";
       toast.error(message);
       console.error(error);
     }
@@ -57,7 +56,7 @@ function Page() {
           onClick={handleChangePassword}
           disabled={isLoading}
         >
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 text-lg">
             <div>Save</div>
             <div>
               <SaveIcon size={18} />
@@ -76,7 +75,7 @@ function Page() {
           placeholder="Current Password"
           iconLast={true}
           divClassName="!bg-[#F8F8F8]"
-          hideEyeIcon={true}
+          // REMOVED: hideEyeIcon={true}
         />
         <PasswordInput
           text={newPassword}
@@ -85,7 +84,7 @@ function Page() {
           placeholder="New Password"
           iconLast={true}
           divClassName="!bg-[#F8F8F8]"
-          hideEyeIcon={true}
+          // REMOVED: hideEyeIcon={true}
         />
         <PasswordInput
           text={confirmPassword}
@@ -94,7 +93,7 @@ function Page() {
           placeholder="Confirm Password"
           iconLast={true}
           divClassName="!bg-[#F8F8F8]"
-          hideEyeIcon={true}
+          // REMOVED: hideEyeIcon={true}
         />
       </div>
     </div>
