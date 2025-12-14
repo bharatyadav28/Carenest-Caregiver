@@ -10,7 +10,6 @@ interface UseSocketReturn {
   sendMessage: (toUserId: string, message: string) => void;
   onNewMessage: (callback: (msg: any) => void) => void;
   onNewNotification: (callback: (notification: any) => void) => void;
-  subscribeToNotifications: () => void;
   disconnect: () => void;
 }
 
@@ -28,12 +27,8 @@ export const useSocket = (token?: string): UseSocketReturn => {
     socketRef.current.on("connect", () => {
       console.log("Socket connected:", socketRef.current?.id);
       socketRef.current?.emit("join");
-      // Subscribe to notifications on connect
-      socketRef.current?.emit("subscribe_notifications");
-    });
-
-    socketRef.current.on("notification_subscribed", (data) => {
-      console.log("Notification subscription confirmed:", data);
+      // User is automatically in their notification room now
+      console.log("User automatically subscribed to notifications via room join");
     });
 
     socketRef.current.on("connect_error", (err) => {
@@ -61,12 +56,6 @@ export const useSocket = (token?: string): UseSocketReturn => {
     socketRef.current?.on("new_notification", callback);
   };
 
-  const subscribeToNotifications = () => {
-    if (socketRef.current?.connected) {
-      socketRef.current.emit("subscribe_notifications");
-    }
-  };
-
   const disconnect = () => {
     socketRef.current?.disconnect();
   };
@@ -75,7 +64,6 @@ export const useSocket = (token?: string): UseSocketReturn => {
     sendMessage, 
     onNewMessage, 
     onNewNotification,
-    subscribeToNotifications,
     disconnect 
   };
 };
