@@ -1,8 +1,8 @@
 // store/api/subscriptionApi.ts
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-// const BASE_URL = 'https://carenest-backend-8y2y.onrender.com/api/v1';
-const BASE_URL = 'http://localhost:4000/api/v1';
+const BASE_URL = 'https://carenest-backend-8y2y.onrender.com/api/v1';
+// const BASE_URL = 'http://localhost:4000/api/v1';
 
 export interface Subscription {
   id: string;
