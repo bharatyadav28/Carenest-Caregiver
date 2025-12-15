@@ -1,20 +1,38 @@
+// app/subscription/page.tsx
 "use client";
-import React, { useState } from "react";
+import React, { useEffect } from "react";
+import { useGetMySubscriptionQuery } from "@/store/api/subscriptionApi";
 
 import CurrentPlan from "@/components/profile/subscription/CurrentPlan";
 import ViewPlans from "@/components/profile/subscription/ViewPlans";
 
-function Page() {
-  const [hasSubscription, setHasSubscription] = useState(false);
+function SubscriptionPage() {
+  const { data: subscriptionData, isLoading, refetch } = useGetMySubscriptionQuery();
+
+  const hasSubscription = subscriptionData?.data?.hasActiveSubscription || false;
+  const subscription = subscriptionData?.data?.subscription || null;
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-[400px]">
+        <div className="text-gray-500">Loading subscription information...</div>
+      </div>
+    );
+  }
 
   return (
     <div>
-      {!hasSubscription && (
-        <ViewPlans setHasSubscription={setHasSubscription} />
+      {!hasSubscription ? (
+        <ViewPlans />
+      ) : (
+        <CurrentPlan subscription={subscription} refetch={refetch} />
       )}
-      {hasSubscription && <CurrentPlan />}
     </div>
   );
 }
 
-export default Page;
+export default SubscriptionPage;

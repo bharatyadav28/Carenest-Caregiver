@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import Cookies from 'js-cookie';
 import { setAccessToken, clearAuth } from '../authSlice';
 import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query';
-import type { RootState } from '../store'; // Adjust import path as needed
+import type { RootState } from '../store';
 
 // --------- Interfaces ---------
 interface Profile {

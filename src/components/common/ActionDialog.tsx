@@ -35,7 +35,7 @@ function ActionDialog({
         <div className="flex flex-col gap-1 items-center">
           {heading && <div className="text-2xl font-medium">{heading}</div>}
           {subheading && (
-            <div className="text-[1.2rem] text-[var(--cool-gray)] text-nowrap">
+            <div className="text-lg text-[var(--cool-gray)] ">
               {subheading}
             </div>
           )}

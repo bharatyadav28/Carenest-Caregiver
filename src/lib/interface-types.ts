@@ -33,3 +33,34 @@ export interface chatMessageType {
   createdAt: string;
   hasRead: boolean;
 }
+
+// lib/interface-types.ts (add these)
+export interface SubscriptionType {
+  id: string;
+  userId: string;
+  planId: string;
+  stripeSubscriptionId: string;
+  status: 'active' | 'canceled' | 'past_due' | 'none';
+  currentPeriodEnd: string;
+  cancelAtPeriodEnd: boolean;
+  createdAt: string;
+  updatedAt: string;
+  plan?: {
+    id: string;
+    name: string;
+    description: string;
+    amount: number;
+    interval: string;
+    displayAmount: string;
+  };
+}
+
+export interface PlanType {
+  id: string;
+  name: string;
+  description: string;
+  amount: number;
+  interval: string;
+  displayAmount: string;
+  isActive: boolean;
+}

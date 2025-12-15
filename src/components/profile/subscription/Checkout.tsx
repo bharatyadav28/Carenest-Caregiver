@@ -1,61 +1,40 @@
+// components/profile/subscription/Checkout.tsx
+"use client";
 import React from "react";
-import Cookies from "js-cookie";
+import { useCreateCheckoutMutation } from "@/store/api/subscriptionApi";
 
 import { CustomDialog } from "@/components/common/CustomDialog";
-import { plansType } from "./ViewPlans";
-import { planDataType } from "@/lib/interface-types";
 import {
   DialogConfirmButton,
   TransaparentButton,
 } from "@/components/common/CustomButton";
 
+interface Plan {
+  id: string;
+  name: string;
+  displayAmount: string;
+  interval: string;
+}
 
 interface Props {
   open: boolean;
   handleOpen: () => void;
-  visiblePlan: planDataType;
-  handleVisiblePlan: (planPeroid: string) => void;
-  setHasSubscription: React.Dispatch<React.SetStateAction<boolean>>;
+  plan: Plan;
 }
 
-function Checkout({
-  open,
-  handleOpen,
-  visiblePlan,
-  handleVisiblePlan,
-  // setHasSubscription,
-}: Props) {
-  const planPeroid = visiblePlan?.period;
-
-  const baseUrl = "https://carenest-backend-8y2y.onrender.com";
-  // const baseUrl = "http://localhost:4000";
+function Checkout({ open, handleOpen, plan }: Props) {
+  const [createCheckout, { isLoading }] = useCreateCheckoutMutation();
 
   const handleConfirm = async () => {
-    // setHasSubscription(true);
-    const token = Cookies.get("authToken");
-    console.log("token", token);  
-    const response = await fetch(
-      `${baseUrl}/api/v1/subscriptions/checkout`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          priceID: "price_1Sd5onJyndNyjMDu4jUzOaWX",
-        }),
+    try {
+      const result = await createCheckout().unwrap();
+      if (result.data.checkoutUrl) {
+        window.location.href = result.data.checkoutUrl;
       }
-    );
-    const responseData = await response.json();
-    const checkoutUrl = responseData?.data?.checkoutUrl;
-    console.log("checkoutUrl", checkoutUrl, responseData);
-    if (checkoutUrl) {
-      console.log("Redirecting to:", checkoutUrl);
-      window.location.href = checkoutUrl;
+    } catch (error) {
+      console.error("Failed to create checkout:", error);
+      // You might want to show an error toast here
     }
-
-    handleOpen();
   };
 
   return (
@@ -65,45 +44,44 @@ function Checkout({
       className="lg:w-[28rem] w-[calc(100%-2rem)] px-6 py-6"
     >
       <div className="flex flex-col w-full">
-        <div className="flex justify-between ">
+        <div className="flex justify-between items-center mb-6">
           <div className="font-medium lg:text-2xl text-lg">
             Subscription Details
           </div>
-
-          <div className="flex  gap-2 w-max items-center h-max rounded-full px-2 py-1 bg-[#233D4D1A] text-sm font-medium ">
-            {plansType?.map((plan) => (
-              <button
-                key={plan.key}
-                className={`py-[0.3rem] text-center rounded-full ${
-                  planPeroid === plan.value
-                    ? "bg-primary-foreground text-[#fff]"
-                    : ""
-                } btn w-[3.5rem] text-xs `}
-                onClick={() => handleVisiblePlan(plan.value)}
-              >
-                {plan.key}
-              </button>
-            ))}
-          </div>
         </div>
 
-        <div className="my-6 flex flex-col gap-2">
+        <div className="my-6 flex flex-col gap-4">
           <div className="flex justify-between text-lg">
-            <div>Plan:</div>
-            <div className="text-[var(--cool-gray)]">{visiblePlan.name}</div>
+            <div className="font-medium">Plan:</div>
+            <div className="text-[var(--cool-gray)]">{plan.name}</div>
           </div>
 
           <div className="flex justify-between text-lg">
-            <div>Amount:</div>
+            <div className="font-medium">Amount:</div>
             <div className="text-[var(--cool-gray)]">
-              {visiblePlan.price}/{visiblePlan.interval}
+              {plan.displayAmount}/{plan.interval}
             </div>
           </div>
+
+          <div className="flex justify-between text-lg">
+            <div className="font-medium">Billing:</div>
+            <div className="text-[var(--cool-gray)]">Monthly</div>
+          </div>
+
+          <div className="mt-4 p-3 bg-blue-50 rounded-lg">
+            <p className="text-sm text-blue-700">
+              You will be redirected to Stripe to complete your payment securely.
+              Your subscription will renew automatically each month until canceled.
+            </p>
+          </div>
         </div>
 
-        <div className="flex w-full gap-2 ">
-          <TransaparentButton onClick={handleOpen} />
-          <DialogConfirmButton title="Checkout now" onClick={handleConfirm} />
+        <div className="flex w-full gap-2">
+          <TransaparentButton onClick={handleOpen} title="Cancel" />
+          <DialogConfirmButton 
+            title={isLoading ? "Processing..." : "Checkout Now"} 
+            onClick={handleConfirm}
+          />
         </div>
       </div>
     </CustomDialog>
