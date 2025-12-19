@@ -1,3 +1,4 @@
+// BookingDetailsDialog.tsx
 import React from "react";
 import { useRouter } from "next/navigation";
 import { CustomDialog } from "@/components/common/CustomDialog";
@@ -7,6 +8,11 @@ interface WeeklySchedule {
   weekDay: number; // 0 = Sunday ... 6 = Saturday
   startTime: string;
   endTime: string;
+}
+
+interface CareType {
+  id: string;
+  name: string;
 }
 
 interface BookingDetailsDialogProps {
@@ -19,6 +25,7 @@ interface BookingDetailsDialogProps {
     id: string;
     bookedOn: string;
     careType: string;
+    careTypes?: CareType[]; // Added optional careTypes array
     startDate: string;
     endDate: string;
     meetingDate: string;
@@ -30,6 +37,43 @@ interface BookingDetailsDialogProps {
     status?: string;
   };
 }
+
+// Helper function to check if date is default (1970-01-01)
+const isDefaultDate = (dateString: string): boolean => {
+  try {
+    const date = new Date(dateString);
+    return date.getFullYear() === 1970 && 
+           date.getMonth() === 0 && 
+           date.getDate() === 1;
+  } catch (error) {
+    return true;
+  }
+};
+
+// Helper function to format date or show hyphen
+const formatDateOrHyphen = (dateString: string): string => {
+  // Check if date is null, undefined, empty, or default
+  if (!dateString || isDefaultDate(dateString)) {
+    return '----';
+  }
+  
+  try {
+    const date = new Date(dateString);
+    // Check if date is valid
+    if (isNaN(date.getTime())) {
+      return '----';
+    }
+    
+    // Format as DD/MM/YYYY
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    
+    return `${day}/${month}/${year}`;
+  } catch (error) {
+    return '----';
+  }
+};
 
 export default function BookingDetailsDialog({
   onClose,
@@ -55,6 +99,17 @@ export default function BookingDetailsDialog({
     return `${displayHour}:${minutes} ${period}`;
   };
 
+  // Format dates using the helper function
+  const formattedMeetingDate = formatDateOrHyphen(data.meetingDate);
+  const formattedStartDate = formatDateOrHyphen(data.startDate);
+  const formattedEndDate = formatDateOrHyphen(data.endDate);
+  const formattedBookedOn = formatDateOrHyphen(data.bookedOn);
+
+  // Format care types for display (show all if array exists, otherwise use single string)
+  const displayCareType = data.careTypes && data.careTypes.length > 0
+    ? data.careTypes.map(ct => ct.name).join(', ')
+    : data.careType || 'Home Care';
+
   return (
     <CustomDialog
       open={open}
@@ -73,14 +128,14 @@ export default function BookingDetailsDialog({
             />
           </div>
           
-          <div className="min-w-0 flex-1"> {/* Added min-w-0 to enable text truncation */}
+          <div className="min-w-0 flex-1">
             <h2 className="text-[24px] p-2 font-semibold text-[#1B2A37] leading-[24px] mb-2 ">
               {data.name}
             </h2>
             
             {/* Address with icon - fixed layout */}
             <div className="flex items-start gap-2">
-              <div className="flex-shrink-0 mt-0.5"> {/* Fixed icon container */}
+              <div className="flex-shrink-0 mt-0.5">
                 {arrow}
               </div>
               <p className="text-[18px] leading-[20px] text-[#7A8B9B] break-words flex-1 min-w-0">
@@ -112,29 +167,23 @@ export default function BookingDetailsDialog({
             </div>
             <div className="flex justify-between">
               <span>Booked On:</span>
-              <span className="text-[#7A8B9B]">{data.bookedOn}</span>
+              <span className="text-[#7A8B9B]">{formattedBookedOn}</span>
             </div>
             <div className="flex justify-between">
               <span>Care Type:</span>
-              <span className="text-[#7A8B9B]">{data.careType}</span>
+              <span className="text-[#7A8B9B]">{displayCareType}</span>
             </div>
             <div className="flex justify-between">
               <span>Meeting Date:</span>
-              <span className="text-[#7A8B9B]">
-                {new Date(data.meetingDate).toLocaleDateString()}
-              </span>
+              <span className="text-[#7A8B9B]">{formattedMeetingDate}</span>
             </div>
             <div className="flex justify-between">
               <span>Service Start Date:</span>
-              <span className="text-[#7A8B9B]">
-                {data.startDate ? new Date(data.startDate).toLocaleDateString() : "N/A"}
-              </span>
+              <span className="text-[#7A8B9B]">{formattedStartDate}</span>
             </div>
             <div className="flex justify-between">
               <span>Service End Date:</span>
-              <span className="text-[#7A8B9B]">
-                {data.endDate ? new Date(data.endDate).toLocaleDateString() : "N/A"}
-              </span>
+              <span className="text-[#7A8B9B]">{formattedEndDate}</span>
             </div>
           </div>
         </div>

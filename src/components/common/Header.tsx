@@ -52,7 +52,7 @@ function Header({ className }: props) {
   };
 
   const navContent = (
-    <div className="flex lg:flex-row flex-col items-center gap-6">
+    <div className="flex lg:flex-row flex-col items-center gap-6 py-4">
       <div className="flex lg:flex-row flex-col items-center lg:gap-16 gap-6">
         <Link
           href={"/dashboard"}
@@ -153,7 +153,7 @@ function Header({ className }: props) {
         className={`flex justify-between bg-primary-foreground sticky top-0 z-9999 text-[#fff] items-center py-2 ${className}`}
       >
         <Link href={"/dashboard"}>
-          <div className="relative w-40 h-12">
+          <div className="relative w-40 h-18">
             <Image src={"/Logo.svg"} alt="Logo" fill className="object-contain" />
           </div>
         </Link>

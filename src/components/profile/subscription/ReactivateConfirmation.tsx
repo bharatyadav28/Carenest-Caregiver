@@ -24,7 +24,7 @@ function ReactivateConfirmation({ open, handleOpen, onConfirm, isLoading, renewa
     >
       <div className="flex flex-col w-full">
         <div className="flex justify-between items-center mb-6">
-          <div className="font-medium lg:text-2xl text-lg">
+          <div className="font-medium mx-auto lg:text-2xl text-lg">
             Reactivate Subscription
           </div>
         </div>

@@ -11,6 +11,7 @@ interface Profile {
   email: string;
   address: string;
   mobile: string;
+  city: string;
   zipcode:string;
   avatar: string | null;
   gender: string;
@@ -29,6 +30,40 @@ interface ProfileResponse {
     user: Profile;
   };
 }
+
+// --------- Document Interfaces ---------
+interface Document {
+  id: string;
+  userId: string;
+  type: 'resume' | 'work_permit' | 'certificate';
+  fileUrl: string;
+  createdAt: string;
+}
+
+interface ResumeResponse {
+  success: boolean;
+  message: string;
+  data: {
+    resume: Document | null;
+  };
+}
+
+interface WorkPermitResponse {
+  success: boolean;
+  message: string;
+  data: {
+    workPermit: Document | null;
+  };
+}
+
+interface UpdateDocumentResponse {
+  success: boolean;
+  message: string;
+  data: {
+    document: Document;
+  };
+}
+
 // --------- Certificate Interfaces ---------
 interface Certificate {
   id: string;
@@ -44,18 +79,14 @@ interface CertificateResponse {
   };
 }
 
-
 interface UpdateProfilePayload {
   name: string;
   email: string;
   address: string;
+  city: string;
   mobile: string;
   gender: string;
 }
-
-// interface AvatarPayload {
-//   avatar: string;
-// }
 
 // For About Section
 interface AboutData {
@@ -311,47 +342,77 @@ updateAvatar: builder.mutation<
       }),
       invalidatesTags: ['About'],
     }),
-    // --------- Certificate Endpoints ---------
-getCertificates: builder.query<Certificate[], void>({
-  query: () => `/api/v1/document/certificates`,
-  transformResponse: (res: CertificateResponse) => res.data.certificates,
-  providesTags: ['Documents'],
-}),
+    
+    // --------- Document Endpoints ---------
+    
+    // Get Resume
+    getResume: builder.query<Document | null, void>({
+      query: () => `/api/v1/document/resume`,
+      transformResponse: (res: ResumeResponse) => res.data.resume || null,
+      providesTags: ['Documents'],
+    }),
 
-uploadDocument: builder.mutation<
-  { success: boolean; message: string; data: { url: string } },
-  FormData
->({
-  query: (formData) => ({
-    url: `/api/v1/document/upload`,
-    method: 'POST',
-    body: formData,
-  }),
-}),
+    // Get Work Permit
+    getWorkPermit: builder.query<Document | null, void>({
+      query: () => `/api/v1/document/work-permit`,
+      transformResponse: (res: WorkPermitResponse) => res.data.workPermit || null,
+      providesTags: ['Documents'],
+    }),
 
-saveCertificate: builder.mutation<
-  { success: boolean; message: string },
-  { fileUrl: string }
->({
-  query: (body) => ({
-    url: `/api/v1/document/certificates`,
-    method: 'POST',
-    body,
-  }),
-  invalidatesTags: ['Documents'],
-}),
+    // Update Document (Resume or Work Permit)
+    updateDocument: builder.mutation<
+      UpdateDocumentResponse,
+      { type: 'resume' | 'work_permit'; fileUrl: string }
+    >({
+      query: (body) => ({
+        url: `/api/v1/document/update`,
+        method: 'PUT',
+        body,
+      }),
+      invalidatesTags: ['Documents'],
+    }),
 
-deleteCertificate: builder.mutation<
-  { success: boolean; message: string },
-  { id: string; fileUrl: string }
->({
-  query: ({ id, fileUrl }) => ({
-    url: `/api/v1/document/${id}`,
-    method: 'DELETE',
-    body: { fileUrl },
-  }),
-  invalidatesTags: ['Documents'],
-}),
+    // --------- Certificate Endpoints --------- (Your existing code - unchanged)
+    getCertificates: builder.query<Certificate[], void>({
+      query: () => `/api/v1/document/certificates`,
+      transformResponse: (res: CertificateResponse) => res.data.certificates,
+      providesTags: ['Documents'],
+    }),
+
+    uploadDocument: builder.mutation<
+      { success: boolean; message: string; data: { url: string } },
+      FormData
+    >({
+      query: (formData) => ({
+        url: `/api/v1/document/upload`,
+        method: 'POST',
+        body: formData,
+      }),
+    }),
+
+    saveCertificate: builder.mutation<
+      { success: boolean; message: string },
+      { fileUrl: string }
+    >({
+      query: (body) => ({
+        url: `/api/v1/document/certificates`,
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['Documents'],
+    }),
+
+    deleteCertificate: builder.mutation<
+      { success: boolean; message: string },
+      { id: string; fileUrl: string }
+    >({
+      query: ({ id, fileUrl }) => ({
+        url: `/api/v1/document/${id}`,
+        method: 'DELETE',
+        body: { fileUrl },
+      }),
+      invalidatesTags: ['Documents'],
+    }),
 
     // 🔹 Get Job Profile
     getJobProfile: builder.query<JobProfile, void>({
@@ -443,26 +504,25 @@ deleteCertificate: builder.mutation<
       }),
       invalidatesTags: (_result, _error, { id }) => [{ type: 'WhyChooseMe', id }],
     }),
+    
     // 🔹 Update Zipcode
-updateZipcode: builder.mutation<
-  { success: boolean; message: string },
-  { zipcode: number }
->({
-  query: (body) => ({
-    url: `/api/v1/giver/zipcode`,
-    method: 'PUT',
-    body,
-  }),
-  invalidatesTags: ['Profile'],
-}),
+    updateZipcode: builder.mutation<
+      { success: boolean; message: string },
+      { zipcode: number }
+    >({
+      query: (body) => ({
+        url: `/api/v1/giver/zipcode`,
+        method: 'PUT',
+        body,
+      }),
+      invalidatesTags: ['Profile'],
+    }),
 
-getZipcode: builder.query<number | null, void>({
-  query: () => `/api/v1/giver/zipcode`,
-  transformResponse: (res: ZipcodeResponse) => res.data?.zipcode ?? null,
-  providesTags: ['Profile'],
-}),
-
-
+    getZipcode: builder.query<number | null, void>({
+      query: () => `/api/v1/giver/zipcode`,
+      transformResponse: (res: ZipcodeResponse) => res.data?.zipcode ?? null,
+      providesTags: ['Profile'],
+    }),
 
     // 🔹 Delete Why Choose Me Entry
     deleteWhyChooseMe: builder.mutation<
@@ -496,12 +556,23 @@ export const {
   useGetMyServicesQuery,
   useUpdateMyServicesMutation,
   useGetWhyChooseMeQuery,
-   useGetZipcodeQuery, 
-   useGetCertificatesQuery,
-useUploadDocumentMutation,
-useSaveCertificateMutation,
-useDeleteCertificateMutation,
-    useUpdateZipcodeMutation,
+  useGetZipcodeQuery, 
+  
+  // Document hooks - New
+  useGetResumeQuery,
+  useGetWorkPermitQuery,
+  useUpdateDocumentMutation,
+  
+  // Certificate hooks - Your existing
+  useGetCertificatesQuery,
+  useUploadDocumentMutation,
+  useSaveCertificateMutation,
+  useDeleteCertificateMutation,
+  
+  // Zipcode hooks
+  useUpdateZipcodeMutation,
+  
+  // Why Choose Me hooks
   useCreateWhyChooseMeMutation,
   useUpdateWhyChooseMeMutation,
   useDeleteWhyChooseMeMutation,

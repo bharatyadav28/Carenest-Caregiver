@@ -128,7 +128,7 @@ function ProfileMenu() {
         handleOpen={handleDeleteDialog}
         icon={binIconTheme}
         heading="Delete Account"
-        subheading="Are you sure you want to delete your account? This action cannot be undone and all your data will be permanently removed."
+        subheading="Are you sure you want to delete your account?"
         handleConfirm={handleDeleteAccount}
         confirmText="Delete"
       />

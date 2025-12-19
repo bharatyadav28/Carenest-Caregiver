@@ -18,7 +18,7 @@ interface Props {
 
 function Notification({ open, handleOpen }: Props) {
   const [page, setPage] = useState(1);
-  const limit = 20;
+  const limit = 6;
   
   const token = Cookies.get("authToken");
   const { data, isLoading, isError, refetch } = useGetNotificationsQuery(
@@ -92,7 +92,7 @@ function Notification({ open, handleOpen }: Props) {
     >
       <div className="mt-12">
         <div className="flex items-center justify-between">
-          <div className="flex items-center">
+          <div className="flex items-center ms-3"> 
             <button
               className="bg-[#233D4D1A] border-0 p-2 rounded-full hover:bg-[#233D4D33] transition-colors"
               onClick={handleOpen}
@@ -100,7 +100,7 @@ function Notification({ open, handleOpen }: Props) {
             >
               <BackIcon size={20} />
             </button>
-            <div className="ms-[5rem] text-xl font-medium">Notifications</div>
+            <div className="ms-[7rem] text-xl font-medium">Notification</div>
           </div>
           {unreadCount > 0 && (
             <span className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
@@ -130,8 +130,27 @@ function Notification({ open, handleOpen }: Props) {
               </div>
             </div>
           )}
+               {/* Mark all as read button (optional feature) */}
+        {unreadCount > 0 && notifications.length > 0 && (
+          <div className="mt-2 px-3 pb-4">
+            <button
+              onClick={() => {
+                // You would need to implement markAllAsRead API endpoint
+                notifications.forEach(notif => {
+                  if (!notif.isRead) {
+                    handleMarkAsRead(notif.id);
+                  }
+                });
+              }}
+              className="w-full py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors text-sm font-medium"
+            >
+              Mark all as read
+            </button>
+          </div>
+        )}
 
           {notifications.map((notification) => (
+            
             <div
               key={notification.id}
               className={`flex gap-x-3 items-start cursor-pointer hover:bg-gray-50 p-1 rounded-lg transition-colors ${
@@ -139,6 +158,7 @@ function Notification({ open, handleOpen }: Props) {
               }`}
               onClick={() => !notification.isRead && handleMarkAsRead(notification.id)}
             >
+              
               {/* Unread indicator */}
               {!notification.isRead && (
                 <div className="w-2 h-2 rounded-full bg-primary mt-4 flex-shrink-0"></div>
@@ -193,24 +213,7 @@ function Notification({ open, handleOpen }: Props) {
           )}
         </div>
 
-        {/* Mark all as read button (optional feature) */}
-        {unreadCount > 0 && notifications.length > 0 && (
-          <div className="mt-4 px-3 pb-4">
-            <button
-              onClick={() => {
-                // You would need to implement markAllAsRead API endpoint
-                notifications.forEach(notif => {
-                  if (!notif.isRead) {
-                    handleMarkAsRead(notif.id);
-                  }
-                });
-              }}
-              className="w-full py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors text-sm font-medium"
-            >
-              Mark all as read
-            </button>
-          </div>
-        )}
+   
       </div>
     </CustomSheet>
   );

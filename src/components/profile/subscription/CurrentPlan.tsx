@@ -151,18 +151,18 @@ function CurrentPlan({ subscription, refetch }: Props) {
               <div className="text-2xl font-semibold">
                 Subscription Ending Soon
               </div>
-              <div className="mt-1">
+              <div className="mt-1 text-lg">
                 Your subscription is scheduled to end on <strong>{formatDate(subscription.currentPeriodEnd)}</strong>.
                 You'll keep full access until then.
               </div>
-              <div className="mt-2 text-sm">
+              <div className="mt-2 text-lg">
                 Want to continue? You can reactivate your subscription to keep your benefits.
               </div>
             </>
           ) : isCanceled ? (
             <>
               <div className="text-2xl font-semibold">
-                Subscription Canceled
+                Subscription Cancelled
               </div>
               <div className="mt-1">
                 Your subscription has ended. To regain premium benefits, please choose a new plan.
@@ -268,7 +268,7 @@ function CurrentPlan({ subscription, refetch }: Props) {
               <button
                 onClick={() => setShowReactivateConfirm(true)}
                 disabled={isReactivating}
-                className="bg-green-50 text-green-600 hover:bg-green-100 btn px-4 py-2 rounded-full text-sm transition-colors disabled:opacity-50 w-full"
+                className="bg-green-200 text-green-600  hover:bg-green-200 btn px-4 py-2 border-2 border-green-500 rounded-full text-sm transition-colors disabled:opacity-50 w-full"
               >
                 {isReactivating ? "Processing..." : "Reactivate Subscription"}
               </button>

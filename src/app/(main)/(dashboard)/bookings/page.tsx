@@ -4,6 +4,7 @@ import React, { useState, useMemo } from "react";
 import { BookingCard } from "@/components/dashboard/BookingCard";
 import { noBooking } from "@/lib/svg_icons";
 import { useGetRecentBookingsQuery } from "@/store/api/bookingApi";
+import type { Booking } from "@/store/api/bookingApi";
 
 // Updated tabs to match the new status values, excluding "rejected"
 const tabs = ["All", "ProfilePicks", "hired", "active", "completed"] as const;
@@ -84,7 +85,7 @@ function MyBookingPage() {
       ) : (
         <div className="flex-1 overflow-y-auto max-h-screen pr-2"> {/* Added scrollable container */}
           <div className="flex flex-col gap-4 w-full pb-4"> {/* Added padding bottom */}
-            {filteredBookings.map((booking) => (
+            {filteredBookings.map((booking: Booking) => (
               <BookingCard
                 key={booking.bookingId}
                 bookingId={booking.bookingId}
@@ -95,6 +96,7 @@ function MyBookingPage() {
                 endDate={booking.endDate}
                 zipcode={booking.zipcode}
                 requiredBy={booking.requiredBy}
+                careTypes={booking.careTypes || []} // Added careTypes prop
                 weeklySchedule={booking.weeklySchedule}
                 user={booking.user}
               />

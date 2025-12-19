@@ -10,6 +10,9 @@ import {
   passwordIcon,
   personIcon,
   phoneIcon,
+  cityIcon,
+  zipcodeIcon,
+// You may need to add this icon or use an existing one
 } from "@/lib/svg_icons";
 import { CustomButton } from "../../common/CustomButton";
 import GoogleButton from "../GoogleButton";
@@ -23,6 +26,7 @@ function SignupForm() {
   const [countryCode, setCountryCode] = useState("+1");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
+  const [city, setCity] = useState(""); // New city field
   const [zipcode, setZipcode] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -77,6 +81,17 @@ function SignupForm() {
       return false;
     }
 
+    // City validation
+    const cityRegex = /^[A-Za-z\s\-']+$/;
+    if (!city.trim()) {
+      toast.error("City is required");
+      return false;
+    }
+    if (!cityRegex.test(city)) {
+      toast.error("City can only contain letters, spaces, hyphens and apostrophes");
+      return false;
+    }
+
     const zipRegex = /^\d{5}$/;
     if (!zipcode.trim()) {
       toast.error("Zipcode is required");
@@ -113,6 +128,7 @@ function SignupForm() {
         name,
         email,
         address,
+        city, 
         zipcode: Number(zipcode),
         mobile: fullPhone,
         password,
@@ -224,9 +240,17 @@ function SignupForm() {
       />
 
       <TextInput
+        text={city}
+        setText={setCity}
+        Icon={cityIcon} 
+        placeholder="Enter City"
+        className="!text-lg"
+      />
+
+      <TextInput
         text={zipcode}
         setText={setZipcode}
-        Icon={addressIcon}
+        Icon={zipcodeIcon}
         placeholder="Enter Zip Code"
         className="!text-lg"
       />

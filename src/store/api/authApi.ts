@@ -11,6 +11,7 @@ interface User {
   email: string;
   address: string;
   mobile: string;
+  city: string;
   zipcode: number;
   role: 'giver' | 'receiver';
 }
@@ -142,6 +143,7 @@ export const authApi = createApi({
       email: string;
       address: string;
       mobile: string;
+      city: string;
       zipcode: number;
       password: string;
       role: 'giver' | 'receiver';

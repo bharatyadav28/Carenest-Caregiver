@@ -133,7 +133,7 @@ function SidebarMenu({ items, ViewProfile }: Props) {
         {/* Pass dynamic percentage to CustomPieChart */}
         <CustomPieChart percentage={profileCompletionPercentage}>
           <div
-            className="relative rounded-full w-16 h-16 m-3 group cursor-pointer"
+            className="relative rounded-full w-20 h-20 m-3 group cursor-pointer"
             onClick={handleAvatarClick}
             title="Edit profile image"
           >

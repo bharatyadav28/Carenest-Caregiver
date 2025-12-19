@@ -480,6 +480,88 @@ export const addressIcon = (
     />
   </svg>
 );
+export const cityIcon = (
+  <svg
+    width="32"
+    height="32"
+    viewBox="0 0 32 32"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M11 13H9V17H11V13Z"
+      stroke="#233D4D"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M15 10H13V17H15V10Z"
+      stroke="#233D4D"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M19 12H17V17H19V12Z"
+      stroke="#233D4D"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M23 14H21V17H23V14Z"
+      stroke="#233D4D"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M24 17H8V26H24V17Z"
+      stroke="#233D4D"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+export const zipcodeIcon = (
+  <svg
+    width="32"
+    height="32"
+    viewBox="0 0 32 32"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    {/* Simple post box body - rectangle */}
+    <path
+      d="M11 14H21V24H11V14Z"
+      stroke="#233D4D"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    
+    {/* Simple mail slot - horizontal line */}
+    <path
+      d="M14 17H18V19H14V17Z"
+      stroke="#233D4D"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    
+    {/* Simple post/stand */}
+    <path
+      d="M15 24H17V28H15V24Z"
+      stroke="#233D4D"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
 export const addressIcons = (
 <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path fill-rule="evenodd" clip-rule="evenodd" d="M9 1.5C10.7902 1.5 12.5071 2.21116 13.773 3.47703C15.0388 4.7429 15.75 6.45979 15.75 8.25C15.75 10.5555 14.493 12.4425 13.1685 13.7962C12.5068 14.4653 11.7847 15.0719 11.0115 15.6082L10.692 15.8257L10.542 15.9255L10.2592 16.1055L10.0073 16.2592L9.69525 16.4407C9.48348 16.5616 9.24384 16.6252 9 16.6252C8.75616 16.6252 8.51652 16.5616 8.30475 16.4407L7.99275 16.2592L7.60275 16.0192L7.45875 15.9255L7.15125 15.7207C6.31712 15.1564 5.54018 14.5118 4.8315 13.7962C3.507 12.4417 2.25 10.5555 2.25 8.25C2.25 6.45979 2.96116 4.7429 4.22703 3.47703C5.4929 2.21116 7.20979 1.5 9 1.5ZM9 3C7.60761 3 6.27226 3.55312 5.28769 4.53769C4.30312 5.52225 3.75 6.85761 3.75 8.25C3.75 9.9915 4.704 11.52 5.90325 12.747C6.4189 13.269 6.97624 13.7481 7.56975 14.1795L7.91325 14.424C8.02425 14.5015 8.131 14.5735 8.2335 14.64L8.526 14.8275L8.78325 14.9842L9 15.111L9.34125 14.9092L9.6165 14.7367C9.763 14.6437 9.91975 14.5395 10.0868 14.424L10.4303 14.1795C11.0238 13.7481 11.5811 13.269 12.0968 12.747C13.296 11.5207 14.25 9.9915 14.25 8.25C14.25 6.85761 13.6969 5.52225 12.7123 4.53769C11.7277 3.55312 10.3924 3 9 3ZM9 5.25C9.79565 5.25 10.5587 5.56607 11.1213 6.12868C11.6839 6.69129 12 7.45435 12 8.25C12 9.04565 11.6839 9.80871 11.1213 10.3713C10.5587 10.9339 9.79565 11.25 9 11.25C8.20435 11.25 7.44129 10.9339 6.87868 10.3713C6.31607 9.80871 6 9.04565 6 8.25C6 7.45435 6.31607 6.69129 6.87868 6.12868C7.44129 5.56607 8.20435 5.25 9 5.25ZM9 6.75C8.60218 6.75 8.22064 6.90804 7.93934 7.18934C7.65804 7.47064 7.5 7.85217 7.5 8.25C7.5 8.64782 7.65804 9.02935 7.93934 9.31066C8.22064 9.59196 8.60218 9.75 9 9.75C9.39782 9.75 9.77936 9.59196 10.0607 9.31066C10.342 9.02935 10.5 8.64782 10.5 8.25C10.5 7.85217 10.342 7.47064 10.0607 7.18934C9.77936 6.90804 9.39782 6.75 9 6.75Z" fill="#667085"/>

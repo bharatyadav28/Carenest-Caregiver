@@ -17,6 +17,7 @@ function MyProfilePage() {
   const [gender, setGender] = useState(""); 
   const [mobile, setMobile] = useState("");
   const [address, setAddress] = useState("");
+  const [city, setCity] = useState(""); // New city field
 
   // ✅ Pre-fill form with normalized gender
   useEffect(() => {
@@ -24,6 +25,7 @@ function MyProfilePage() {
       setName(profile.name || "");
       setEmail(profile.email || "");
       setAddress(profile.address || "");
+      setCity(profile.city || ""); // Pre-fill city from API
       setGender(profile.gender || ""); // normalize to lowercase
       setMobile(profile.mobile || "");
     }
@@ -33,6 +35,7 @@ function MyProfilePage() {
     if (!name.trim()) return toast.error("Name is required");
     if (!gender.trim()) return toast.error("Gender is required");
     if (!address.trim()) return toast.error("Address is required");
+    if (!city.trim()) return toast.error("City is required"); // New validation
     if (!mobile.trim()) return toast.error("Please enter phone number");
 
     try {
@@ -41,6 +44,7 @@ function MyProfilePage() {
         name,
         email,
         address,
+        city, // Add city to update payload
         gender, // or gender.charAt(0).toUpperCase() + gender.slice(1)
         mobile,
       }).unwrap();
@@ -65,7 +69,7 @@ function MyProfilePage() {
       </div>
 
       <div className="w-full border-t-1 border-[#33333333] my-3">
-        <div className="mt-6 flex flex-col  gap-3">
+        <div className="mt-6 flex flex-col gap-3">
           <TextInput
             text={name}
             setText={setName}
@@ -106,6 +110,15 @@ function MyProfilePage() {
             setText={setAddress}
             Icon={addressIcons}
             placeholder="Enter Address"
+            iconLast={true}
+            divClassName="!bg-[#F8F8F8] text-[#667085] font-medium"
+          />
+
+          <TextInput
+            text={city}
+            setText={setCity}
+            Icon={ addressIcons} // Use cityIcon if available, otherwise fallback to addressIcons
+            placeholder="Enter City"
             iconLast={true}
             divClassName="!bg-[#F8F8F8] text-[#667085] font-medium"
           />

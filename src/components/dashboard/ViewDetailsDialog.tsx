@@ -57,8 +57,8 @@ export default function ViewDetailsDialog({ user, onClose }: ViewDetailsDialogPr
             
             {/* Text container that will wrap but not affect icon */}
             <div className="min-w-0 flex-1">
-              <div className="font-medium mb-1 text-lg">Location</div>
-              <span className="text-xs text-[#7A8B9B] break-words block leading-relaxed">
+              <div className="font-medium  text-xl">Location</div>
+              <span className="text-lg text-[#7A8B9B] break-words block leading-relaxed">
                 {user.subscribed ? user.location : obfuscate(user.location)}
               </span>
             </div>

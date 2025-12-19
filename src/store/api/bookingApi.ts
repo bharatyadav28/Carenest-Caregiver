@@ -1,3 +1,4 @@
+// bookingApi.ts
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import Cookies from 'js-cookie';
@@ -13,6 +14,11 @@ interface WeeklySchedule {
   weekDay: number;
   startTime: string;
   endTime: string;
+}
+
+interface CareType {
+  id: string;
+  name: string;
 }
 
 interface BookingUser {
@@ -34,6 +40,7 @@ export interface Booking {
   meetingDate: string;
   zipcode: number;
   requiredBy: string;
+  careTypes: CareType[]; // Added careTypes array
   weeklySchedule: WeeklySchedule[];
   user: BookingUser;
 }

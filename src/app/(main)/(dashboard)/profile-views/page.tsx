@@ -2,7 +2,8 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import ViewDetailsDialog from "@/components/dashboard/ViewDetailsDialog"; 
-import { useGetProfileViewsQuery } from "@/store/api/dashboardApi"; // ✅ import API hook
+import { useGetProfileViewsQuery } from "@/store/api/dashboardApi";
+import { useGetMySubscriptionQuery } from "@/store/api/subscriptionApi"; // Import subscription hook
 
 interface ProfileView {
   id: string;
@@ -14,7 +15,7 @@ interface ProfileView {
   email: string;
   location: string;
   subscribed: boolean;
-  createdAt: string; // Added to preserve original timestamp for sorting
+  createdAt: string;
 }
 
 // ✅ Helper function to format relative time
@@ -47,30 +48,47 @@ function ViewProfile() {
   const [selectedUser, setSelectedUser] = useState<ProfileView | null>(null);
   const [openDialog, setOpenDialog] = useState(false);
 
-  // ✅ Call API
-  const { data, isLoading, isError } = useGetProfileViewsQuery();
+  // ✅ Check subscription status
+  const { 
+    data: subscriptionData, 
+    isLoading: subscriptionLoading 
+  } = useGetMySubscriptionQuery();
 
-  const profileViews: ProfileView[] =
-    data?.data.seekers
-      .map((s) => ({
-        id: s.id,
-        name: s.name,
-        role: "Care Seeker", 
-        time: formatRelativeTime(s.createdAt),
-        avatar: s.avatar,
-        phone: s.mobile,
-        email: s.email,
-        location: s.address,
-        subscribed: true, // not available in backend response
-        createdAt: s.createdAt, // Keep original timestamp for sorting
-      }))
-      
-      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()) || [];
+  // ✅ Call API for profile views (only if subscribed)
+  const { data, isLoading, isError } = useGetProfileViewsQuery(undefined, {
+    skip: !subscriptionData?.data?.hasActiveSubscription, // Skip API call if not subscribed
+  });
+
+  const hasActiveSubscription = subscriptionData?.data?.hasActiveSubscription || false;
+  const subscriptionLoadingState = subscriptionLoading;
+  
+  // Process profile views only if user has subscription
+  const profileViews: ProfileView[] = hasActiveSubscription 
+    ? data?.data.seekers
+        .map((s) => ({
+          id: s.id,
+          name: s.name,
+          role: "Care Seeker", 
+          time: formatRelativeTime(s.createdAt),
+          avatar: s.avatar,
+          phone: s.mobile,
+          email: s.email,
+          location: s.address,
+          subscribed: true,
+          createdAt: s.createdAt,
+        }))
+        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()) || []
+    : [];
 
   const handleView = (viewer: ProfileView) => {
     setSelectedUser(viewer);
     setOpenDialog(true);
   };
+
+  // Loading states
+  if (subscriptionLoadingState) {
+    return <div className="text-center py-10">Checking subscription status...</div>;
+  }
 
   if (isLoading) {
     return <div className="text-center py-10">Loading profile views...</div>;
@@ -80,19 +98,52 @@ function ViewProfile() {
     return <div className="text-center py-10 text-red-500">Failed to load profile views</div>;
   }
 
+  // If user doesn't have a subscription
+  if (!hasActiveSubscription) {
+    return (
+      <div className="flex flex-col gap-8 w-full h-full items-center justify-center py-10">
+        <div className="text-[#233D4D] text-[28px] font-medium text-center">
+           Profile Views
+        </div>
+        
+        <div className="max-w-md text-center">
+       
+          
+          <p className="text-[#7A8B9B] text-lg mb-6">
+            See who's interested in your profile by subscribing to our premium plan.
+            Get insights into potential clients and increase your job opportunities.
+          </p>
+          
+      
+          
+          <Button
+            className="bg-[#1B2A37] text-white rounded-full px-6 py-3 text-lg font-medium hover:bg-[#1B2A37]/90 transition-colors"
+            onClick={() => window.location.href = "/subscription"}
+          >
+            Get Subscription to View Profile Visitors
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  // User has subscription, show profile views
   return (
     <div className="flex flex-col gap-8 w-full h-full">
       <div className="text-[#233D4D] text-[28px] font-medium">
-        Who&apos;s Looking  Your Profile
+        Who&apos;s Looking at Your Profile
       </div>
 
       {profileViews.length === 0 ? (
-        <div className="m-auto">
+        <div className="m-auto text-center">
           <img
             src={"/no-views.png"}
             alt="no views"
-            className="object-cover"
+            className="object-cover mx-auto"
           />
+          <p className="text-[#7A8B9B] text-lg mt-4">
+            No one has viewed your profile yet. Complete your profile and stay active to get noticed!
+          </p>
         </div>
       ) : (
         <div className="flex flex-col gap-4 max-h-[600px] overflow-y-auto pr-2">

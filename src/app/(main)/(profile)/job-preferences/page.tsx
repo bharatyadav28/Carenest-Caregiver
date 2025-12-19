@@ -3,6 +3,8 @@ import About from "@/components/profile/job-preferences/About";
 import JobProfile from "@/components/profile/job-preferences/JobProfile";
 import MyCertificates from "@/components/profile/job-preferences/MyCertificate";
 import MyServices from "@/components/profile/job-preferences/MyServices";
+import ResumeComponent from "@/components/profile/job-preferences/ResumeComponent";
+import WorkPermitComponent from "@/components/profile/job-preferences/WorkPermitComponent";
 import Zipcode from "@/components/profile/job-preferences/Zipcode";
 import React from "react";
 
@@ -13,6 +15,8 @@ function JobPreferencePage() {
       <JobProfile />
       <MyServices />
       <Zipcode />
+      <WorkPermitComponent/>
+      <ResumeComponent/>
 <MyCertificates/> 
     </div>
   );

@@ -71,16 +71,17 @@ function Checkout({ open, handleOpen, plan }: Props) {
           <div className="mt-4 p-3 bg-blue-50 rounded-lg">
             <p className="text-sm text-blue-700">
               You will be redirected to Stripe to complete your payment securely.
-              Your subscription will renew automatically each month until canceled.
+              Your subscription will renew automatically each month until cancelled.
             </p>
           </div>
         </div>
 
         <div className="flex w-full gap-2">
-          <TransaparentButton onClick={handleOpen} title="Cancel" />
+          <TransaparentButton onClick={handleOpen} title="Cancel"  className="text-lg"/>
           <DialogConfirmButton 
             title={isLoading ? "Processing..." : "Checkout Now"} 
             onClick={handleConfirm}
+            className="text-lg"
           />
         </div>
       </div>

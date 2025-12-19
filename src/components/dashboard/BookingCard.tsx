@@ -1,3 +1,4 @@
+// BookingCard.tsx
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import BookingDetailsDialog from "@/components/dashboard/BookingDetailsDialog";
@@ -11,6 +12,11 @@ interface WeeklySchedule {
   endTime: string;
 }
 
+interface CareType {
+  id: string;
+  name: string;
+}
+
 export const cdnURL = "https://creative-story.s3.us-east-1.amazonaws.com";
 
 interface BookingCardProps {
@@ -22,6 +28,7 @@ interface BookingCardProps {
   meetingDate: string;
   zipcode: number;
   requiredBy: string;
+  careTypes: CareType[]; // Added careTypes
   weeklySchedule: WeeklySchedule[];
   user: {
     id: string;
@@ -34,14 +41,31 @@ interface BookingCardProps {
   };
 }
 
-// Utility function to format date
-const formatDate = (dateString: string): string => {
+// Utility function to check if date is default/invalid (1970-01-01)
+const isDefaultDate = (dateString: string): boolean => {
   try {
+    const date = new Date(dateString);
+    return date.getFullYear() === 1970 && 
+           date.getMonth() === 0 && 
+           date.getDate() === 1;
+  } catch (error) {
+    return true;
+  }
+};
+
+// Utility function to format date or return hyphen for default/invalid dates
+const formatDateOrHyphen = (dateString: string): string => {
+  try {
+    // Check if date is null, undefined, or default (1970-01-01)
+    if (!dateString || isDefaultDate(dateString)) {
+      return '-';
+    }
+    
     const date = new Date(dateString);
     
     // Check if date is valid
     if (isNaN(date.getTime())) {
-      return 'Invalid Date';
+      return '-';
     }
     
     const day = date.getDate().toString().padStart(2, '0');
@@ -55,8 +79,18 @@ const formatDate = (dateString: string): string => {
     return `${day}-${month}-${year}`;
   } catch (error) {
     console.error('Error formatting date:', error);
-    return 'Invalid Date';
+    return '-';
   }
+};
+
+// Helper function to format care types into a comma-separated string
+const formatCareTypes = (careTypes: CareType[]): string => {
+  if (!careTypes || careTypes.length === 0) {
+    return 'Home Care'; // Default fallback
+  }
+  
+  // Join all service names with commas
+  return careTypes.map(service => service.name).join(', ');
 };
 
 export function BookingCard({
@@ -67,16 +101,20 @@ export function BookingCard({
   endDate,
   zipcode,
   requiredBy,
+  careTypes,
   weeklySchedule,
   user: { name, email, mobile, address, avatar },
 }: BookingCardProps) {
   const [showDialog, setShowDialog] = useState(false);
 
   // Format all dates
-  const formattedBookedOn = formatDate(bookedOn);
-  const formattedStartDate = formatDate(startDate);
-  const formattedMeetingDate = formatDate(meetingDate);
-  const formattedEndDate = formatDate(endDate);
+  const formattedBookedOn = formatDateOrHyphen(bookedOn);
+  const formattedStartDate = formatDateOrHyphen(startDate);
+  const formattedMeetingDate = formatDateOrHyphen(meetingDate);
+  const formattedEndDate = formatDateOrHyphen(endDate);
+  
+  // Format care types
+  const formattedCareType = formatCareTypes(careTypes);
 
   const bookingDetails = {
     id: bookingId,
@@ -85,8 +123,9 @@ export function BookingCard({
     phone: mobile,
     address,
     avatar,
-    bookedOn: formattedBookedOn, // Use formatted date
-    careType: "Home care",
+    bookedOn: formattedBookedOn,
+    careType: formattedCareType, // Single string for display
+    careTypes: careTypes, // Full array for details dialog
     startDate: formattedStartDate,
     meetingDate: formattedMeetingDate,
     endDate: formattedEndDate,
@@ -104,7 +143,7 @@ export function BookingCard({
             Booking ID: #{bookingId?.toString().slice(0,10).toUpperCase()}
           </div>
           <div>
-            Care Type: <span className="text-[#7A8B9B]">Home Care</span>
+            Care Type: <span className="text-[#7A8B9B]">{formattedCareType}</span>
           </div>
         </div>
 

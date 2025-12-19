@@ -27,6 +27,11 @@ function Page() {
       return toast.error("New password must be at least 6 characters");
     }
 
+    // Check if old and new passwords are the same
+    if (currentPassword === newPassword) {
+      return toast.error("New password cannot be the same as the old password");
+    }
+
     // Check confirm password match
     if (newPassword !== confirmPassword) {
       return toast.error("New and Confirm passwords do not match");
