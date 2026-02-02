@@ -12,6 +12,14 @@ function SubscriptionPage() {
   const hasSubscription = subscriptionData?.data?.hasActiveSubscription || false;
   const subscription = subscriptionData?.data?.subscription || null;
 
+  const normalizedSubscription = subscription ? {
+    ...subscription,
+    pricingInfo: subscription.pricingInfo ? {
+      ...subscription.pricingInfo,
+      priceDifference: subscription.pricingInfo.priceDifference || undefined,
+    } : undefined,
+  } : null;
+
   useEffect(() => {
     refetch();
   }, [refetch]);
@@ -29,7 +37,7 @@ function SubscriptionPage() {
       {!hasSubscription ? (
         <ViewPlans />
       ) : (
-        <CurrentPlan subscription={subscription} refetch={refetch} />
+        <CurrentPlan subscription={normalizedSubscription} refetch={refetch} />
       )}
     </div>
   );
