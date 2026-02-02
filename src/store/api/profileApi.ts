@@ -193,7 +193,7 @@ interface RefreshTokenResponse {
 }
 
 // --------- Base URLs ---------
-const baseUrl = 'https://carenest-backend-8y2y.onrender.com';
+const baseUrl = 'https://api.careworks.biz';
 // const baseUrl = 'http://localhost:4000';
 // --------- Base Queries ---------
 const baseQuery = fetchBaseQuery({

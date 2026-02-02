@@ -12,6 +12,7 @@ import CustomDrawer from "./CustomDrawer";
 import Notification from "../Notification";
 import { useGetUnreadCountQuery } from "../../store/api/notificationApi";
 import Cookies from "js-cookie";
+import { frontendurl } from "../../lib/utils"; // Adjust import path
 
 interface props {
   className: string;
@@ -36,6 +37,11 @@ function Header({ className }: props) {
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const handleLogoClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    window.open(frontendurl, "_blank");
+  };
 
   const handleOpenMenu = () => {
     setOpenMenu((prev) => !prev);
@@ -152,11 +158,18 @@ function Header({ className }: props) {
       <div
         className={`flex justify-between bg-primary-foreground sticky top-0 z-9999 text-[#fff] items-center py-2 ${className}`}
       >
-        <Link href={"/dashboard"}>
-          <div className="relative w-40 h-18">
-            <Image src={"/Logo.svg"} alt="Logo" fill className="object-contain" />
-          </div>
-        </Link>
+        {/* Updated Logo with click handler */}
+        <div 
+          className="relative w-40 h-18 cursor-pointer"
+          onClick={handleLogoClick}
+        >
+          <Image 
+            src={"/Logo.svg"} 
+            alt="Logo" 
+            fill 
+            className="object-contain"
+          />
+        </div>
         
         <div className="lg:block hidden">
           {navContent}

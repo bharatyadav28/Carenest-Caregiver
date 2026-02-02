@@ -5,10 +5,9 @@ import Cookies from 'js-cookie';
 import { setAccessToken, clearAuth } from '../authSlice';
 import type { RootState } from '../store';
 
-const BASE_URL = 'https://carenest-backend-8y2y.onrender.com/api/v1';
+const BASE_URL = 'https://api.careworks.biz/api/v1';
 // const BASE_URL = 'http://localhost:4000/api/v1';
-export const cdnURL = "https://creative-story.s3.us-east-1.amazonaws.com";
-
+export const cdnURL = "https://carenest-storage.ap-south-1.storage.onantryk.com";
 // ================== Types ==================
 interface WeeklySchedule {
   weekDay: number;

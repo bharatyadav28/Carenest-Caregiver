@@ -270,6 +270,9 @@ function JobProfileDialog({ open, handleOpen, profile, setProfile }: Props) {
   const radioQues = questions?.filter((ques) => ques.type === "radio");
   const multipleQues = questions?.filter((ques) => ques.type === "multiple");
 
+  // Filter out q2 (price range) from the questions
+  const filteredRadioQues = radioQues?.filter((ques) => ques.id !== "q2");
+
   return (
     <CustomDialog
       open={open}
@@ -289,7 +292,7 @@ function JobProfileDialog({ open, handleOpen, profile, setProfile }: Props) {
         </div>
 
         <div className="flex-1 overflow-y-auto h-full w-full my-6 flex flex-col gap-5">
-          {radioQues?.map((item) => {
+          {filteredRadioQues?.map((item) => {
             const result = selectedValues?.find((value) => value.qid === item.id);
             const selectedOption = result && !Array.isArray(result.oid) ? result.oid : "";
 

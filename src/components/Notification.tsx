@@ -181,7 +181,7 @@ function Notification({ open, handleOpen }: Props) {
                     </div>
                   </div>
                   
-                  <div className="text-gray-600 text-sm mt-1 line-clamp-2">
+                  <div className="text-gray-600 text-sm mt-1 ">
                     {notification.description}
                   </div>
                   

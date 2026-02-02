@@ -140,7 +140,7 @@ function DocumentsUpload() {
         />
 
         <UploadFiles
-          label="Upload your Work Permit and License documents"
+          label="Upload your Driving License "
           uploadTitle="Upload your files"
           handleUpload={(e) => handleFileUpload(e, "work_permit")}
           inputRef={workPermitRef}

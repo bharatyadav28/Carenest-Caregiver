@@ -1,8 +1,32 @@
-// store/api/subscriptionApi.ts
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+// store/api/subscriptionApi.ts - UPDATED
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'; 
 
-const BASE_URL = 'https://carenest-backend-8y2y.onrender.com/api/v1';
+const BASE_URL = 'https://api.careworks.biz/api/v1';
 // const BASE_URL = 'http://localhost:4000/api/v1';
+
+export interface SubscriptionPlan {
+  id: string;
+  name: string;
+  description: string;
+  amount: number;
+  interval: string;
+  displayAmount: string;
+  isCurrentPrice?: boolean;
+}
+
+export interface PricingInfo {
+  isOnOldPrice: boolean;
+  currentPrice: string | null;
+  priceDifference: {
+    amount: number;
+    formatted: string;
+    isIncrease: boolean;
+    percentage: number;
+  } | null;
+  needsRenewal: boolean;
+  canRenewAtCurrentPrice: boolean;
+  requiresPriceUpdate?: boolean;
+}
 
 export interface Subscription {
   id: string;
@@ -14,14 +38,8 @@ export interface Subscription {
   cancelAtPeriodEnd: boolean;
   createdAt: string;
   updatedAt: string;
-  plan?: {
-    id: string;
-    name: string;
-    description: string;
-    amount: number;
-    interval: string;
-    displayAmount: string;
-  };
+  plan?: SubscriptionPlan;
+  pricingInfo?: PricingInfo;
 }
 
 export interface Plan {
@@ -38,6 +56,7 @@ export interface SubscriptionResponse {
   data: {
     subscription: Subscription | null; 
     hasActiveSubscription: boolean;
+    currentPlan?: Plan;
   };
 }
 
@@ -56,6 +75,32 @@ export interface CheckoutResponse {
   };
 }
 
+export interface ReactivateResponse {
+  success: boolean;
+  message: string;
+  data: {
+    status: string;
+    cancelAtPeriodEnd: boolean;
+    currentPeriodEnd: string;
+    requiresPriceUpdate?: boolean;
+    checkoutUrl?: string;
+    oldPrice?: string;
+    newPrice?: string;
+  };
+}
+
+export interface RenewResponse {
+  success: boolean;
+  message: string;
+  data: {
+    status: string;
+    cancelAtPeriodEnd: boolean;
+    currentPeriodEnd: string;
+    oldPrice?: string;
+    newPrice?: string;
+  };
+}
+
 export const subscriptionApi = createApi({
   reducerPath: 'subscriptionApi',
   baseQuery: fetchBaseQuery({
@@ -70,19 +115,16 @@ export const subscriptionApi = createApi({
   }),
   tagTypes: ['Subscription', 'Plans'],
   endpoints: (builder) => ({
-    // Get user's subscription
     getMySubscription: builder.query<SubscriptionResponse, void>({
       query: () => '/subscriptions/my',
       providesTags: ['Subscription'],
     }),
 
-    // Get all plans
     getPlans: builder.query<PlansResponse, void>({
       query: () => '/plans',
       providesTags: ['Plans'],
     }),
 
-    // Create checkout session
     createCheckout: builder.mutation<CheckoutResponse, void>({
       query: () => ({
         url: '/subscriptions/checkout',
@@ -91,7 +133,6 @@ export const subscriptionApi = createApi({
       invalidatesTags: ['Subscription'],
     }),
 
-    // Cancel subscription
     cancelSubscription: builder.mutation<{ success: boolean; message: string }, void>({
       query: () => ({
         url: '/subscriptions/cancel',
@@ -100,12 +141,7 @@ export const subscriptionApi = createApi({
       invalidatesTags: ['Subscription'],
     }),
 
-       // Reactivate subscription
-    reactivateSubscription: builder.mutation<{
-      success: boolean;
-      message: string;
-      data: any;
-    }, void>({
+    reactivateSubscription: builder.mutation<ReactivateResponse, void>({
       query: () => ({
         url: '/subscriptions/reactivate',
         method: 'POST',
@@ -113,9 +149,16 @@ export const subscriptionApi = createApi({
       invalidatesTags: ['Subscription'],
     }),
 
-    // Check subscription status
     checkSubscriptionStatus: builder.query<{ success: boolean; data: { status: any } }, void>({
       query: () => '/subscriptions/check',
+    }),
+
+    renewSubscription: builder.mutation<RenewResponse, void>({
+      query: () => ({
+        url: '/subscriptions/renew',
+        method: 'POST',
+      }),
+      invalidatesTags: ['Subscription'],
     }),
   }),
 });
@@ -125,6 +168,7 @@ export const {
   useGetPlansQuery,
   useCreateCheckoutMutation,
   useCancelSubscriptionMutation,
+  useReactivateSubscriptionMutation,
   useCheckSubscriptionStatusQuery,
-   useReactivateSubscriptionMutation,
+  useRenewSubscriptionMutation,
 } = subscriptionApi;

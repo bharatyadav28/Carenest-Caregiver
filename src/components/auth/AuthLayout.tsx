@@ -1,5 +1,8 @@
+"use client";
 import React from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { frontendurl } from "../../lib/utils"; // Adjust the import path as needed
 
 interface Props {
   image: string;
@@ -7,13 +10,26 @@ interface Props {
 }
 
 function AuthLayout({ image, children }: Props) {
+  const router = useRouter();
+
+  const handleLogoClick = () => {
+    router.push(frontendurl);
+  };
+
   return (
     <div className="w-full h-full py-8 md:px-20 px-5 bg-[var(--secondary-backgound)] flex flex-col">
       <div className="grid grid-cols-12 h-full flex-1 min-h-0">
         {/* Left form */}
         <div className="col-start-1 md:col-end-5 col-end-13 flex flex-col min-h-0">
           <div className="mb-0">
-            <Image src={"/auth/logoblue.png"} alt="Logo" width={180} height={100} />
+            <Image 
+              src={"/auth/logoblue.png"} 
+              alt="Logo" 
+              width={180} 
+              height={100}  
+              onClick={handleLogoClick}
+              className="cursor-pointer"
+            />
           </div>
           <div className="h-full ">{children}</div>
         </div>
@@ -59,7 +75,6 @@ function AuthLayout({ image, children }: Props) {
         </div>
               <div className="py-10"></div>
       </div>
-
     </div>
   );
 }

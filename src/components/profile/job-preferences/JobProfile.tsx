@@ -20,8 +20,6 @@ function JobProfile() {
     isSuccess,
   } = useGetJobProfileQuery();
 
-  // const [updateJobProfile] = useUpdateJobProfileMutation();
-
   const handleOpenDialog = () => {
     setOpenDialog((prev) => !prev);
   };
@@ -81,7 +79,8 @@ function JobProfile() {
     }
   }, [isSuccess, jobProfile]);
 
-  const profileQues = data?.profileQues;
+  // Filter out q2 (price range) from profile questions
+  const profileQues = data?.profileQues?.filter((item) => item.id !== "q2");
 
   return (
     <>

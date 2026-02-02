@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "creative-story.s3.us-east-1.amazonaws.com",
+        hostname: "carenest-storage.ap-south-1.storage.onantryk.com",
         pathname: "/**",
       },
     ],

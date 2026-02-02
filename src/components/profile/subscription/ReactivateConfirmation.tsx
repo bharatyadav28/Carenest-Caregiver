@@ -13,9 +13,17 @@ interface Props {
   onConfirm: () => void;
   isLoading: boolean;
   renewalDate: string;
+  currentPrice?: string; // Optional: Add price info
 }
 
-function ReactivateConfirmation({ open, handleOpen, onConfirm, isLoading, renewalDate }: Props) {
+function ReactivateConfirmation({ 
+  open, 
+  handleOpen, 
+  onConfirm, 
+  isLoading, 
+  renewalDate,
+  currentPrice 
+}: Props) {
   return (
     <CustomDialog
       open={open}
@@ -37,7 +45,12 @@ function ReactivateConfirmation({ open, handleOpen, onConfirm, isLoading, renewa
           <div className="p-3 bg-yellow-50 rounded-lg">
             <p className="text-sm text-yellow-700">
               Your subscription will be reactivated and will renew on <strong>{renewalDate}</strong>.
-              You'll be charged the regular monthly rate at that time.
+              {currentPrice && (
+                <span> You'll be charged <strong>{currentPrice}/month</strong> at that time.</span>
+              )}
+              {!currentPrice && (
+                <span> You'll be charged the regular monthly rate at that time.</span>
+              )}
             </p>
           </div>
 
@@ -45,7 +58,7 @@ function ReactivateConfirmation({ open, handleOpen, onConfirm, isLoading, renewa
             <ul className="text-sm text-green-700 list-disc pl-4">
               <li>Verified Badge on your profile build instant trust with families</li>
               <li>See Who Viewed You access full customer details</li>
-              <li>Priority Listing  appear at the top in caregiver searches</li>
+              <li>Priority Listing appear at the top in caregiver searches</li>
               <li>First Call Advantage be the first to receive new consultation calls</li>
             </ul>
           </div>
@@ -55,12 +68,10 @@ function ReactivateConfirmation({ open, handleOpen, onConfirm, isLoading, renewa
           <TransaparentButton 
             onClick={handleOpen} 
             title="Cancel" 
-          
           />
           <DialogConfirmButton 
             title={isLoading ? "Reactivating..." : "Confirm Reactivation"} 
             onClick={onConfirm}
-          
           />
         </div>
       </div>
