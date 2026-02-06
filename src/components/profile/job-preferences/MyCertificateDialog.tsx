@@ -127,31 +127,34 @@ const CertificateDialog: React.FC<CertificateDialogProps> = ({
             </p>
           </div>
 
-          {files.map((file, index) => (
-            <div
-              key={file.name + index}
-              className="flex items-center justify-between w-full px-4 py-3 bg-gray-50 rounded-lg shadow-sm"
-            >
-              <div className="flex items-center gap-3">
-                {pdfIcons}
-                <div className="flex flex-col text-sm text-left">
-                  <span className="font-medium truncate max-w-[200px]">
-                    {file.name}
-                  </span>
-                  <span className="text-xs text-gray-500">
-                    {(file.size / (1024 * 1024)).toFixed(1)} MB •{" "}
-                    {file.type.split("/")[1]?.toUpperCase()}
-                  </span>
-                </div>
-              </div>
-              <button
-                className="text-gray-400 hover:text-red-500 text-lg"
-                onClick={() => removeFile(index)}
+          {/* Scrollable file list container */}
+          <div className="max-h-[200px] overflow-y-auto pr-2 custom-scrollbar">
+            {files.map((file, index) => (
+              <div
+                key={file.name + index}
+                className="flex items-center justify-between w-full px-4 py-3 bg-gray-50 rounded-lg shadow-sm mb-2 last:mb-0"
               >
-                ✕
-              </button>
-            </div>
-          ))}
+                <div className="flex items-center gap-3">
+                  {pdfIcons}
+                  <div className="flex flex-col text-sm text-left">
+                    <span className="font-medium truncate max-w-[200px]">
+                      {file.name}
+                    </span>
+                    <span className="text-xs text-gray-500">
+                      {(file.size / (1024 * 1024)).toFixed(1)} MB •{" "}
+                      {file.type.split("/")[1]?.toUpperCase()}
+                    </span>
+                  </div>
+                </div>
+                <button
+                  className="text-gray-400 hover:text-red-500 text-lg"
+                  onClick={() => removeFile(index)}
+                >
+                  ✕
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
 
         <div className="flex w-full gap-2 mt-2">

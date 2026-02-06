@@ -1,7 +1,7 @@
 "use client";
 import React, { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify"; // Import toast for success message
+import { toast } from "react-toastify";
 
 import UploadFiles from "@/components/auth/UploadFiles";
 import { CustomButton } from "@/components/common/CustomButton";
@@ -58,6 +58,7 @@ function DocumentsUpload() {
       file: File;
     }[]
   >([]);
+  const [uploadingFile, setUploadingFile] = useState<string | null>(null);
 
   const [uploadDocument, { isLoading: isUploading }] = useUploadDocumentMutation();
   const [saveDocuments, { isLoading: isSaving }] = useSaveDocumentsMutation();
@@ -70,6 +71,8 @@ function DocumentsUpload() {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    setUploadingFile(file.name);
+    
     try {
       const formData = new FormData();
       formData.append("file", file);
@@ -94,6 +97,8 @@ function DocumentsUpload() {
     } catch (err: any) {
       console.error("Upload failed:", err);
       toast.error(err.data?.message || "Failed to upload file");
+    } finally {
+      setUploadingFile(null);
     }
   };
 
@@ -129,6 +134,11 @@ function DocumentsUpload() {
     toast.info(`${name} removed`);
   };
 
+  // Simple circular loader component
+  const CircularLoader = () => (
+    <div className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-solid border-current border-r-transparent motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+  );
+
   return (
     <div className="mt-6">
       <div className="flex flex-col gap-4">
@@ -146,6 +156,15 @@ function DocumentsUpload() {
           inputRef={workPermitRef}
         />
       </div>
+
+      {uploadingFile && (
+        <div className="flex items-center justify-center my-4">
+          <div className="flex items-center gap-2 text-sm text-gray-600">
+            <CircularLoader />
+            <span>Uploading {uploadingFile}...</span>
+          </div>
+        </div>
+      )}
 
       {uploadedDocs.map((doc) => (
         <div
@@ -188,7 +207,7 @@ function DocumentsUpload() {
       ))}
 
       <CustomButton
-        className="w-full mt-8 text-xl"
+        className="w-full mt-8 text-xl flex items-center justify-center gap-2"
         onClick={handleSubmit}
         disabled={
           isUploading ||
@@ -197,7 +216,14 @@ function DocumentsUpload() {
           !uploadedDocs.find((d) => d.type === "work_permit")
         }
       >
-        {isUploading || isSaving ? "Processing..." : "Save & Continue"}
+        {isUploading || isSaving ? (
+          <>
+            <CircularLoader />
+            Processing...
+          </>
+        ) : (
+          "Save & Continue"
+        )}
       </CustomButton>
     </div>
   );

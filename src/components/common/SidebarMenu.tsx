@@ -121,10 +121,10 @@ function SidebarMenu({ items, ViewProfile }: Props) {
   let avatar =
     profile?.avatar && profile.avatar !== ""
       ? profile.avatar
-      : "/profile-pic.png";
+      : "/image.svg";
 
   // If avatar is not a full URL, prepend the CDN URL
-  if (avatar && avatar !== "/profile-pic.png") {
+  if (avatar && avatar !== "/image.svg") {
     avatar = `${cdnURL}${avatar}`;
   }
 

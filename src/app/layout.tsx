@@ -12,8 +12,8 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: "Carenest | Caregiver",
-  description: "CareNest is a platform for care Provider and care Seeker.",
+  title: "CareWorks | Caregiver",
+  description: "CareWorks is a platform for care Provider and care Seeker.",
 };
 
 export default function RootLayout({
@@ -23,6 +23,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+        <head>
+        <link rel="icon" href="/logos.svg" />
+      </head>
       <body className={`${roboto.className}  antialiased`}> 
           <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}>
          <Providers>{children}</Providers>

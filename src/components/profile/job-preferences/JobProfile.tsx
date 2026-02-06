@@ -1,3 +1,4 @@
+// JobProfile.tsx
 import React, { useEffect, useState } from "react";
 import { AddButton, EditButton } from "@/components/common/CustomButton";
 import { jobProfileType } from "@/lib/interface-types";
@@ -7,7 +8,6 @@ import JobProfileDialog from "./JobProfileDialog";
 
 import {
   useGetJobProfileQuery,
- 
 } from "@/store/api/profileApi";
 
 function JobProfile() {
@@ -16,7 +16,6 @@ function JobProfile() {
 
   const {
     data: jobProfile,
-   
     isSuccess,
   } = useGetJobProfileQuery();
 
@@ -33,15 +32,31 @@ function JobProfile() {
         ? `$${profileData.minPrice} - $${profileData.maxPrice}`
         : "";
       
-      // Format the experience range
-      const experienceRange = profileData.experienceMin && profileData.experienceMax
-        ? `${profileData.experienceMin}-${profileData.experienceMax} years`
-        : "";
+      // Format the experience range - show "10+" instead of "10-99"
+      let experienceRange = "";
+      if (profileData.experienceMin !== undefined && profileData.experienceMax !== undefined) {
+        if (profileData.experienceMax === 99) {
+          experienceRange = "10+ years";
+        } else {
+          experienceRange = `${profileData.experienceMin}-${profileData.experienceMax} years`;
+        }
+      }
       
-      // Format PRN
-      const prnRange = profileData.isPrn && profileData.prnMin && profileData.prnMax
-        ? `$${profileData.prnMin} - $${profileData.prnMax}`
-        : "As Needed";
+      // Format PRN based on isPrn flag
+      let prnRange = "";
+      if (profileData.isPrn !== undefined) {
+        if (profileData.isPrn) {
+          // As Needed - no price range
+          prnRange = "As Needed";
+        } else {
+          // // Fixed Scheduled - show price range if available
+          // if (profileData.prnMin && profileData.prnMax) {
+          //   prnRange = `$${profileData.prnMin} - $${profileData.prnMax}`;
+          // } else {
+            prnRange = "Fixed Scheduled";
+          }
+        
+      }
 
       const mappedProfile: jobProfileType[] = [
         {

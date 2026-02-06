@@ -11,14 +11,43 @@ import { toast } from "react-toastify";
 
 function ForgotPasswordForm() {
   const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   
   const router = useRouter();
   const [forgotPassword] = useForgotPasswordMutation();
 
+  // Simple email validation function
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setEmail(value);
+    
+    // Clear error when user starts typing
+    if (emailError) {
+      setEmailError("");
+    }
+  };
+
   const handleSubmit = async () => {
+    // Reset previous errors
+    setEmailError("");
+
+    // Validate email
     if (!email) {
-      return toast.error("Please enter your email");
+      setEmailError("Please enter your email");
+      toast.error("Please enter your email");
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      setEmailError("Please enter a valid email address");
+      toast.error("Please enter a valid email address");
+      return;
     }
 
     setIsLoading(true);
@@ -36,25 +65,30 @@ function ForgotPasswordForm() {
       } else {
         toast.error(response.message || "Failed to send OTP");
       }
-    } catch (error:any) {
-          console.log(error);
-          toast.error(error.data.message);
-        } finally {
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error.data.message);
+    } finally {
       setIsLoading(false);
     }
   };
 
   return (
     <div className="my-8 flex flex-col gap-4">
-      <TextInput
-        text={email}
-        setText={setEmail}
-        Icon={EmailIcon}
-        type="email"
-        placeholder="Enter Email ID"
-        onChange={(e) => setEmail(e.target.value)}
+      <div className="relative">
+        <TextInput
+          text={email}
+          setText={setEmail}
+          Icon={EmailIcon}
+          type="email"
+          placeholder="Enter Email ID"
+          onChange={handleEmailChange}
           className="!text-lg"
-      />
+        />
+        {emailError && (
+          <p className="text-red-500 text-sm mt-1 ml-1">{emailError}</p>
+        )}
+      </div>
 
       <CustomButton
         className="mt-6 text-lg"

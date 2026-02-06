@@ -12,7 +12,6 @@ import {
   phoneIcon,
   cityIcon,
   zipcodeIcon,
-// You may need to add this icon or use an existing one
 } from "@/lib/svg_icons";
 import { CustomButton } from "../../common/CustomButton";
 import GoogleButton from "../GoogleButton";
@@ -26,7 +25,7 @@ function SignupForm() {
   const [countryCode, setCountryCode] = useState("+1");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
-  const [city, setCity] = useState(""); // New city field
+  const [city, setCity] = useState("");
   const [zipcode, setZipcode] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -55,7 +54,6 @@ function SignupForm() {
       return false;
     }
 
-    // Updated country code validation to allow + sign
     const countryCodeRegex = /^\+\d{1,4}$/;
     if (!countryCode.trim()) {
       toast.error("Country code is required");
@@ -81,7 +79,6 @@ function SignupForm() {
       return false;
     }
 
-    // City validation
     const cityRegex = /^[A-Za-z\s\-']+$/;
     if (!city.trim()) {
       toast.error("City is required");
@@ -102,12 +99,34 @@ function SignupForm() {
       return false;
     }
 
+    // Password validation - Simple and strong
     if (!password) {
       toast.error("Password is required");
       return false;
     }
-    if (password.length < 6) {
-      toast.error("Password must be at least 6 characters long");
+    
+    if (password.length < 8) {
+      toast.error("Password must contain  A-Z, a-z, 0-9, special character");
+      return false;
+    }
+    
+    if (!/[A-Z]/.test(password)) {
+      toast.error("Password must contain  A-Z, a-z, 0-9, special character");
+      return false;
+    }
+    
+    if (!/[a-z]/.test(password)) {
+      toast.error("Password must contain  A-Z, a-z, 0-9, special character");
+      return false;
+    }
+    
+    if (!/\d/.test(password)) {
+      toast.error("Password must contain  A-Z, a-z, 0-9, special character");
+      return false;
+    }
+    
+    if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
+      toast.error("Password must contain  A-Z, a-z, 0-9, special character");
       return false;
     }
 
@@ -150,30 +169,24 @@ function SignupForm() {
 
   // Function to handle country code input
   const handleCountryCodeChange: React.Dispatch<React.SetStateAction<string>> = (val) => {
-    // Handle both string and function types
     const inputValue = typeof val === 'function' ? val(countryCode) : val;
     
     let input = inputValue;
     
-    // If user types just numbers, prepend +
     if (/^\d+$/.test(input)) {
       input = `+${input}`;
     }
     
-    // Remove any non-digit characters except the leading +
     input = input.replace(/[^\d+]/g, '');
     
-    // Ensure only one + at the beginning
     if (input.startsWith('++')) {
       input = `+${input.slice(2)}`;
     }
     
-    // If it doesn't start with +, add it
     if (!input.startsWith('+')) {
       input = `+${input}`;
     }
     
-    // Limit to 1-4 digits after +
     const match = input.match(/^\+(\d{0,4})/);
     if (match) {
       setCountryCode(`+${match[1]}`);
@@ -182,7 +195,6 @@ function SignupForm() {
 
   // Function to handle phone number input
   const handlePhoneChange: React.Dispatch<React.SetStateAction<string>> = (val) => {
-    // Handle both string and function types
     const inputValue = typeof val === 'function' ? val(phone) : val;
     
     const cleaned = inputValue.replace(/\D/g, "").slice(0, 10);
@@ -259,9 +271,10 @@ function SignupForm() {
         text={password}
         setText={setPassword}
         Icon={passwordIcon}
-        placeholder="Enter Password"
+        placeholder="Enter Password "
         className="!text-lg"
       />
+     
 
       <PasswordInput
         text={confirmPassword}

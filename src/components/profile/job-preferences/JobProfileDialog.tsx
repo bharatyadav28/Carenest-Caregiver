@@ -1,5 +1,6 @@
+// JobProfileDialog.tsx
 import React, { useEffect, useState } from "react";
-import { toast } from "react-toastify"; // Import toast
+import { toast } from "react-toastify";
 import { CustomDialog } from "@/components/common/CustomDialog";
 import {
   DialogConfirmButton,
@@ -21,6 +22,7 @@ interface Props {
 
 function JobProfileDialog({ open, handleOpen, profile, setProfile }: Props) {
   const [selectedValues, setSelectedValues] = useState<jobProfileType[]>([]);
+  const [languageError, setLanguageError] = useState<string>("");
   const [updateJobProfile, { isLoading }] = useUpdateJobProfileMutation();
 
   // Initialize form with current profile data
@@ -73,10 +75,20 @@ function JobProfileDialog({ open, handleOpen, profile, setProfile }: Props) {
           } else {
             newOids.push(oid);
           }
+          
+          // Clear language error when at least one language is selected
+          if (qid === "q6" && newOids.length > 0) {
+            setLanguageError("");
+          }
+          
           return prev.map((item) =>
             item.qid === qid ? { ...item, oid: newOids } : item
           );
         } else {
+          // Clear language error when first language is selected
+          if (qid === "q6") {
+            setLanguageError("");
+          }
           return [...prev, { qid, oid: [oid] }];
         }
       } else {
@@ -89,6 +101,46 @@ function JobProfileDialog({ open, handleOpen, profile, setProfile }: Props) {
         }
       }
     });
+  };
+
+  const validateForm = (): boolean => {
+    // Check if at least one language is selected
+    const languageItem = selectedValues.find((v) => v.qid === "q6");
+    const selectedLanguages = languageItem && Array.isArray(languageItem.oid) 
+      ? languageItem.oid 
+      : [];
+    
+    if (selectedLanguages.length === 0) {
+      setLanguageError("Please select at least one language");
+      return false;
+    }
+    
+    // Check if all required radio fields are selected
+    const requiredFields = ["q1", "q2", "q3", "q4", "q5", "q7"];
+    const missingFields = requiredFields.filter(fieldId => {
+      const field = selectedValues.find(v => v.qid === fieldId);
+      return !field || !field.oid || (Array.isArray(field.oid) && field.oid.length === 0);
+    });
+    
+    if (missingFields.length > 0) {
+      const questionNames = {
+        q1: "caregiving type",
+        q2: "price range",
+        q3: "location range",
+        q4: "PRN",
+        q5: "certification status",
+        q7: "years of experience"
+      };
+      
+      const missingNames = missingFields.map(field => questionNames[field as keyof typeof questionNames]);
+      toast.error(`Please select: ${missingNames.join(", ")}`, {
+        position: "top-right",
+        autoClose: 4000,
+      });
+      return false;
+    }
+    
+    return true;
   };
 
   const convertToApiPayload = () => {
@@ -129,9 +181,9 @@ function JobProfileDialog({ open, handleOpen, profile, setProfile }: Props) {
         : "";
     })();
 
-    let isPrn = false,
-      prnMin = 0,
-      prnMax = 0;
+    let isPrn = true,  // Default to true (As Needed)
+        prnMin = 0,
+        prnMax = 0;
     {
       const item = selectedValues.find((v) => v.qid === "q4");
       if (item) {
@@ -139,14 +191,16 @@ function JobProfileDialog({ open, handleOpen, profile, setProfile }: Props) {
           "q4",
           Array.isArray(item.oid) ? item.oid[0] : item.oid
         );
-        if (prnText.toLowerCase() === "as needed") {
+        if (prnText === "Fixed Scheduled") {
+          isPrn = false;
+          // Set default PRN price range when Fixed Scheduled is selected
+          prnMin = 50;  // Default minimum
+          prnMax = 100; // Default maximum
+        } else if (prnText === "As Needed") {
           isPrn = true;
-        } else {
-          const matches = prnText.match(/\$(\d+)\s*-\s*\$(\d+)/);
-          if (matches) {
-            prnMin = parseInt(matches[1], 10);
-            prnMax = parseInt(matches[2], 10);
-          }
+          // PRN prices are not applicable for "As Needed"
+          prnMin = 0;
+          prnMax = 0;
         }
       }
     }
@@ -160,13 +214,16 @@ function JobProfileDialog({ open, handleOpen, profile, setProfile }: Props) {
           "q7",
           Array.isArray(item.oid) ? item.oid[0] : item.oid
         );
-        const matches = expText.match(/(\d+)[^\d]+(\d+)/);
-        if (matches) {
-          experienceMin = parseInt(matches[1], 10);
-          experienceMax = parseInt(matches[2], 10);
-        } else if (expText.includes("10+")) {
+        // Handle the 10+ years case
+        if (expText === "10+ years") {
           experienceMin = 10;
-          experienceMax = 99;
+          experienceMax = 99; // Use 99 to represent "10+"
+        } else {
+          const matches = expText.match(/(\d+)[^\d]+(\d+)/);
+          if (matches) {
+            experienceMin = parseInt(matches[1], 10);
+            experienceMax = parseInt(matches[2], 10);
+          }
         }
       }
     }
@@ -179,7 +236,7 @@ function JobProfileDialog({ open, handleOpen, profile, setProfile }: Props) {
           "q5",
           Array.isArray(item.oid) ? item.oid[0] : item.oid
         );
-        certified = certText.toLowerCase() === "yes";
+        certified = certText === "Yes";
       }
     }
 
@@ -208,6 +265,11 @@ function JobProfileDialog({ open, handleOpen, profile, setProfile }: Props) {
 
   const handleSave = async () => {
     try {
+      // Validate form before saving
+      if (!validateForm()) {
+        return;
+      }
+      
       const payload = convertToApiPayload();
       await updateJobProfile(payload).unwrap();
       
@@ -224,6 +286,16 @@ function JobProfileDialog({ open, handleOpen, profile, setProfile }: Props) {
                 }).filter(text => text !== '')
               : [];
             return { ...item, oid: languageTexts.join(", ") };
+          }
+        }
+        // Special handling for experience to show "10+" instead of "10-99"
+        else if (item.qid === "q7") {
+          const question = data.profileQues.find(q => q.id === "q7");
+          if (question) {
+            const option = question.options.find(opt => opt.id === item.oid);
+            if (option) {
+              return { ...item, oid: option.text };
+            }
           }
         }
         else {
@@ -331,13 +403,25 @@ function JobProfileDialog({ open, handleOpen, profile, setProfile }: Props) {
             const selectedOids = result && Array.isArray(result.oid) 
               ? result.oid 
               : [];
+            
+            // Check if this is the languages section (q6)
+            const isLanguages = item.id === "q6";
 
             return (
               <div
                 key={item.id}
                 className="flex flex-col gap-2 items-start text-lg font-medium"
               >
-                <div>{item.ques} <span className="text-xs text-gray-600/60">(You can select multiple fields)</span> </div>
+                <div>
+                  {item.ques} 
+                  {isLanguages && <span className="text-red-500 ml-1">*</span>}
+                  <span className="text-xs text-gray-600/60 ml-2">
+                    (You can select multiple fields)
+                  </span>
+                </div>
+                {isLanguages && languageError && (
+                  <div className="text-red-500 text-sm">{languageError}</div>
+                )}
                 <div className="mb-4 flex flex-wrap gap-y-3 gap-x-2 items-start w-full">
                   {item.options?.map((option) => {
                     const isSelected = selectedOids.includes(option.id);
@@ -366,13 +450,16 @@ function JobProfileDialog({ open, handleOpen, profile, setProfile }: Props) {
           })}
         </div>
 
-        <div className="flex mt-auto w-full gap-2">
-          <TransaparentButton onClick={handleOpen} className="text-lg" />
-          <DialogConfirmButton
-          className="text-lg"
-            onClick={handleSave}
-            title={isLoading ? "Saving..." : "Save"}
-          />
+        <div className="flex flex-col gap-2 mt-auto w-full">
+        
+          <div className="flex gap-2">
+            <TransaparentButton onClick={handleOpen} className="text-lg" />
+            <DialogConfirmButton
+              className="text-lg"
+              onClick={handleSave}
+              title={isLoading ? "Saving..." : "Save"}
+            />
+          </div>
         </div>
       </div>
     </CustomDialog>

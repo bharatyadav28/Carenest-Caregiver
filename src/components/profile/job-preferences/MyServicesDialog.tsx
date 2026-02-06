@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { RxCross2 as CrossIcon } from "react-icons/rx";
 import { IoIosAdd as AddIcon } from "react-icons/io";
-import { toast } from "react-toastify"; // Import toast
+import { toast } from "react-toastify";
 
 import { CustomDialog } from "@/components/common/CustomDialog";
 import {
@@ -14,7 +14,7 @@ import { useUpdateMyServicesMutation } from "@/store/api/profileApi";
 interface Props {
   open: boolean;
   handleOpen: () => void;
-  services: string[]; // array of service names
+  services: string[];
   setServices: React.Dispatch<React.SetStateAction<string[]>>;
   allServices: { id: string; name: string }[];
 }
@@ -44,23 +44,28 @@ function MyServicesDialog({
   };
 
   const handleSave = async () => {
+    // Check if at least one service is selected
+    if (selectedServices.length === 0 && !newService.trim()) {
+      toast.error("Please select at least one service");
+      return;
+    }
+
     try {
-      const serviceData = newService
-        ? [...selectedServices, newService]
+      const serviceData = newService.trim()
+        ? [...selectedServices, newService.trim()]
         : [...selectedServices];
 
       setServices(serviceData);
       setNewService("");
 
-      // 🔁 Convert selected names to IDs
+      // Convert selected names to IDs
       const selectedIds = allServices
-        .filter((s) => serviceData.includes(s.name))
+        .filter((s) => selectedServices.includes(s.name))
         .map((s) => s.id);
 
-      // ⬆️ Save to backend
+      // Save to backend
       await updateMyServices({ serviceIds: selectedIds }).unwrap();
       
-      // Show success toast message
       toast.success("Services updated successfully!", {
         position: "top-right",
         autoClose: 3000,
@@ -74,7 +79,6 @@ function MyServicesDialog({
     } catch (err) {
       console.error("Failed to update services:", err);
       
-      // Show error toast message
       toast.error("Failed to update services. Please try again.", {
         position: "top-right",
         autoClose: 4000,
@@ -100,14 +104,14 @@ function MyServicesDialog({
       <div className="flex flex-col gap-1 items-center text-center">
         <div className="text-2xl font-semibold">My Services</div>
         <div className="text-[var(--cool-gray)] text-sm">
-          Please add type of care giving services you are interested.
+          Please select at least one care giving service you are interested in.
         </div>
 
         {selectedServices?.length > 0 && (
           <div className="mt-4 flex flex-wrap gap-y-3 gap-x-2 items-start w-full">
             {selectedServices.map((service) => (
               <div
-                className="service-card flex gap-1 items-center !text-white  bg-[#233D4D]"
+                className="service-card flex gap-1 items-center !text-white bg-[#233D4D]"
                 key={service}
               >
                 {service}

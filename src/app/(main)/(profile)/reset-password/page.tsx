@@ -23,8 +23,28 @@ function Page() {
     }
 
     // Check new password length
-    if (newPassword.length < 6) {
-      return toast.error("New password must be at least 6 characters");
+    if (newPassword.length < 8) {
+      return toast.error("New password must be at least 8 characters");
+    }
+
+    // Check for uppercase letter
+    if (!/[A-Z]/.test(newPassword)) {
+      return toast.error("Password must contain at least one uppercase letter");
+    }
+
+    // Check for lowercase letter
+    if (!/[a-z]/.test(newPassword)) {
+      return toast.error("Password must contain at least one lowercase letter");
+    }
+
+    // Check for number
+    if (!/\d/.test(newPassword)) {
+      return toast.error("Password must contain at least one number");
+    }
+
+    // Check for special character
+    if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(newPassword)) {
+      return toast.error("Password must contain at least one special character");
     }
 
     // Check if old and new passwords are the same
@@ -80,16 +100,14 @@ function Page() {
           placeholder="Current Password"
           iconLast={true}
           divClassName="!bg-[#F8F8F8]"
-          // REMOVED: hideEyeIcon={true}
         />
         <PasswordInput
           text={newPassword}
           setText={setNewPassword}
           Icon={smallPasswordIcon}
-          placeholder="New Password"
+          placeholder="New Password (min 8 chars with A-Z, a-z, 0-9, special)"
           iconLast={true}
           divClassName="!bg-[#F8F8F8]"
-          // REMOVED: hideEyeIcon={true}
         />
         <PasswordInput
           text={confirmPassword}
@@ -98,7 +116,6 @@ function Page() {
           placeholder="Confirm Password"
           iconLast={true}
           divClassName="!bg-[#F8F8F8]"
-          // REMOVED: hideEyeIcon={true}
         />
       </div>
     </div>

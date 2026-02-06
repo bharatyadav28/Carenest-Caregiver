@@ -136,10 +136,10 @@ export function BookingCard({
 
   return (
     <>
-      <div className="bg-white rounded-xl px-4 sm:px-6 py-4 flex flex-col sm:flex-row flex-wrap justify-between items-start gap-4 sm:gap-6 shadow-sm border w-full">
+      <div className="bg-white rounded-xl px-1 py-4 flex flex-col sm:flex-row flex-wrap justify-between items-start gap-2 sm:gap-2 shadow-sm border w-full">
         {/* Booking ID and Care Type */}
         <div className="flex flex-col gap-1 text-sm w-[270]">
-          <div className="text-[12px] sm:text-[20px] font-medium text-[#1B2A37]">
+          <div className="text-[16px] sm:text-[16px] font-medium text-[#1B2A37]">
             Booking ID: #{bookingId?.toString().slice(0,10).toUpperCase()}
           </div>
           <div>
@@ -152,15 +152,15 @@ export function BookingCard({
           {/* Avatar and User Details */}
           <div className="flex items-start sm:items-center gap-3 w-full sm:w-auto sm:flex-1 sm:min-w-0">
             <img
-              src={avatar || "/profile-pic.png"}
+              src={avatar || "/image.svg"}
               alt="avatar"
               className="w-10 h-10 rounded-full object-cover flex-shrink-0 mt-1 sm:mt-0"
             />
             <div className="flex flex-col min-w-0 flex-1">
-              <div className="text-[16px] sm:text-[18px] font-semibold text-[#1B2A37] truncate">
+              <div className="text-[14px] sm:text-[14px] font-semibold text-[#1B2A37] truncate">
                 {name}
               </div>
-              <div className="text-sm text-[#7A8B9B] truncate">
+              <div className="text-md text-[#7A8B9B] truncate ">
                 {email}
               </div>
             </div>

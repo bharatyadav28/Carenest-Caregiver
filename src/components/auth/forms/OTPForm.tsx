@@ -12,6 +12,8 @@ import {
 import { formatTime } from "@/lib/resuable_funs";
 import Cookies from 'js-cookie';
 import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 interface Props {
   isEmailVerify?: boolean;
 }
@@ -28,7 +30,7 @@ function OTPForm({ isEmailVerify }: Props) {
 
   const handleSubmit = async () => {
     if (otp.length !== 4) {
-      setError("Please enter a valid 4-digit OTP");
+      toast.error("Please enter all 4 digits");
       return;
     }
 
@@ -36,7 +38,9 @@ function OTPForm({ isEmailVerify }: Props) {
     try {
       const userId = Cookies.get("tempUserId");
       if (!userId) {
-        throw new Error("Session expired. Please sign up again.");
+        toast.error("Session expired. Please try again.");
+        router.push(isEmailVerify ? "/signup" : "/forgot-password");
+        return;
       }
 
       const response = await verifyEmail({
@@ -46,29 +50,38 @@ function OTPForm({ isEmailVerify }: Props) {
       }).unwrap();
 
       if (response.success) {
+        toast.success("OTP verified successfully!");
+        
         if (isEmailVerify) {
-          // Store tokens in cookies for email verification flow
-          Cookies.set("authToken", response.data.accessToken, { expires: 1 }); // 1 day
-          Cookies.set("refreshToken", response.data.refreshToken, { expires: 7 }); // 7 days
+          Cookies.set("authToken", response.data.accessToken, { expires: 1 });
+          Cookies.set("refreshToken", response.data.refreshToken, { expires: 7 });
           Cookies.remove("tempUserId");
           router.push("/signup/documents");
         } else {
-          // For password reset flow
-          Cookies.set("resetToken", response.data.token || "", { expires: 1/24 }); // 1 hour
+          Cookies.set("resetToken", response.data.token || "", { expires: 1/24 });
           router.push("/resets-password");
         }
-      } else {
-        setError(response.message || "Verification failed");
       }
-    }  catch (error) {
-  if (error instanceof Error) {
-    console.error(error.message);
-    // Use error.message in your UI
-  } else {
-    console.error("An unknown error occurred");
-    // Fallback error message
-  }
-}finally {
+    } catch (error: any) {
+      console.error("OTP Error:", error);
+      
+      // Clear OTP field
+      setOtp("");
+      
+      // Simple error message
+      if (error?.data?.message?.toLowerCase().includes("invalid") || 
+          error?.data?.message?.toLowerCase().includes("incorrect") ||
+          error?.status === 400) {
+        toast.error("Incorrect OTP. Please try again.");
+      } else if (error?.data?.message?.toLowerCase().includes("expired")) {
+        toast.error("OTP has expired. Please request a new one.");
+      } else if (error?.message?.includes("Session expired")) {
+        toast.error("Session expired. Please start again.");
+        router.push(isEmailVerify ? "/signup" : "/forgot-password");
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
+    } finally {
       setIsLoading(false);
     }
   };
@@ -79,7 +92,9 @@ function OTPForm({ isEmailVerify }: Props) {
     try {
       const userId = Cookies.get("tempUserId");
       if (!userId) {
-        throw new Error("Session expired. Please start the process again.");
+        toast.error("Session expired. Please start again.");
+        router.push(isEmailVerify ? "/signup" : "/forgot-password");
+        return;
       }
 
       const response = await resendOtp({
@@ -88,25 +103,19 @@ function OTPForm({ isEmailVerify }: Props) {
       }).unwrap();
 
       if (response.success) {
-             toast.success(`OTP is sent Successfully`);
-        setTime(60); // Reset timer
+        toast.success("New OTP sent!");
+        setTime(60);
         setError(null);
       } else {
-        setError(response.message || "Failed to resend OTP");
+        toast.error("Failed to resend OTP");
       }
-    }  catch (error) {
-  if (error instanceof Error) {
-    console.error(error.message);
-    // Use error.message in your UI
-  } else {
-    console.error("An unknown error occurred");
-    // Fallback error message
-  }
-}
+    } catch (error: any) {
+      console.error("Resend Error:", error);
+      toast.error("Failed to resend OTP. Please try again.");
+    }
   };
 
   useEffect(() => {
-    // Check if tempUserId exists on component mount
     if (!Cookies.get("tempUserId")) {
       router.push(isEmailVerify ? "/signup" : "/forgot-password");
     }
@@ -132,12 +141,6 @@ function OTPForm({ isEmailVerify }: Props) {
         below.
       </div>
 
-      {error && (
-        <div className="text-red-500 text-sm mt-2 text-center">
-          {error}
-        </div>
-      )}
-
       <div className="my-8 flex flex-col gap-4">
         <div className="space-y-2 mx-2 self-center">
           <InputOTP
@@ -145,7 +148,7 @@ function OTPForm({ isEmailVerify }: Props) {
             value={otp}
             onChange={(value) => {
               setOtp(value);
-              setError(null); // Clear error when user types
+              setError(null);
             }}
           >
             <InputOTPGroup className="flex gap-4">
@@ -164,7 +167,7 @@ function OTPForm({ isEmailVerify }: Props) {
         <CustomButton 
           className="mt-6 text-xl" 
           onClick={handleSubmit}
-          //disabled={isLoading || otp.length !== 4}
+          disabled={isLoading}
         >
           {isLoading ? "Verifying..." : "Verify and continue"}
         </CustomButton>
@@ -175,7 +178,7 @@ function OTPForm({ isEmailVerify }: Props) {
       </div>
 
       <div className="flex justify-center items-center gap-1 mt-5">
-        <div>Didnt receive OTP yet?</div>
+        <div>Didn't receive OTP yet?</div>
         <button
           className={`p-0 m-0 font-medium ${
             time > 0 

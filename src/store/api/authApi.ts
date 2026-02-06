@@ -266,7 +266,7 @@ export const authApi = createApi({
     // Upload document (form-data)
     uploadDocument: builder.mutation<UploadDocumentResponse, FormData>({
       query: (formData) => ({
-        url: "https://carenest-backend-8y2y.onrender.com/api/v1/document/upload",
+        url: "https://api.careworks.biz/api/v1/document/upload",
       //  url: "http://localhost:4000/api/v1/document/upload",
         method: "POST",
         body: formData,
@@ -279,7 +279,7 @@ export const authApi = createApi({
     // Save documents (JSON)
     saveDocuments: builder.mutation<SaveDocumentsResponse, SaveDocumentsRequest>({
       query: (body) => ({
-        url: "https://carenest-backend-8y2y.onrender.com/api/v1/document",
+        url: "https://api.careworks.biz/api/v1/document",
         // url: "http://localhost:4000/api/v1/document",
         method: "POST",
         body,

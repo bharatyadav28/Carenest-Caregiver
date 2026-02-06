@@ -105,10 +105,12 @@ export default function BookingDetailsDialog({
   const formattedEndDate = formatDateOrHyphen(data.endDate);
   const formattedBookedOn = formatDateOrHyphen(data.bookedOn);
 
-  // Format care types for display (show all if array exists, otherwise use single string)
-  const displayCareType = data.careTypes && data.careTypes.length > 0
-    ? data.careTypes.map(ct => ct.name).join(', ')
-    : data.careType || 'Home Care';
+  // Get care types for display
+  const careTypes = data.careTypes && data.careTypes.length > 0
+    ? data.careTypes
+    : data.careType 
+      ? [{ id: '1', name: data.careType }]
+      : [{ id: '1', name: 'Home Care' }];
 
   return (
     <CustomDialog
@@ -122,7 +124,7 @@ export default function BookingDetailsDialog({
         <div className="flex items-start gap-4">
           <div className="flex-shrink-0">
             <img
-              src={data.avatar || "/profile-pic.png"}
+              src={data.avatar || "/image.svg"}
               alt="avatar"
               className="w-12 h-12 rounded-full object-cover"
             />
@@ -139,7 +141,7 @@ export default function BookingDetailsDialog({
                 {arrow}
               </div>
               <p className="text-[18px] leading-[20px] text-[#7A8B9B] break-words flex-1 min-w-0">
-                {data.address}
+                {data.address || 'N/A'}
               </p>
             </div>
           </div>
@@ -148,7 +150,7 @@ export default function BookingDetailsDialog({
         {/* Action Buttons */}
         <div className="flex gap-4 flex-wrap">
           <button
-            className="flex-1 bg-[#FFA629] hover:bg-[#e2941f] text-black rounded-full text-[14px] py-[10px] flex justify-center items-center gap-2"
+            className="flex-1 min-w-[200px] bg-[#FFA629] hover:bg-[#e2941f] text-black rounded-full text-[14px] py-[10px] flex justify-center items-center gap-2"
             onClick={handleMessageClick}
           >
             {message} Message
@@ -162,27 +164,38 @@ export default function BookingDetailsDialog({
           </h3>
           <div className="text-[16px] leading-[20px] text-[#1B2A37] space-y-3">
             <div className="flex justify-between">
-              <span>Booking ID:</span>
-              <span className="text-[#7A8B9B]">#{data.id}</span>
+              <span className="font-medium">Booking ID:</span>
+              <span className="text-[#7A8B9B] break-all text-right pl-2">#{data.id}</span>
             </div>
             <div className="flex justify-between">
-              <span>Booked On:</span>
+              <span className="font-medium">Booked On:</span>
               <span className="text-[#7A8B9B]">{formattedBookedOn}</span>
             </div>
-            <div className="flex justify-between">
-              <span>Care Type:</span>
-              <span className="text-[#7A8B9B]">{displayCareType}</span>
+            <div className="flex justify-between flex-wrap gap-y-1">
+              <span className="font-medium">Care Type:</span>
+              <div className="text-[#7A8B9B] text-right max-w-[60%]">
+                <div className="flex flex-wrap gap-1 justify-end">
+                  {careTypes.map((careType, index) => (
+                    <span 
+                      key={careType.id || index}
+                      className="inline-block bg-[#EDF2F7] px-2 py-1 rounded-md text-[14px] whitespace-nowrap"
+                    >
+                      {careType.name}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
             <div className="flex justify-between">
-              <span>Meeting Date:</span>
+              <span className="font-medium">Meeting Date:</span>
               <span className="text-[#7A8B9B]">{formattedMeetingDate}</span>
             </div>
             <div className="flex justify-between">
-              <span>Service Start Date:</span>
+              <span className="font-medium">Service Start Date:</span>
               <span className="text-[#7A8B9B]">{formattedStartDate}</span>
             </div>
             <div className="flex justify-between">
-              <span>Service End Date:</span>
+              <span className="font-medium">Service End Date:</span>
               <span className="text-[#7A8B9B]">{formattedEndDate}</span>
             </div>
           </div>
@@ -191,7 +204,8 @@ export default function BookingDetailsDialog({
         {/* Weekly Schedule Section */}
         <div>
           <h3 className="text-[20px] font-semibold text-[#1B2A37] mb-3">
-            Weekly Schedule  <span className="text-[16px] font-medium text-gray-600">  (This Schedule may vary)</span>
+            Weekly Schedule  
+            <span className="text-[16px] font-medium text-gray-600">  (This Schedule may vary)</span>
           </h3>
           <div className="bg-white rounded-[16px] p-4">
             <div className="space-y-3">
@@ -199,7 +213,7 @@ export default function BookingDetailsDialog({
                 [...data.weeklySchedule]
                   .sort((a, b) => a.weekDay - b.weekDay)
                   .map((schedule, index) => (
-                    <div key={index} className="flex justify-between">
+                    <div key={index} className="flex justify-between flex-wrap gap-y-1">
                       <span className="font-medium text-[#1B2A37]">
                         {dayNames[schedule.weekDay]}
                       </span>

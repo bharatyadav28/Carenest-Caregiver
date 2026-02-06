@@ -5,8 +5,8 @@ import type {
   UnreadCountResponse,
 } from '../../lib/types/notification';
 
-const BASE_URL = 'https://api.careworks.biz/api/v1';
-// const BASE_URL = 'http://localhost:4000/api/v1';
+// const BASE_URL = 'https://api.careworks.biz/api/v1';
+const BASE_URL = 'http://localhost:4000/api/v1';
 
 export const notificationApi = createApi({
   reducerPath: 'notificationApi',
@@ -60,6 +60,24 @@ export const notificationApi = createApi({
       }),
       invalidatesTags: ['Notifications', 'UnreadCount'],
     }),
+    
+    // Delete single notification
+    deleteNotification: builder.mutation<any, string>({
+      query: (id) => ({
+        url: `/notifications/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Notifications', 'UnreadCount'],
+    }),
+    
+    // Clear all notifications
+    clearAllNotifications: builder.mutation<any, void>({
+      query: () => ({
+        url: '/notifications/',
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Notifications', 'UnreadCount'],
+    }),
   }),
 });
 
@@ -67,5 +85,8 @@ export const {
   useGetNotificationsQuery,
   useGetUnreadCountQuery,
   useMarkAsReadMutation,
+  useMarkAllAsReadMutation,
+  useDeleteNotificationMutation,
+  useClearAllNotificationsMutation,
   useLazyGetNotificationsQuery,
 } = notificationApi;

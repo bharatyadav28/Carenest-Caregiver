@@ -31,21 +31,21 @@
         { "id": "opt8", "text": "Within 10 miles" },
         { "id": "opt9", "text": "Within 15 miles" },
         { "id": "opt10", "text": "Within 20 miles" },
-        { "id": "opt11", "text": "Within 30 miles" },
-        { "id": "opt12", "text": "Everywhere / Open to all locations" }
+        { "id": "opt11", "text": "Within 30 miles" }
       ],
       "placeholder": "Add preferred location"
     },
-    {
-      "id": "q4",
-      "type": "radio",
-      "ques": "PRN (Pro re nata)",
-      "options": [
-        { "id": "opt13", "text": "As Needed" },
-        { "id": "opt14", "text": " Fixed Scheduled" }
-      ],
-      "placeholder": "Add PRN"
-    },
+ {
+  "id": "q4",
+  "type": "radio",
+  "ques": "PRN (Pro re nata)",
+  "options": [
+    { "id": "opt13", "text": "Fixed Scheduled" },
+    { "id": "opt14", "text": "As Needed" }
+  ],
+  "placeholder": "Add PRN",
+  "showPrice": true
+},
     {
       "id": "q7",
       "type": "radio",
@@ -75,15 +75,12 @@
       "options": [
         { "id": "opt21", "text": "English" },
         { "id": "opt22", "text": "Spanish" },
-        { "id": "opt23", "text": "Arabic" },
-        { "id": "opt24", "text": "German" },
-        { "id": "opt25", "text": "Russian" },
-        { "id": "opt26", "text": "Chinese" },
-        { "id": "opt27", "text": "Portuguese" },
+        { "id": "opt23", "text": "French" },
+        { "id": "opt24", "text": "Italian" },
+        { "id": "opt25", "text": "Vietnamese" },
+        { "id": "opt26", "text": "Urdu" },
         { "id": "opt28", "text": "Italian" },
-        { "id": "opt29", "text": "Turkish" },
-        { "id": "opt30", "text": "French" },
-        { "id": "opt31", "text": "Japanese" },
+      
         { "id": "opt32", "text": "Hindi" }
       ],
       "placeholder": "Add languages"
