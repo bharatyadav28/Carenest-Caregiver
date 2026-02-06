@@ -5,8 +5,8 @@ import type {
   UnreadCountResponse,
 } from '../../lib/types/notification';
 
-// const BASE_URL = 'https://api.careworks.biz/api/v1';
-const BASE_URL = 'http://localhost:4000/api/v1';
+const BASE_URL = 'https://api.careworks.biz/api/v1';
+// const BASE_URL = 'http://localhost:4000/api/v1';
 
 export const notificationApi = createApi({
   reducerPath: 'notificationApi',
