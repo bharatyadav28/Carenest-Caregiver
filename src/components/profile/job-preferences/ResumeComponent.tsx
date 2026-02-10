@@ -81,9 +81,9 @@ function ResumeComponent() {
     
     if (!url.startsWith('http://') && !url.startsWith('https://')) {
       if (url.startsWith('/')) {
-        viewUrl = `https://creative-story.s3.us-east-1.amazonaws.com${url}`;
+        viewUrl = `https://carenest-storage.ap-south-1.storage.onantryk.com${url}`;
       } else {
-        viewUrl = `https://creative-story.s3.us-east-1.amazonaws.com/${url}`;
+        viewUrl = `https://carenest-storage.ap-south-1.storage.onantryk.com/${url}`;
       }
     }
     

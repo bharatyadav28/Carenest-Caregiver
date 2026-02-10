@@ -130,7 +130,7 @@ const Footer = () => {
         {/* Logo and Description */}
         <div className="sm:w-80 w-full">
           <div className="relative w-50 h-30">
-            <Link href="/" className="relative w-45 h-45 block cursor-pointer ">
+            <Link href="" className="relative w-45 h-45 block cursor-pointer ">
               <Image 
                 src="/Logo.svg" 
                 alt="Carenest logo" 

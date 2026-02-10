@@ -8,6 +8,12 @@ const nextConfig: NextConfig = {
         hostname: "creative-story.s3.us-east-1.amazonaws.com",
         pathname: "/**",
       },
+        {
+        protocol: "https",
+     hostname: "carenest-storage.ap-south-1.storage.onantryk.com",
+        pathname: "/**",
+      },
+       
       {
         protocol: "https",
         hostname: "images.unsplash.com",
