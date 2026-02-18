@@ -134,7 +134,7 @@ function OTPForm({ isEmailVerify }: Props) {
   }, [isEmailVerify, router]);
 
   return (
-    <div className="mt-[8rem]">
+    <div className="xl:mt-[8rem] lg:mt-[5rem] sm:mt-[2rem]">
       <div className="font-semibold text-2xl">OTP Verification</div>
       <div className="mt-3">
         We&apos;ve sent a one-time password to your email — please enter it
