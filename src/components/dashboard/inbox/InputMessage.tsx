@@ -1,7 +1,7 @@
 "use client";
+
 import React, { useState } from "react";
 import { LuSend as SendIcon } from "react-icons/lu";
-// import { IoIosAttach as AttachmentIcon } from "react-icons/io";
 import { Input } from "@/components/ui/input";
 import { chatMessageType } from "@/lib/interface-types";
 
@@ -32,17 +32,19 @@ const InputMessage = ({ userId, addMessage, sendMessage }: Props) => {
   };
 
   return (
-    <div className="flex items-center rounded-lg px-4 py-2 bg-[#F7F7F3] gap-2">
-   
+    <div className="flex items-center rounded-lg px-2 sm:px-4 py-1 sm:py-2 bg-[#F7F7F3] gap-1 sm:gap-2 sticky bottom-0">
       <Input
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         placeholder="Write a message..."
-        className="border-none focus-visible:ring-0 flex-grow"
+        className="border-none focus-visible:ring-0 flex-grow text-sm sm:text-base h-8 sm:h-10"
         onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
       />
-      <button onClick={handleSendMessage}>
-        <SendIcon size={18} className="text-[#233D4D]" />
+      <button 
+        onClick={handleSendMessage}
+        className="p-1.5 sm:p-2 hover:bg-gray-200 rounded-full transition-colors"
+      >
+        <SendIcon size={16} className="sm:w-[18px] sm:h-[18px] text-[#233D4D]" />
       </button>
     </div>
   );

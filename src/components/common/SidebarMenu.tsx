@@ -3,7 +3,7 @@ import React, { useState, useRef } from "react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { MdArrowForwardIos as ArrowIcon } from "react-icons/md";
-import { RiFileList3Line as MenuIcon } from "react-icons/ri";
+import { MdMenu as MenuIcon } from "react-icons/md";
 import { FiEdit2 } from "react-icons/fi";
 
 import CustomDrawer from "./CustomDrawer";
@@ -31,9 +31,12 @@ function SidebarMenu({ items, ViewProfile }: Props) {
   const router = useRouter();
 
   const lastIndex = items?.length - 1;
+  
   const handleViewProfileClick = () => {
     router.push("/my-profile");
+    setOpenMenu(false); // Close drawer on mobile
   };
+  
   const handleOpenMenu = () => {
     setOpenMenu((prev) => !prev);
   };
@@ -45,8 +48,13 @@ function SidebarMenu({ items, ViewProfile }: Props) {
     path?: string;
     handleClick?: () => void;
   }) => {
-    if (path) router.push(path);
-    else if (handleClick) handleClick();
+    if (path) {
+      router.push(path);
+      setOpenMenu(false); // Close drawer on mobile after navigation
+    } else if (handleClick) {
+      handleClick();
+      setOpenMenu(false); // Close drawer on mobile after custom action
+    }
   };
 
   // Fetch profile data from API
@@ -108,8 +116,6 @@ function SidebarMenu({ items, ViewProfile }: Props) {
     // Check avatar
     if (profile.avatar && profile.avatar.trim() !== "" && profile.avatar !== "/profile-pic.png") completedFields++;
     
-  
-    
     // Calculate percentage
     const percentage = Math.round((completedFields / totalFields) * 100);
     return percentage;
@@ -129,7 +135,7 @@ function SidebarMenu({ items, ViewProfile }: Props) {
   }
 
   const content = (
-    <div className="min-h-[20rem] w-full min-w-[22rem] px-4 py-6 bg-[#fff] rounded-lg shadow-2xl">
+    <div className="min-h-[30rem] lg:min-h-[20rem] w-full min-w-[22rem] px-4 py-6 bg-[#fff] rounded-lg lg:rounded-lg shadow-2xl h-full lg:h-auto">
       <div className="flex items-center gap-4">
         {/* Pass dynamic percentage to CustomPieChart */}
         <CustomPieChart percentage={profileCompletionPercentage}>
@@ -186,7 +192,7 @@ function SidebarMenu({ items, ViewProfile }: Props) {
 
       <div className="w-full border-t-1 border-[#33333333] my-2"></div>
 
-      <div className="flex flex-col gap-2 mt-3">
+      <div className="flex flex-col gap-2 mt-3 flex-1">
         {items?.map((item, index) => {
           const isCurrentPage = pathname === item.path;
           const lastItem = lastIndex === index;
@@ -224,12 +230,15 @@ function SidebarMenu({ items, ViewProfile }: Props) {
       </button>
 
       <CustomDrawer
-        className="lg-hidden w-max h-max my-auto mx-auto rounded-lg"
+        className="lg:hidden w-full h-full pt-20 "
         open={openMenu}
         handleOpen={handleOpenMenu}
         direction="left"
+   
       >
-        {content}
+        <div className="h-full ">
+          {content}
+        </div>
       </CustomDrawer>
     </>
   );

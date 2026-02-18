@@ -136,10 +136,29 @@ export function BookingCard({
 
   return (
     <>
-      <div className="bg-white rounded-xl px-1 py-4 flex flex-col sm:flex-row flex-wrap justify-between items-start gap-2 sm:gap-2 shadow-sm border w-full">
-        {/* Booking ID and Care Type */}
-        <div className="flex flex-col gap-1 text-sm w-[270]">
-          <div className="text-[16px] sm:text-[16px] font-medium text-[#1B2A37]">
+      <div className="bg-white rounded-xl p-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-between sm:items-start sm:gap-2 shadow-sm border w-full">
+        
+        {/* Mobile Layout - Profile at top */}
+        <div className="flex sm:hidden items-start gap-3 w-full">
+          <img
+            src={avatar || "/image.svg"}
+            alt="avatar"
+            className="w-12 h-12 rounded-full object-cover flex-shrink-0 border-2 border-[#FFA629]"
+          />
+          <div className="flex flex-col min-w-0 flex-1">
+            <div className="text-[16px] font-semibold text-[#1B2A37] truncate">
+              {name}
+            </div>
+            <div className="text-[13px] text-[#7A8B9B] truncate">
+              {email}
+            </div>
+         
+          </div>
+        </div>
+
+        {/* Desktop Layout - Original structure for larger screens */}
+        <div className="hidden sm:flex sm:flex-col sm:gap-1 text-sm w-[270px]">
+          <div className="text-[16px] font-medium text-[#1B2A37]">
             Booking ID: #{bookingId?.toString().slice(0,10).toUpperCase()}
           </div>
           <div>
@@ -147,9 +166,8 @@ export function BookingCard({
           </div>
         </div>
 
-        {/* User Info with Calendar */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full sm:flex-1 sm:min-w-0 max-w-full">
-          {/* Avatar and User Details */}
+        {/* Desktop User Info - Hidden on mobile */}
+        <div className="hidden sm:flex sm:flex-row sm:items-center sm:gap-4 w-full sm:flex-1 sm:min-w-0 max-w-full">
           <div className="flex items-start sm:items-center gap-3 w-full sm:w-auto sm:flex-1 sm:min-w-0">
             <img
               src={avatar || "/image.svg"}
@@ -157,26 +175,65 @@ export function BookingCard({
               className="w-10 h-10 rounded-full object-cover flex-shrink-0 mt-1 sm:mt-0"
             />
             <div className="flex flex-col min-w-0 flex-1">
-              <div className="text-[14px] sm:text-[14px] font-semibold text-[#1B2A37] truncate">
+              <div className="text-[14px] font-semibold text-[#1B2A37] truncate">
                 {name}
               </div>
-              <div className="text-md text-[#7A8B9B] truncate ">
+              <div className="text-md text-[#7A8B9B] truncate">
                 {email}
               </div>
             </div>
           </div>
 
-          {/* Calendar and Date */}
           <div className="flex items-center gap-2 flex-shrink-0 ml-0 sm:ml-4 mt-2 sm:mt-0">
             <div className="flex-shrink-0">{calendar}</div>
             <div className="text-[14px] sm:text-[16px] text-[#1B2A37] whitespace-nowrap">
-              {formattedStartDate} {/* Display formatted date */}
+              {formattedStartDate}
             </div>
           </div>
         </div>
 
-        {/* Action Buttons */}
-        <div className="w-full sm:w-auto mt-2 sm:mt-0 flex justify-end sm:justify-start flex-shrink-0">
+        {/* Mobile Middle Section - Booking ID and Care Type */}
+        <div className="flex sm:hidden flex-col gap-2 w-full mt-1">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-[14px] font-medium text-[#1B2A37] whitespace-nowrap">
+              Booking ID:
+            </span>
+            <span className="text-[14px] text-[#7A8B9B] break-all">
+              #{bookingId?.toString().slice(0,10).toUpperCase()}
+            </span>
+          </div>
+          <div className="flex flex-wrap items-start gap-2">
+            <span className="text-[14px] font-medium text-[#1B2A37] whitespace-nowrap">
+              Care Type:
+            </span>
+            <span className="text-[14px] text-[#7A8B9B] flex-1">
+              {formattedCareType}
+            </span>
+          </div>
+        </div>
+
+        {/* Mobile Bottom Section - Date and Button */}
+        <div className="flex sm:hidden flex-col gap-3 w-full mt-2">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <div className="flex-shrink-0">{calendar}</div>
+              
+              <span className="text-[14px] text-[#7A8B9B]">
+                {formattedStartDate}
+              </span>
+            </div>
+          </div>
+          
+          <Button
+            className="bg-[#1B2A37] text-white px-4 py-3 rounded-full text-sm w-full"
+            onClick={() => setShowDialog(true)}
+          >
+            View Details
+          </Button>
+        </div>
+
+        {/* Desktop Action Button - Hidden on mobile */}
+        <div className="hidden sm:block sm:w-auto mt-2 sm:mt-0 flex justify-end sm:justify-start flex-shrink-0">
           <Button
             className="bg-[#1B2A37] text-white px-4 py-2 rounded-full text-sm w-full sm:w-auto min-w-[120px]"
             onClick={() => setShowDialog(true)}

@@ -74,7 +74,7 @@ function Page() {
 
   return (
     <div className="flex flex-col card">
-      <div className="flex w-full justify-between text-3xl font-medium">
+      <div className="hidden lg:flex w-full justify-between text-lg xl:text-3xl font-medium">
         <div>Reset Password</div>
         <CustomButton
           className="py-2"
@@ -88,6 +88,10 @@ function Page() {
             </div>
           </div>
         </CustomButton>
+      </div>
+         {/* Header - Mobile */}
+      <div className="lg:hidden w-full text-center mb-6">
+        <h1 className="text-2xl font-semibold text-[#233D4D]">Reset Password</h1>
       </div>
 
       <SimpleLine className="my-3" />
@@ -105,10 +109,11 @@ function Page() {
           text={newPassword}
           setText={setNewPassword}
           Icon={smallPasswordIcon}
-          placeholder="New Password (min 8 chars with A-Z, a-z, 0-9, special)"
+          placeholder="New Password "
           iconLast={true}
           divClassName="!bg-[#F8F8F8]"
         />
+      
         <PasswordInput
           text={confirmPassword}
           setText={setConfirmPassword}
@@ -117,7 +122,20 @@ function Page() {
           iconLast={true}
           divClassName="!bg-[#F8F8F8]"
         />
+          <span className="text-sm">(min 8 chars with A-Z, a-z, 0-9, special)</span>
+          <div className="lg:hidden pt-4">
+                <CustomButton 
+                  className="w-full py-3 text-lg" 
+                onClick={handleChangePassword}
+                >
+                  <div className="flex items-center justify-center gap-2">
+                    <div>Save</div>
+                    <SaveIcon size={20} />
+                  </div>
+                </CustomButton>
+              </div>
       </div>
+      
     </div>
   );
 }

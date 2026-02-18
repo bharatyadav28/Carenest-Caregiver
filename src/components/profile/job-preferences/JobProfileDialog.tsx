@@ -373,8 +373,8 @@ function JobProfileDialog({ open, handleOpen, profile, setProfile }: Props) {
                 key={item.id}
                 className="flex flex-col gap-2 items-start text-lg font-medium"
               >
-                <div>{item.ques}</div>
-                <div>
+                <div className="text-left">{item.ques}</div>
+                <div className="text-left">
                   <RadioGroup
                     className="gap-2"
                     onValueChange={(oid) => handleChange(item.id, oid, "radio")}
@@ -412,7 +412,7 @@ function JobProfileDialog({ open, handleOpen, profile, setProfile }: Props) {
                 key={item.id}
                 className="flex flex-col gap-2 items-start text-lg font-medium"
               >
-                <div>
+                <div className="text-left">
                   {item.ques} 
                   {isLanguages && <span className="text-red-500 ml-1">*</span>}
                   <span className="text-xs text-gray-600/60 ml-2">

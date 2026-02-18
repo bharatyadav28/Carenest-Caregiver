@@ -117,7 +117,7 @@ export default function BookingDetailsDialog({
       open={open}
       handleOpen={onClose}
       showCrossButton={true}
-      className="max-w-[496px] w-full rounded-[24px] bg-[#F9FAFB] p-6 overflow-auto"
+      className="max-w-[410px] w-full rounded-[24px] bg-[#F9FAFB] p-6  overflow-auto"
     >
       <div className="flex flex-col gap-6 h-full">
         {/* Header Section */}

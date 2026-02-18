@@ -87,37 +87,51 @@ function ViewProfile() {
 
   // Loading states
   if (subscriptionLoadingState) {
-    return <div className="text-center py-10">Checking subscription status...</div>;
+    return (
+      <div className="flex items-center justify-center min-h-[400px] sm:min-h-[500px]">
+        <div className="text-center py-6 sm:py-10 text-[#7A8B9B]">
+          Checking subscription status...
+        </div>
+      </div>
+    );
   }
 
   if (isLoading) {
-    return <div className="text-center py-10">Loading profile views...</div>;
+    return (
+      <div className="flex items-center justify-center min-h-[400px] sm:min-h-[500px]">
+        <div className="text-center py-6 sm:py-10 text-[#7A8B9B]">
+          Loading profile views...
+        </div>
+      </div>
+    );
   }
 
   if (isError) {
-    return <div className="text-center py-10 text-red-500">Failed to load profile views</div>;
+    return (
+      <div className="flex items-center justify-center min-h-[400px] sm:min-h-[500px]">
+        <div className="text-center py-6 sm:py-10 text-red-500">
+          Failed to load profile views
+        </div>
+      </div>
+    );
   }
 
   // If user doesn't have a subscription
   if (!hasActiveSubscription) {
     return (
-      <div className="flex flex-col gap-8 w-full h-full items-center justify-center py-10">
-        <div className="text-[#233D4D] text-[28px] font-medium text-center">
-           Profile Views
+      <div className="flex flex-col gap-4 sm:gap-6 w-full h-full items-center justify-center px-4 py-6 sm:py-10">
+        <div className="text-[#233D4D] text-2xl sm:text-[28px] font-medium text-center">
+          Profile Views
         </div>
         
-        <div className="max-w-md text-center">
-       
-          
-          <p className="text-[#7A8B9B] text-lg mb-6">
+        <div className="max-w-md text-center px-2">
+          <p className="text-[#7A8B9B] text-base sm:text-lg mb-4 sm:mb-6">
             See who's interested in your profile by subscribing to our premium plan.
             Get insights into potential clients and increase your job opportunities.
           </p>
           
-      
-          
           <Button
-            className="bg-[#1B2A37] text-white rounded-full px-6 py-3 text-lg font-medium hover:bg-[#1B2A37]/90 transition-colors"
+            className="bg-[#1B2A37] text-white rounded-full px-5 sm:px-6 py-2 sm:py-3 text-base sm:text-lg font-medium hover:bg-[#1B2A37]/90 transition-colors w-full sm:w-auto"
             onClick={() => window.location.href = "/subscription"}
           >
             Get Subscription to View Profile Visitors
@@ -129,28 +143,28 @@ function ViewProfile() {
 
   // User has subscription, show profile views
   return (
-    <div className="flex flex-col gap-8 w-full h-full">
-      <div className="text-[#233D4D] text-[28px] font-medium">
+    <div className="flex flex-col gap-4 sm:gap-6 w-full h-full px-3 sm:px-0">
+      <div className="text-[#233D4D] text-xl sm:text-2xl md:text-[28px] font-medium px-1">
         Who&apos;s Looking at Your Profile
       </div>
 
       {profileViews.length === 0 ? (
-        <div className="m-auto text-center">
+        <div className="flex flex-col items-center justify-center py-6 sm:py-10 px-4">
           <img
             src={"/no-views.png"}
             alt="no views"
-            className="object-cover mx-auto"
+            className="object-cover mx-auto w-48 sm:w-64 md:w-auto"
           />
-          <p className="text-[#7A8B9B] text-lg mt-4">
+          <p className="text-[#7A8B9B] text-sm sm:text-base md:text-lg text-center mt-4 max-w-sm">
             No one has viewed your profile yet. Complete your profile and stay active to get noticed!
           </p>
         </div>
       ) : (
-        <div className="flex flex-col gap-4 max-h-[600px] overflow-y-auto pr-2">
+        <div className="flex flex-col gap-3 sm:gap-4 max-h-[500px] sm:max-h-[600px] overflow-y-auto pr-1 sm:pr-2">
           {/* Custom scrollbar styling */}
           <style jsx>{`
             .overflow-y-auto::-webkit-scrollbar {
-              width: 6px;
+              width: 4px;
             }
             .overflow-y-auto::-webkit-scrollbar-track {
               background: #f1f1f1;
@@ -163,29 +177,42 @@ function ViewProfile() {
             .overflow-y-auto::-webkit-scrollbar-thumb:hover {
               background: #a8a8a8;
             }
+            
+            @media (min-width: 640px) {
+              .overflow-y-auto::-webkit-scrollbar {
+                width: 6px;
+              }
+            }
           `}</style>
           
           {profileViews.map((viewer) => (
             <div
               key={viewer.id}
-              className="flex justify-between items-center bg-white rounded-2xl px-6 py-4 border border-[#F0F0F0] shadow-sm flex-shrink-0"
+              className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-4 bg-white rounded-xl sm:rounded-2xl px-3 sm:px-6 py-3 sm:py-4 border border-[#F0F0F0] shadow-sm"
             >
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3 sm:gap-4">
                 <img
                   src={viewer.avatar || "/image.svg"}
                   alt="avatar"
-                  className="w-12 h-12 rounded-full object-cover flex-shrink-0"
+                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover flex-shrink-0"
                 />
-                <div className="flex flex-col min-w-0">
-                  <span className="text-[#1B2A37] font-semibold text-[18px] truncate">
-                    {viewer.name}
+                <div className="flex flex-col min-w-0 flex-1">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:gap-3">
+                    <span className="text-[#1B2A37] font-semibold text-base sm:text-[18px] truncate">
+                      {viewer.name}
+                    </span>
+                    <span className="text-[#7A8B9B] text-xs sm:text-sm order-last sm:order-none">
+                      {viewer.role}
+                    </span>
+                  </div>
+                  <span className="text-[#1B2A37] text-xs sm:text-sm mt-0.5 sm:mt-1">
+                    {viewer.time}
                   </span>
-                  <span className="text-[#7A8B9B] text-sm">{viewer.role}</span>
-                  <span className="text-[#1B2A37] text-sm mt-1">{viewer.time}</span>
                 </div>
               </div>
+              
               <Button
-                className="bg-[#1B2A37] text-white rounded-full px-5 py-2 text-sm flex-shrink-0"
+                className="bg-[#1B2A37] text-white rounded-full px-4 sm:px-5 py-1.5 sm:py-2 text-xs sm:text-sm w-full sm:w-auto ml-13 sm:ml-0"
                 onClick={() => handleView(viewer)}
               >
                 View Details

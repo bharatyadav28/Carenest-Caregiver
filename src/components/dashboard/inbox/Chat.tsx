@@ -118,31 +118,33 @@ const Chat = ({ messages, otherUserDetails }: Props) => {
 
   return (
     <div
-      className="flex flex-col flex-grow h-full overflow-y-auto hide-scrollbar gap-4 p-4"
+      className="flex flex-col flex-grow h-full overflow-y-auto hide-scrollbar gap-3 sm:gap-4 p-2 sm:p-4"
       ref={containerRef}
     >
       {messages.length === 0 ? (
         // Show the "no messages" image when there are no messages
-        <div className="flex flex-col items-center justify-center h-full gap-4">
-          <div className="relative w-64 h-64">
+        <div className="flex flex-col items-center justify-center h-full gap-4 px-4">
+          <div className="relative w-48 h-48 sm:w-64 sm:h-64">
             <Image
               src="/nomessage.png" // Your no messages image from public folder
               alt="No messages"
               fill
               className="object-contain"
-              sizes="256px"
+              sizes="(max-width: 640px) 192px, 256px"
               priority
             />
           </div>
-    
+          <p className="text-[#7A8B9B] text-sm sm:text-base text-center">
+            No messages yet. Start a conversation!
+          </p>
         </div>
       ) : (
         // Show messages when they exist
         Object.entries(groupedMessages).map(([date, dateMessages]) => (
-          <div key={date} className="flex flex-col gap-4">
+          <div key={date} className="flex flex-col gap-2 sm:gap-4">
             {/* Date Header */}
             <div className="flex justify-center">
-              <div className="bg-gray-100 text-black text-xs px-3 py-1 rounded-full">
+              <div className="bg-gray-100 text-black text-[10px] sm:text-xs px-2 sm:px-3 py-1 rounded-full">
                 {formatDateHeader(date)}
               </div>
             </div>
@@ -153,18 +155,18 @@ const Chat = ({ messages, otherUserDetails }: Props) => {
               return (
                 <div
                   key={msg.id}
-                  className={`flex gap-2 items-end ${
-                    isOther ? "self-start" : "self-end flex-row-reverse text-lg"
-                  }`}
+                  className={`flex gap-1 sm:gap-2 items-end ${
+                    isOther ? "self-start" : "self-end flex-row-reverse"
+                  } max-w-[85%] sm:max-w-[70%]`}
                 >
-                  {/* Profile Image */}
-                  <div className="relative w-10 h-10 flex-shrink-0">
+                  {/* Profile Image - Hidden on very small screens for own messages */}
+                  <div className={`relative w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 flex-shrink-0 ${!isOther ? 'sm:block' : ''}`}>
                     <Image
                       src={getAvatarUrl(isOther)}
                       alt={getAltText(isOther)}
                       fill
                       className="object-cover rounded-full"
-                      sizes="40px"
+                      sizes="(max-width: 640px) 24px, (max-width: 768px) 32px, 40px"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
                         target.src = "/profile-pic.png";
@@ -172,21 +174,21 @@ const Chat = ({ messages, otherUserDetails }: Props) => {
                     />
                   </div>
                   
-                  <div className="flex flex-col text-[#667085] max-w-[21rem] text-lg">
+                  <div className="flex flex-col text-[#667085] max-w-[calc(100%-40px)] sm:max-w-[21rem]">
                     <div
-                      className={`rounded-2xl px-4 py-2 ${
+                      className={`rounded-2xl px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base ${
                         isOther ? "bg-[#F8F9FA]" : "bg-[#233D4D33] text-black"
                       }`}
                     >
                       {msg.message}
                     </div>
-                    <div className="text-sm">
-                      <div className={isOther ? "ms-1" : "self-end mr-1 text-sm"}>
-                        {new Date(msg.createdAt).toLocaleTimeString([], {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })}
-                      </div>
+                    <div className={`text-[10px] sm:text-xs mt-0.5 sm:mt-1 ${
+                      isOther ? "text-left" : "text-right"
+                    }`}>
+                      {new Date(msg.createdAt).toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
                     </div>
                   </div>
                 </div>

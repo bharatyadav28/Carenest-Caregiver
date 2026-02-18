@@ -29,7 +29,7 @@ export default function RootLayout({
       <body className={`${roboto.className}  antialiased`}> 
           <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}>
          <Providers>{children}</Providers>
-               <ToastContainer position="top-right" autoClose={3000} />
+               <ToastContainer position="top-right" className="p-2" autoClose={3000} />
                </GoogleOAuthProvider>
          </body>
     </html>

@@ -109,47 +109,42 @@ function Header({ className }: props) {
     </div>
   );
 
-  // Mobile menu content with proper notification count
+  // Mobile menu content with updated design
   const mobileMenuContent = (
-    <div className="flex flex-col items-center gap-6 p-6">
-      <Link
-        href={"/dashboard"}
-        onClick={() => setOpenMenu(false)}
-        className={`font-medium ${
-          pathName === "/dashboard" ? "text-primary" : "#fff"
-        } text-2xl`}
-      >
-        Dashboard
-      </Link>
-      
-      <button 
-        className="relative p-4 flex items-center gap-3 w-full justify-center"
-        onClick={() => {
-          handleNotificationOpen();
-          setOpenMenu(false);
-        }}
-      >
-        <NotificationIcon size={30} />
-        <span className="font-medium text-lg">Notifications</span>
-        {mounted && unreadCount > 0 && (
-          <span className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full min-w-6 h-6 flex items-center justify-center">
-            {unreadCount > 9 ? "9+" : unreadCount}
-          </span>
-        )}
-      </button>
-
-      <CustomButton
-        className="py-[1.3rem] w-full"
-        onClick={() => {
-          router.push("/my-profile");
-          setOpenMenu(false);
-        }}
-      >
-        <div className="flex items-center gap-2 justify-center">
-          <ProfileIcon />
-          <div className="font-medium text-lg">My Profile</div>
+    <div className="flex flex-col h-full">
+      {/* Navigation Links */}
+      <div className="flex-1 py-8">
+        
+        <div className="flex flex-col">
+          <Link
+            href={"/dashboard"}
+            onClick={() => setOpenMenu(false)}
+            className={`px-8 py-5 text-xl font-medium transition-colors ${
+              pathName === "/dashboard" 
+                ? "text-primary bg-white/10 border-l-4 border-primary" 
+                : "text-white hover:bg-white/5"
+            }`}
+          >
+            Dashboard
+          </Link>
+          
+          <Link
+            href={"/my-profile"}
+            onClick={() => setOpenMenu(false)}
+            className={`px-8 py-5 text-xl font-medium transition-colors ${
+              pathName === "/my-profile" 
+                ? "text-primary bg-white/10 border-l-4 border-primary" 
+                : "text-white hover:bg-white/5"
+            }`}
+          >
+            My Profile
+          </Link>
+          
         </div>
-      </CustomButton>
+      </div>
+
+      {/* Notification at the bottom */}
+    
     </div>
   );
 
@@ -173,16 +168,38 @@ function Header({ className }: props) {
         
         <div className="lg:block hidden">
           {navContent}
+          
         </div>
-
+      
+         <div className=" lg:hidden ">
+        <button 
+          className="w-full px-8 py-5 flex items-center gap-4 hover:bg-white/5 transition-colors lg:hidden "
+          onClick={() => {
+            handleNotificationOpen();
+            setOpenMenu(false);
+          }}
+        >
+          <div className="relative">
+            <NotificationIcon size={28} />
+            {mounted && unreadCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full min-w-5 h-5 flex items-center justify-center">
+                {unreadCount > 9 ? "9+" : unreadCount}
+              </span>
+            )}
+          </div>
+          {/* <span className="text-white text-xl font-medium">Notifications</span> */}
+        </button>
+      </div>
         <button onClick={handleOpenMenu} className="lg:hidden">
           <MenuIcon size={30} />
         </button>
+    
 
         <CustomDrawer
-          className="bg-primary-foreground text-white"
+          className="bg-primary-foreground text-white pt-25"
           open={openMenu}
           handleOpen={handleOpenMenu}
+          direction="left" // This makes the drawer slide from left
         >
           {mobileMenuContent}
         </CustomDrawer>

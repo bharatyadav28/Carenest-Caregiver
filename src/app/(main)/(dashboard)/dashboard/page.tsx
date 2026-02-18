@@ -122,14 +122,14 @@ function MyDashboardPage() {
       ) : isError || latestActiveBookings.length === 0 ? (
         <div className="m-auto mt-8">
           {noBooking}
-          <p className="text-center text-sm font-medium mt-2">
+          <p className="text-center text-lg font-medium mt-2">
             No active bookings right now
           </p>
         </div>
       ) : (
         <div className="flex flex-col gap-4 w-full">
           <div className="flex justify-between items-center">
-            <div className="!text-3xl font-semibold text-[#1B2A37]">
+            <div className="!text-4xl font-semibold text-[#1B2A37]">
               Active Bookings
             </div>
             {sortedActiveBookings.length > 4 && (

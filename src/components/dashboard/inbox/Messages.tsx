@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 
@@ -24,8 +25,6 @@ function Messages() {
       try {
         const res = await fetch(
           `https://api.careworks.biz/api/v1/message/${ADMIN_ID}/chat-history`,
-          // `http://localhost:4000/api/v1/message/${ADMIN_ID}/chat-history`,
-
           { headers: { Authorization: `Bearer ${token}` } }
         );
         const data = await res.json();
@@ -83,9 +82,11 @@ function Messages() {
   };
 
   return (
-    <div className="flex-grow flex flex-col h-[calc(100vh-3.5rem)]">
+    <div className="flex-grow flex flex-col h-full min-h-0">
       <NameHeader />
-      <Chat messages={messages} otherUserDetails={otherUserDetails} />
+      <div className="flex-1 overflow-hidden">
+        <Chat messages={messages} otherUserDetails={otherUserDetails} />
+      </div>
       <InputMessage userId={ADMIN_ID} addMessage={addMessage} sendMessage={sendMessage} />
     </div>
   );
