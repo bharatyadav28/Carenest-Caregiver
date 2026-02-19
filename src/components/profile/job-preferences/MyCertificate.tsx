@@ -8,7 +8,7 @@ import {
   useGetCertificatesQuery,
   useDeleteCertificateMutation,
 } from "@/store/api/profileApi";
-
+import { cdnURL } from "@/lib/utils";
 interface Certificate {
   id: string;
   fileUrl: string;
@@ -71,9 +71,9 @@ function MyCertificates() {
     
     if (!url.startsWith('http://') && !url.startsWith('https://')) {
       if (url.startsWith('/')) {
-        viewUrl = `https://carenest-storage.ap-south-1.storage.onantryk.com${url}`;
+        viewUrl = `${cdnURL}${url}`;
       } else {
-        viewUrl = `https://carenest-storage.ap-south-1.storage.onantryk.com/${url}`;
+        viewUrl = `${cdnURL}/${url}`;
       }
     }
     

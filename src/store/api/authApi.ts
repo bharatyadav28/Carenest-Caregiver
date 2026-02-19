@@ -2,7 +2,9 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { setCredentials, logout, clearAuth, setAccessToken } from '../authSlice';
 import Cookies from 'js-cookie';
 import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query';
-import type { RootState } from '../store'; // Adjust import path as needed
+import { backendurl } from '@/lib/utils';
+import type { RootState } from '../store';
+ // Adjust import path as needed
 
 // Type definitions
 interface User {
@@ -62,8 +64,7 @@ interface SaveDocumentsResponse {
  data?: unknown;
 }
 
-const baseAddr = 'https://api.careworks.biz/api/v1/user';
-// const baseAddr = 'http://localhost:4000/api/v1/user';
+const baseAddr = `${backendurl}/api/v1/user`;
 // Typed base queries
 const baseQuery = fetchBaseQuery({
   baseUrl: baseAddr,
@@ -266,8 +267,7 @@ export const authApi = createApi({
     // Upload document (form-data)
     uploadDocument: builder.mutation<UploadDocumentResponse, FormData>({
       query: (formData) => ({
-        url: "https://api.careworks.biz/api/v1/document/upload",
-      //  url: "http://localhost:4000/api/v1/document/upload",
+        url: `${backendurl}/api/v1/document/upload`,
         method: "POST",
         body: formData,
             headers: {
@@ -279,8 +279,7 @@ export const authApi = createApi({
     // Save documents (JSON)
     saveDocuments: builder.mutation<SaveDocumentsResponse, SaveDocumentsRequest>({
       query: (body) => ({
-        url: "https://api.careworks.biz/api/v1/document",
-        // url: "http://localhost:4000/api/v1/document",
+        url: `${backendurl}/api/v1/document`,
         method: "POST",
         body,
             headers: {

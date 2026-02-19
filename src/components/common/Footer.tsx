@@ -9,6 +9,7 @@ import facebook from "../../../public/Facebook.svg";
 import tiktok from "../../../public/tiktok.svg";
 import instagram from "../../../public/instagram.svg";
 import linkedin from "../../../public/linkedin.svg";
+import { backendurl,frontendurl } from "@/lib/utils";
 
 type SocialLink = {
   id: string;
@@ -35,30 +36,30 @@ type linkSection = {
 const link: linkSection[] = [
   {
     Company: [
-      { title: "About Us", link: "https://care-nest-teal.vercel.app/aboutUs" },
-      { title: "Become A Caregiver", link: "https://care-nest-teal.vercel.app/care-provider" },
-      { title: "Who We Are", link: "https://care-nest-teal.vercel.app/who-we-are" },
-      { title: "We Accept Medicaid", link: "https://care-nest-teal.vercel.app/medicaid" },
+      { title: "About Us", link: `${frontendurl}/aboutUs` },
+      { title: "Become A Caregiver", link: `${frontendurl}/care-provider` },
+      { title: "Who We Are", link: `${frontendurl}/who-we-are` },
+      { title: "We Accept Medicaid", link: `${frontendurl}/medicaid` },
     ],
     "Other Services": [
-      { title: "Transportation", link: "https://care-nest-teal.vercel.app/service/transportation" },
-      { title: "Veteran Homecare", link: "https://care-nest-teal.vercel.app/veterans" },
-      { title: "Private Sitters", link: "https://care-nest-teal.vercel.app/service/sitter-service" },
-      { title: "Homemakers", link: "https://care-nest-teal.vercel.app/service/home-maker" },
+      { title: "Transportation", link: `${frontendurl}/service/transportation` },
+      { title: "Veteran Homecare", link: `${frontendurl}/veterans` },
+      { title: "Private Sitters", link: `${frontendurl}/service/sitter-service` },
+      { title: "Homemakers", link: `${frontendurl}/service/home-maker` },
     ],
     "Quick Links": [
-      { title: "FAQs", link: "https://care-nest-teal.vercel.app/faq" },
-      { title: "Privacy Policy", link: "https://care-nest-teal.vercel.app/privacy" },
-      { title: "Resources", link: "https://care-nest-teal.vercel.app/resources" },
-      { title: "Veterans Financial Assistance", link: "https://care-nest-teal.vercel.app/veterans" },
+      { title: "FAQs", link: `${frontendurl}/faq` },
+      { title: "Privacy Policy", link: `${frontendurl}/privacy` },
+      { title: "Resources", link: `${frontendurl}/resources` },
+      { title: "Veterans Financial Assistance", link: `${frontendurl}/veterans` },
     ],
   },
 ];
 
 const footerLink: linkItems[] = [
-  { title: "Terms", link: "https://care-nest-teal.vercel.app/terms" },
-  { title: "Privacy", link: "https://care-nest-teal.vercel.app/privacy" },
-  { title: "Legal", link: "https://care-nest-teal.vercel.app/legal" },
+  { title: "Terms", link: `${frontendurl}/terms` },
+  { title: "Privacy", link: `${frontendurl}/privacy` },
+  { title: "Legal", link: `${frontendurl}/legal` },
 ];
 
 const Footer = () => {
@@ -71,7 +72,7 @@ const Footer = () => {
    
 
       try {
-        const endpoint = `https://api.careworks.biz/api/v1/footer`;
+        const endpoint = `${backendurl}/api/v1/footer`;
         const res = await fetch(endpoint);
         console.log("Footer API response status:", res);  
         if (res.ok) {
@@ -103,7 +104,7 @@ const Footer = () => {
     const cleaned = loc.replace(/,/g, '').trim().replace(/\s+/g, '-');
     return {
       title: loc,
-      link: `https://care-nest-teal.vercel.app/location/${cleaned}`,
+      link: `${frontendurl}/location/${cleaned}`,
     };
   });
 
@@ -196,11 +197,11 @@ const Footer = () => {
             <FooterLink 
               title="Locations we cover" 
               links={locationLinks.length > 0 ? locationLinks : [
-                { title: "Sugarland, TX", link: "https://care-nest-teal.vercel.app/location/Sugarland-TX" },
-                { title: "Katy, TX", link: "https://care-nest-teal.vercel.app/location/Katy-TX" },
-                { title: "Spring, TX", link: "https://care-nest-teal.vercel.app/location/Spring-TX" },
-                { title: "Cypress, TX", link: "https://care-nest-teal.vercel.app/location/Cypress-TX" },
-                { title: "Pearland, TX", link: "https://care-nest-teal.vercel.app/location/Pearland-TX" },
+                { title: "Sugarland, TX", link: `${frontendurl}/location/Sugarland-TX` },
+                { title: "Katy, TX", link: `${frontendurl}/location/Katy-TX` },
+                { title: "Spring, TX", link: `${frontendurl}/location/Spring-TX` },
+                { title: "Cypress, TX", link: `${frontendurl}/location/Cypress-TX` },
+                { title: "Pearland, TX", link: `${frontendurl}/location/Pearland-TX` },
               ]} 
             />
           )}

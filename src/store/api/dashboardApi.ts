@@ -5,15 +5,10 @@ import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import Cookies from "js-cookie";
 import { setAccessToken,clearAuth } from "../authSlice"; //clearauth
 import type { RootState } from "../store";
+import { backendurl, cdnURL} from "@/lib/utils"; // Adjust import path as needed
 
-const BASE_URL = "https://api.careworks.biz/api/v1";
-// const BASE_URL = 'http://localhost:4000/api/v1';
+const BASE_URL = `${backendurl}/api/v1`;
 
-export const cdnURL = "https://carenest-storage.ap-south-1.storage.onantryk.com";
-
-// =============================
-// Types
-// =============================
 export interface ProfileViewUser {
   id: string;
   userId: string;

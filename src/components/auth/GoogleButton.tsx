@@ -8,6 +8,7 @@ import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 import { setCredentials, setAccessToken } from "@/store/authSlice";
 import { useRouter } from "next/navigation";
+import { backendurl } from "@/lib/utils";
 function GoogleButton() {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -15,8 +16,7 @@ function GoogleButton() {
   const googleLogin = useGoogleLogin({
     onSuccess: async (response) => {
       try {
-        const res = await fetch("https://api.careworks.biz/api/v1/user/google-auth", {
-      //  const res = await fetch("http://localhost:4000/api/v1/user/google-auth", {
+        const res = await fetch(`${backendurl}/api/v1/user/google-auth`, {
 
           method: "POST",
           headers: { "Content-Type": "application/json" },

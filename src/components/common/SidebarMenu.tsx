@@ -13,10 +13,9 @@ import {
   useGetProfileQuery,
   useUpdateAvatarMutation,
 } from "@/store/api/profileApi";
+import { cdnURL } from "@/lib/utils";
 
-// CDN URL for profile images
-// export const cdnURL = "https://creative-story.s3.us-east-1.amazonaws.com";
-export const cdnURL = "https://carenest-storage.ap-south-1.storage.onantryk.com";
+
 
 interface Props {
   items: sidebarItemType[];

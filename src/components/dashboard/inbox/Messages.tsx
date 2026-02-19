@@ -8,6 +8,7 @@ import Chat from "./Chat";
 import InputMessage from "./InputMessage";
 import { useSocket } from "@/hooks/use-socket";
 import { chatMessageType } from "@/lib/interface-types";
+import { backendurl } from "@/lib/utils";
 
 const ADMIN_ID = "Q5jvPEYY22YTV1Ut3kROw"; // Admin ID for chat
 
@@ -18,13 +19,12 @@ function Messages() {
   const token = Cookies.get("authToken");
   const { sendMessage, onNewMessage } = useSocket(token);
 
-  // Fetch chat history on mount
   useEffect(() => {
     const fetchChatHistory = async () => {
       if (!token) return;
       try {
         const res = await fetch(
-          `https://api.careworks.biz/api/v1/message/${ADMIN_ID}/chat-history`,
+          `${backendurl}/api/v1/message/${ADMIN_ID}/chat-history`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         const data = await res.json();

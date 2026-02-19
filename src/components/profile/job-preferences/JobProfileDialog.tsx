@@ -116,7 +116,7 @@ function JobProfileDialog({ open, handleOpen, profile, setProfile }: Props) {
     }
     
     // Check if all required radio fields are selected
-    const requiredFields = ["q1", "q2", "q3", "q4", "q5", "q7"];
+    const requiredFields = ["q1", "q3", "q4", "q5", "q7"];
     const missingFields = requiredFields.filter(fieldId => {
       const field = selectedValues.find(v => v.qid === fieldId);
       return !field || !field.oid || (Array.isArray(field.oid) && field.oid.length === 0);
@@ -125,7 +125,6 @@ function JobProfileDialog({ open, handleOpen, profile, setProfile }: Props) {
     if (missingFields.length > 0) {
       const questionNames = {
         q1: "caregiving type",
-        q2: "price range",
         q3: "location range",
         q4: "PRN",
         q5: "certification status",

@@ -3,6 +3,8 @@ import Cookies from 'js-cookie';
 import { setAccessToken, clearAuth } from '../authSlice';
 import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import type { RootState } from '../store';
+import { backendurl } from "@/lib/utils"; // Adjust import path as needed
+
 
 // --------- Interfaces ---------
 interface Profile {
@@ -193,9 +195,8 @@ interface RefreshTokenResponse {
 }
 
 // --------- Base URLs ---------
-const baseUrl = 'https://api.careworks.biz';
-// const baseUrl = 'http://localhost:4000';
-// --------- Base Queries ---------
+const baseUrl = `${backendurl}`; 
+
 const baseQuery = fetchBaseQuery({
   baseUrl,
   prepareHeaders: (headers, { getState }) => {

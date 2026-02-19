@@ -9,6 +9,7 @@ import {
   useUpdateDocumentMutation,
   useUploadDocumentMutation,
 } from "@/store/api/profileApi";
+import { cdnURL } from "@/lib/utils";
 
 // Define a specific type for Work Permit
 interface WorkPermitDocument {
@@ -81,9 +82,9 @@ function WorkPermitComponent() {
     
     if (!url.startsWith('http://') && !url.startsWith('https://')) {
       if (url.startsWith('/')) {
-        viewUrl = `https://carenest-storage.ap-south-1.storage.onantryk.com${url}`;
+        viewUrl = `${cdnURL}${url}`;
       } else {
-        viewUrl = `https://carenest-storage.ap-south-1.storage.onantryk.com/${url}`;
+        viewUrl = `${cdnURL}/${url}`;
       }
     }
     

@@ -6,3 +6,6 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const frontendurl = "https://care-nest-teal.vercel.app";
+export const backendurl = "https://api.careworks.biz";
+export const cdnURL = "https://carenest-storage.ap-south-1.storage.onantryk.com";
+

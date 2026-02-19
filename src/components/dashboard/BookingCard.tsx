@@ -5,6 +5,7 @@ import BookingDetailsDialog from "@/components/dashboard/BookingDetailsDialog";
 import {
   calendar
 } from "@/lib/svg_icons";
+import { cdnURL } from "@/lib/utils";
 
 interface WeeklySchedule {
   weekDay: number; // 0 = Sunday ... 6 = Saturday
@@ -17,7 +18,6 @@ interface CareType {
   name: string;
 }
 
-export const cdnURL = "https://carenest-storage.ap-south-1.storage.onantryk.com";
 
 interface BookingCardProps {
   bookingId: string;

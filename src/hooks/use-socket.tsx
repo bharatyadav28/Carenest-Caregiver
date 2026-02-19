@@ -2,9 +2,9 @@
 "use client";
 import { useEffect, useRef, useCallback } from "react";
 import { io, Socket } from "socket.io-client";
+import { backendurl } from "@/lib/utils";
 
-const SOCKET_URL = "https://api.careworks.biz";
-// const SOCKET_URL = "http://localhost:4000";
+const SOCKET_URL = `${backendurl}`;
 
 interface UseSocketReturn {
   sendMessage: (toUserId: string, message: string) => void;

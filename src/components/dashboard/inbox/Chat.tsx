@@ -3,9 +3,9 @@ import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import { chatMessageType } from "@/lib/interface-types";
 import { useGetProfileQuery } from "@/store/api/profileApi";
+import { cdnURL } from "@/lib/utils";
 
-// CDN URL for profile images (same as in SidebarMenu)
-export const cdnURL = "https://carenest-storage.ap-south-1.storage.onantryk.com";
+
 
 interface Props {
   messages: chatMessageType[];

@@ -1,8 +1,8 @@
 // store/api/subscriptionApi.ts - UPDATED
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'; 
+import { backendurl } from "@/lib/utils"; // Adjust import path as needed
 
-const BASE_URL = 'https://api.careworks.biz/api/v1';
-// const BASE_URL = 'http://localhost:4000/api/v1';
+const BASE_URL = `${backendurl}/api/v1`;
 
 export interface SubscriptionPlan {
   id: string;
