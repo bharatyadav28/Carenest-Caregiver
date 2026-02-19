@@ -134,7 +134,7 @@ function SidebarMenu({ items, ViewProfile }: Props) {
   }
 
   const content = (
-    <div className="min-h-[30rem] lg:min-h-[20rem] w-full min-w-[22rem] px-4 py-6 bg-[#fff] rounded-lg lg:rounded-lg shadow-2xl h-full lg:h-auto">
+    <div className="min-h-[30rem] lg:min-h-[20rem] w-full  px-4 py-6 bg-[#fff] rounded-lg lg:rounded-lg shadow-2xl h-full lg:h-auto">
       <div className="flex items-center gap-4">
         {/* Pass dynamic percentage to CustomPieChart */}
         <CustomPieChart percentage={profileCompletionPercentage}>
@@ -180,7 +180,7 @@ function SidebarMenu({ items, ViewProfile }: Props) {
             <div className="mt-1">
               <button
                 onClick={handleViewProfileClick}
-                className="text-[#F2A307] border-1 border-[#F2A307] font-medium rounded-full bg-[#F2A3071A] px-4 py-1.5 text-md hover:bg-[#F2A3071A]/80 transition-colors"
+                className="text-[#F2A307] border-1 border-[#F2A307] font-medium rounded-full bg-[#F2A3071A] px-4 py-1.5 text-sm hover:bg-[#F2A3071A]/80 transition-colors"
               >
                 View Profile
               </button>
@@ -223,11 +223,15 @@ function SidebarMenu({ items, ViewProfile }: Props) {
   return (
     <>
       <div className="lg:block hidden">{content}</div>
-
-      <button onClick={handleOpenMenu} className="lg:hidden">
-        <MenuIcon size={30} />
-      </button>
-
+    <div className="p-1">
+  <button 
+    onClick={handleOpenMenu} 
+    className="lg:hidden flex items-center justify-center w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 active:scale-95"
+    aria-label="Open menu"
+  >
+    <MenuIcon size={24} className="text-white" />
+  </button>
+</div>
       <CustomDrawer
         className="lg:hidden w-full h-full pt-20 "
         open={openMenu}

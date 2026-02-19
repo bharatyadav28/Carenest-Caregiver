@@ -1,5 +1,4 @@
 import React from "react";
-
 import ProfileMenu from "@/components/profile/ProfileMenu";
 
 function Layout({
@@ -9,10 +8,13 @@ function Layout({
 }>) {
   return (
     <div className="my-10 grid grid-cols-24">
-      <div className="col-start-1 col-end-8 mr-5">
+      {/* Profile Menu - significantly wider now */}
+      <div className="col-start-1 col-end-10 mr-5">
         <ProfileMenu />
       </div>
-      <div className="lg:col-start-8 col-start-1 col-end-25 lg:mt-0 mt-8">
+      
+      {/* Content - adjusted to start after profile menu */}
+      <div className="lg:col-start-10 col-start-1 col-end-25 lg:mt-0 mt-8">
         {children}
       </div>
     </div>

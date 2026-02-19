@@ -14,7 +14,7 @@ function InboxBlock() {
   };
 
   return (
-    <div className="w-full h-full px-2 sm:px-4 md:px-6 lg:px-10">
+    <div className="w-full h-full  ">
       {/* Desktop View - Full width chat */}
       <div className="hidden md:flex card flex-grow overflow-y-auto h-[calc(100vh-8rem)]">
         <div className="w-full h-full p-3 sm:p-4 md:p-6">
